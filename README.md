@@ -12,11 +12,11 @@ Ordinals target a specific satoshi but in practice a range is typically used to 
 
 This satoshi is the ordinal and can be sent to any wallet that recognizes it.
 
-## The Satchel
+## Important note for wallet implementors
 
 It is very importent for wallets to keep single satoshi unspent outputs seperate from the rest of your UTXOs. To help isolate ordinals and help prevent accidental loss, we separate funding addresses from destinations meant for holding 1sat ordinals.
 
-Those familliar with the Run token protocol will recall a "purse" was used to fund jigs. We use the same termonology here. A purse funds the network fees for inscriptions and transfers, while a satchel holds the 1sat ordinals as to not comingle them with funding sats.
+Those familliar with the Run token protocol will recall a "purse" was used to fund jigs. We use the same termonology here. A purse funds the network fees for inscriptions and transfers, while a seperat wallet holds the 1sat ordinals as to not comingle them with funding sats.
 
 # Inscriptions
 
