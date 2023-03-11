@@ -200,8 +200,8 @@ You can also address the specific inscription by txid and output index.
 
 Complex example: To inscribe a video that exists across multiple transactions and place it
 on a specific geohash with identity signature
-tx1 - o1 - OP_PUSH ord OP_DROP OP_FALSE OP_RETURN BCAT tx2 tx3 tx4... | MAP SET context geohash geohash <geohash> | AIP <sig...>
-tx1 - o2 - 1 sat
+tx1 - o1 - OP_PUSH 1sat OP_DROP
+tx1 - o2 - OP_FALSE OP_RETURN BCAT tx2 tx3 tx4... | MAP SET context geohash geohash <geohash> | AIP <sig...>
 
 tx2 - o1 - BCAT_PART <tx2_data>
 
