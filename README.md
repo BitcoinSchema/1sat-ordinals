@@ -69,7 +69,7 @@ Here's a plain text "Hello world" inscription bringing it all together. This out
 Output #1:
 
 ```bash
-OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
+OP_PUSHDATA1 <"1sat"> OP_DROP OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
 ```
 
 Output #2:
