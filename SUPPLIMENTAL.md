@@ -118,7 +118,7 @@ o1 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP SET app <mint_platform> type ord col
 o2 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP SET app <mint_platform> type ord collection <unique-collection-name>
 ```
 
-## ATTACHING TO REAL WORLD LOCATION
+## Location Tagging
 
 Create with initial location
 
@@ -172,8 +172,13 @@ tx1 - o1 - 1SAT_P2PKH OP_RETURN BCAT tx2 tx3 tx4... | MAP SET context geohash ge
 tx2 - o1 - BCAT_PART <tx2_data>
 ```
 
-## Needs
+## Ordinals Ecosystem ToDo
 
+- [ ] Fair distribution
+- [ ] [minting lib in go](https://github.com/bitcoinschema/go-1sat-ord)
+- [ ] [minting lib in js](https://github.com/bitcoinschema/js-1sat-ord)
 - [ ] API Endpoint - Get ordinals by address (similar to endpoint for p2pkh utxos)
-- [ ] Paymail - Need a capability for 1sat Ordinals
+- [ ] Paymail - Need a capability for 1sat Ordinal support
 - [ ] BUX Wallet Support
+- [ ] Jamify minter support
+- [ ] Create a discord
