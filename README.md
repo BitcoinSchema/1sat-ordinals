@@ -76,7 +76,7 @@ You can either just send the sat or append to the inscriptions on an ordinal
 ```
 i1 - ordinal
 i2 - funding utxo
-o1 - 1p2pkh + additional inscription
+o1 - 1Sat_p2pkh + additional inscription
 o3 - change
 ```
 
