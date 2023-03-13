@@ -6,7 +6,9 @@ description: An ordinals protocol implementation on Bitcoin SV.
 
 <figure><img src="https://github.com/BitcoinSchema/1sat-ordinals/blob/main/ordinals.png?raw=true" alt=""><figcaption></figcaption></figure>
 
+```
 DRAFT SPECIFICATION
+```
 
 #### Protocol
 
