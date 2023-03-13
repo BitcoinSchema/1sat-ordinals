@@ -94,3 +94,4 @@ o3 - change
 - [Ordinals Indexer](https://github.com/shruggr/bsv-ord-indexer)
 - [Go Library - go-1sat-ord](https://github.com/bitcoinschema/go-1sat-ord)
 - [Tx Parser - go-bmap](https://github.com/bitcoinschema/go-bmap)
+- [BTC Ordinals Specification](https://docs.ordinals.com/)
