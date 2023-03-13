@@ -28,8 +28,6 @@ There are several major differences between chains like BTC where ordinals origi
 
 Ordinals target a specific satoshi but in practice a range is typically used to satisfy dust limits on other chains. Since BSV has no dust limit, we can dramatically simplify things by truly inscribing a single satoshi. This has the additional benefit of improved scalability, since only 1sat utxos need to be considered.
 
-# Inscriptions
-
 ## Creating an Inscription
 
 Creating an inscription is much easier than on other blockchains. To summarize the transaction template:
