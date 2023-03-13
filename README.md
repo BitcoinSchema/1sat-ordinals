@@ -6,7 +6,7 @@
 
 ### Protocol
 
-This output script creates an inscription on an ordinal and sends it to a recipient. The output value is 1 satoshi.
+This output script creates an inscription on an ordinal. The output value should be 1 satoshi.
 
 ```bash
 OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
