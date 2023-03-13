@@ -9,7 +9,13 @@
 This output script creates an inscription on an ordinal and sends it to a recipient. The output value is 1 satoshi.
 
 ```bash
-OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
+OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
+```
+
+This script is then appended to the payment script (typically P2PKH).
+
+```bash
+<P2PKH or Script> <Inscription Script>
 ```
 
 ## Ordinals on BSV
