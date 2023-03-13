@@ -41,7 +41,7 @@ Output #1 - P2PKH + INSCRIPTION (1 Satoshi)
 
 The output with this script must lock exactly 1 Sat.
 
-### 1SAT P2PKH
+### 1Sat P2PKH
 
 Spending a 1sat ordinal is as simple as sending the 1 sat output to another address. From here on, `1SAT_P2PKH` refers to a standard p2pkh output with a single sat value.
 
@@ -73,7 +73,7 @@ Transfer:
 https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d668de4d76407e
 ```
 
-## TRANSFERS
+## Transfers
 
 You can either just send the sat or append to the inscriptions on an ordinal
 
