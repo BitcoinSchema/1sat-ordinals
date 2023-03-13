@@ -58,12 +58,12 @@ OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 6f7264 OP_1
 ### OP_RETURN
 
 ```
-NODE: Enriching an inscription with OP_RETURN is completely optional.
+NOTE: Enriching an inscription with OP_RETURN is completely optional.
 ```
 
 BSV has several other protocols for tagging on-chain data that can be used in conjunction with these tokens. 1Sat Ordinals can be extended using many existing protocols during inscription. This enables things like minting large videos (> 10MB) and attaching them to a real world geolocation.
 
-There are several existing OP_RETURN data protocols in Bitcoin of course we would want to use them together. In this example, we geotag an ordinal with a location using Magic Attribute Protocol.
+In this example, we geotag an ordinal with a location using Magic Attribute Protocol.
 
 ```
 1SAT_P2PKH INSCRIPTION OP_RETURN
@@ -77,7 +77,7 @@ OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 6f7264 OP_1
 
 ## Handling Large Files - BCAT
 
-Inscribes a data file using the BCAT protocol. BCAT lists, in order, the transaction ids required to assemble the data file. It is a Bitcom protocol that uses the prefix "15DHFxWZJT58f9nhyGnsRBqrgwK4W6h4Up". You can find more information about BCAT protocol [here](https://bcat.bico.media/).
+If you were to inscribe files larger than 10MB (at the time of writing this) the ransaction would generally not be accepted by miners. To work around this, a large data file can be spread across multiple transactions. We can achieve this using the BCAT protocol. BCAT lists, in order, the transaction ids required to assemble the data file. It is a Bitcom protocol that uses the prefix "15DHFxWZJT58f9nhyGnsRBqrgwK4W6h4Up". You can find more information about BCAT protocol [here](https://bcat.bico.media/).
 
 While you cannot add the bcat data directly into the inscription fields (since ordinals protocol does not support concatenating external transactions), you can inscribe a thumbnail as the ordinal image, and attach the video using BCAT in OP_RETURN as follows.
 
