@@ -1,9 +1,9 @@
-# 1 Sat Ordinals
-
 <p align="center">
+<h1>1Sat Ordinals<h1>
 <img src="https://github.com/BitcoinSchema/1sat-ordinals/blob/main/ordinals.png?raw=true" alt="1Sat Ordinals" />
-</p>
+<br />
 An ordinals protocol implementation on Bitcoin SV.
+</p>
 
 ## Motivation
 
