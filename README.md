@@ -1,5 +1,7 @@
 # 1 Sat Ordinals
 
+![1Sat Ordinals](https://github.com/bitcoinschema/1sat-ordinals/blob/master/ordinals.png?raw=true)
+
 An ordinals protocol implementation on Bitcoin SV.
 
 ## Motivation
