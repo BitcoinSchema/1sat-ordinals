@@ -4,6 +4,10 @@
 </p>
 <h5 align="center">An ordinals protocol implementation on Bitcoin SV.<h5>
 
+```
+DRAFT SPECIFICATION
+```
+
 ### Protocol
 
 This output script creates an inscription on an ordinal. The output value should be 1 satoshi.
