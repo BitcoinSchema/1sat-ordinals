@@ -8,18 +8,6 @@
 DRAFT SPECIFICATION
 ```
 
-## Table of Contents
-
-- [Protocol](#protocol)
-- [Ordinals on BSV](#ordinals-on-bsv)
-- [Design Goals](#design-goals)
-- [Creating an Inscription](#creating-an-inscription)
-- [Transfers](#transfers)
-- [Examples](#examples)
-- [More Information](#more-information)
-- [Resources](#resources)
-- [Maintainers](#maintainers)
-
 ### Protocol
 
 This output script creates an inscription on an ordinal. The output value is 1 satoshi.
