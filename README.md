@@ -110,6 +110,6 @@ https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d6
 
 ## Maintainers
 
-| [<img src="https://github.com/rohenaz.png" height="50" alt="Satchmo" />](https://github.com/rohenaz) | [<img src="https://github.com/shruggr.png" height="50" alt="Shruggr" />](https://github.com/shruggr) |
-| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
-|                                [Satchmo](https://github.com/rohenaz)                                 |                                [Shruggr](https://github.com/shruggr)                                 |
+| [<img src="https://github.com/rohenaz.png" height="50" alt="Satchmo" />](https://github.com/rohenaz) | [<img src="https://github.com/shruggr.png" height="50" alt="Shruggr" />](https://github.com/shruggr) | [<img src="https://github.com/icellan.png" height="50" alt="Siggi" />](https://github.com/icellan) |
+| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+|                                [Satchmo](https://github.com/rohenaz)                                 |                                [Shruggr](https://github.com/shruggr)                                 |                                [Siggi](https://github.com/icellan)                                 |
