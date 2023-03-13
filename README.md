@@ -35,6 +35,7 @@ Creating an inscription is much easier than on other blockchains. To summarize t
 ```bash
 Input - Any valid utxo
 Output #1 - P2PKH + INSCRIPTION (1 Satoshi)
+Output #2 - P2PKH (change)
 ```
 
 The output with this script must lock exactly 1 Sat.

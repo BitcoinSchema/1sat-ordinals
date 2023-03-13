@@ -1,3 +1,14 @@
+## "Rare Sats"
+
+You can choose which Satoshi to inscribe by creating a transaction with two change outputs.
+
+```
+i1 - any utxo
+o1 - change1 (n sats)
+o2 - 1SAT_P2PKH + inscription (1 sat)
+o3 - change2 (remaining sats)
+```
+
 ## Important note for wallet implementors
 
 It is very importent for wallets to keep single satoshi unspent outputs seperate from the rest of your UTXOs. To help isolate ordinals and help prevent accidental loss, we separate funding addresses from destinations meant for holding 1sat ordinals.
