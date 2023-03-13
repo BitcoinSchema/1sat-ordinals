@@ -1,4 +1,4 @@
-## "Rare Sats"
+# "Rare Sats"
 
 You can choose which Satoshi to inscribe by creating a transaction with two change outputs.
 
