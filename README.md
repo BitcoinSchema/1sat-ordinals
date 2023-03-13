@@ -49,17 +49,17 @@ OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
 
 ### Inscription Script
 
-Next, inscribe a data file by filling in the two inscription fields, `data` and `content-type`.
+Next, inscribe a data file by filling in the two inscription fields, `data` and `content-type`. Append the inscription script to the locking script.
 
 ```bash
-1SAT_P2PKH OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
+OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
 
 ## Examples
 
 In this example, we inscribe a 3d model (GLTF binary) and tag it with a geolocation:
 
-Mint & Inscribe: (1 sat P2PKH + inscription)
+Mint & Inscribe: (1SAT_P2PKH + inscription)
 
 ```
 https://whatsonchain.com/tx/10f4465cd18c39fbc7aa4089268e57fc719bf19c8c24f2e09156f4a89a2809d6
