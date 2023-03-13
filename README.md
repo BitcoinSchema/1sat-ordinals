@@ -39,15 +39,15 @@ Output #1 - P2PKH + INSCRIPTION (1 Satoshi)
 
 The output with this script must lock exactly 1 Sat.
 
-### 1Sat P2PKH
+### 1Sat Locking Script
 
-Spending a 1sat ordinal is as simple as sending the 1 sat output to another address. From here on, `1SAT_P2PKH` refers to a standard p2pkh output with a single sat value.
+Typically, a P2PKH script is used to lock the ordinal. Simply send the 1 sat output to a new destination to transfer it. From here on, `1SAT_P2PKH` refers to a standard p2pkh output with a single sat value, but keep in mind, any locking script can be used.
 
 ```bash
 OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-### Inscription
+### Inscription Script
 
 Next, inscribe a data file by filling in the two inscription fields, `data` and `content-type`.
 
