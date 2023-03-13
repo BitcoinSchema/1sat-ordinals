@@ -88,3 +88,4 @@ o3 - change
 ## Resources
 
 - [Ordinals Indexer](https://github.com/shruggr/bsv-ord-indexer)
+- [go-bmap Tx Parser](https://github.com/bitcoinschema/go-bmap) - Parsing in Go
