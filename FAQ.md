@@ -6,7 +6,7 @@
 
 ### Why not just use Run?
 
-    Run is no longer in development, and adds some extra complexity we didn't need. Issues building the Run-Sdk in webpack bundled projects and the requirement for JavaScript to interprate token transactions also contributed to the need for a new token protocol.
+    Run is no longer in development, and has some unique chalenges. Building the Run-Sdk in webpack bundled projects and the requirement for JavaScript to interprate token transactions has created a demand for alternatives.
 
 ### Why not just use Stas?
 
