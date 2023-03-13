@@ -5,5 +5,11 @@ It is our intention to announce the protocol and allow equal opportunity to mint
 The coinbase string that begins the countdown will be:
 
 ```
-THE 1SAT PROTOCOL BEGINS IN 121 BLOCKS
+THE 1SAT ORDINALS PROTOCOL BEGINS IN 121 BLOCKS
+```
+
+## First Block
+
+```
+The first block has not been mined yet
 ```
