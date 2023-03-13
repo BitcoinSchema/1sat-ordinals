@@ -23,9 +23,3 @@ Or in markdown
 ```markdown
 [My Ordinal!]("o://ordinalID")
 ```
-
-You can also address the specific inscription by txid and output index.
-
-```html
-<img src="b://txid{64}.o2" />
-```
