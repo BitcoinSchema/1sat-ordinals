@@ -12,6 +12,7 @@ DRAFT SPECIFICATION
 
 - [Protocol](#protocol)
 - [Ordinals on BSV](#ordinals-on-bsv)
+- [Design Goals](#design-goals)
 - [Creating an Inscription](#creating-an-inscription)
 - [Transfers](#transfers)
 - [Examples](#examples)
@@ -103,6 +104,7 @@ https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d6
 
 ## Resources
 
+- [Discord](https://discord.gg/XUfss6StD8)
 - [Go Ordinals Indexer - bsv-ord-indexer](https://github.com/shruggr/bsv-ord-indexer)
 - [Go Library - go-1sat-ord](https://github.com/bitcoinschema/go-1sat-ord)
 - [Tx Parser - go-bmap](https://github.com/bitcoinschema/go-bmap)
