@@ -74,9 +74,9 @@ https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d6
 You can either just send the sat or append to the inscriptions on an ordinal
 
 ```
-i1 - 1 sat
+i1 - ordinal
 i2 - funding utxo
-o1 - 1 sat + new inscription OP_RETURN AIP <sig...> -1
+o1 - 1p2pkh + additional inscription
 o3 - change
 ```
 
