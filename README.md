@@ -13,7 +13,7 @@ DRAFT SPECIFICATION
 This output script creates an inscription on an ordinal. The output value should be 1 satoshi.
 
 ```bash
-OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
+OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
 
 This script is then appended to the payment script (typically P2PKH).
