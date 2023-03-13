@@ -86,7 +86,7 @@ o3 - change
 
 ## More Information
 
-- [Suplimental Readme](https://github.com/bitcoinschema/1sat-ordinals/blob/main/SUPPLIMENTAL.md)
+- [Suplimental Readme](https://github.com/bitcoinschema/1sat-ordinals/blob/main/SUPPLEMENTAL.md)
 - [Common Questions](https://github.com/bitcoinschema/1sat-ordinals/blob/main/FAQ.md)
 
 ## Resources
