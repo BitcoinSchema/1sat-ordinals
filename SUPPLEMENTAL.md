@@ -11,7 +11,7 @@ o3 - change2 (remaining sats)
 
 ## UTXO Management
 
-It is very importent for wallets to keep single satoshi unspent outputs seperate from the rest of your UTXOs. To help isolate ordinals and help prevent accidental loss, we separate funding addresses from destinations meant for holding 1sat ordinals.
+Compatible wallets should be aware that single satoshi outputs may have inscriptions and avoid spending them until it is known weather an ordinal is inscribed with an indexer. To help isolate ordinals and prevent accidental loss, separate keys are used for payments and ordinals.
 
 Those familliar with the Run token protocol will recall a "purse" was used to fund jigs. We use the same termonology here. A purse funds the network fees for inscriptions and transfers, while a seperat wallet holds the 1sat ordinals as to not comingle them with funding sats.
 
