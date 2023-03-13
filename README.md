@@ -4,19 +4,19 @@
 </p>
 <h5 align="center">An ordinals protocol implementation on Bitcoin SV.<h5>
 
-## Motivation
+### Protocol
 
-There are several major differences between chains like BTC where ordinals originated, and a classic Bitcoin system like BSV. Most notably, BSV does not have taproot or segwit, so does not need a workaround to store large data files.
+This output script creates an inscription on an ordinal and sends it to a recipient. The output value is 1 satoshi.
 
-Ordinals target a specific satoshi but in practice a range is typically used to satisfy dust limits on other chains. Since BSV has no dust limit, we can dramatically simplify things by truly inscribing a single satoshi.
+```bash
+OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
+```
 
-This satoshi is the ordinal and can be sent to any wallet that recognizes it.
+## Ordinals on BSV
 
-## Important note for wallet implementors
+There are several major differences between chains like BTC where ordinals originated, and a classic Bitcoin system like BSV. Most notably, BSV does not have taproot or segwit, so it does not need a workaround to store data on-chain. We can simply put the ordinals script in an output, creating an inscribed ordinal in a single step.
 
-It is very importent for wallets to keep single satoshi unspent outputs seperate from the rest of your UTXOs. To help isolate ordinals and help prevent accidental loss, we separate funding addresses from destinations meant for holding 1sat ordinals.
-
-Those familliar with the Run token protocol will recall a "purse" was used to fund jigs. We use the same termonology here. A purse funds the network fees for inscriptions and transfers, while a seperat wallet holds the 1sat ordinals as to not comingle them with funding sats.
+Ordinals target a specific satoshi but in practice a range is typically used to satisfy dust limits on other chains. Since BSV has no dust limit, we can dramatically simplify things by truly inscribing a single satoshi. This has the additional benefit of improved scalability, since only 1sat utxos need to be considered.
 
 # Inscriptions
 
@@ -45,16 +45,6 @@ Next, inscribe a data file by filling in the two inscription fields, `data` and 
 
 ```bash
 1SAT_P2PKH OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
-```
-
-### All Together
-
-Here's a plain text "Hello world" inscription bringing it all together. This output script creates an ordinal and sends it to a recipient. The output value must be exactly 1 satoshi.
-
-Output:
-
-```bash
-OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
 ```
 
 ## Examples
