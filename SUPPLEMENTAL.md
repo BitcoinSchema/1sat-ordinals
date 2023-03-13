@@ -1,3 +1,7 @@
+## Managing Unspent Outputs
+
+Compatible wallets should be aware that single satoshi outputs may have inscriptions and avoid spending them until it is known weather an ordinal is inscribed with the help of an indexer. To isolate ordinals and prevent accidental loss, separate keys should be used for payments and ordinals.
+
 ## "Rare Sats"
 
 You can choose which Satoshi to inscribe by creating a transaction with two change outputs.
@@ -9,13 +13,7 @@ o2 - 1SAT_P2PKH + inscription (1 sat)
 o3 - change2 (remaining sats)
 ```
 
-## UTXO Management
-
-Compatible wallets should be aware that single satoshi outputs may have inscriptions and avoid spending them until it is known weather an ordinal is inscribed with an indexer. To help isolate ordinals and prevent accidental loss, separate keys are used for payments and ordinals.
-
-Those familliar with the Run token protocol will recall a "purse" was used to fund jigs. We use the same termonology here. A purse funds the network fees for inscriptions and transfers, while a seperat wallet holds the 1sat ordinals as to not comingle them with funding sats.
-
-### OP_RETURN
+## OP_RETURN
 
 ```
 NOTE: Enriching an inscription with OP_RETURN is completely optional.
