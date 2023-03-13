@@ -6,4 +6,3 @@
 - [ ] Paymail - Need a capability for 1sat Ordinal support
 - [ ] BUX Wallet Support
 - [ ] Jamify minter support
-- [ ] Create a discord
