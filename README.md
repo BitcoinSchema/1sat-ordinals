@@ -8,9 +8,20 @@
 DRAFT SPECIFICATION
 ```
 
+## Table of Contents
+
+- [Protocol](#protocol)
+- [Ordinals on BSV](#ordinals-on-bsv)
+- [Creating an Inscription](#creating-an-inscription)
+- [Transfers](#transfers)
+- [Examples](#examples)
+- [More Information](#more-information)
+- [Resources](#resources)
+- [Maintainers](#maintainers)
+
 ### Protocol
 
-This output script creates an inscription on an ordinal. The output value should be 1 satoshi.
+This output script creates an inscription on an ordinal. The output value is 1 satoshi.
 
 ```bash
 OP_FALSE OP_IF 0x6f7264 OP_1 <content-type> OP_0 <data> OP_ENDIF
@@ -21,6 +32,8 @@ This script is then appended to the payment script (typically P2PKH).
 ```bash
 <P2PKH or Script> <Inscription Script>
 ```
+
+The rest of the Ordinals protocol is identical as it relates to ordinal numbers. See the [Ordinals Docs](https://docs.ordinals.com/) for more information on ordinal theory.
 
 ## Ordinals on BSV
 
@@ -56,6 +69,17 @@ Next, inscribe a data file by filling in the two inscription fields, `data` and 
 OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
 
+## Transfers
+
+You can either just send the sat or append to the inscriptions on an ordinal
+
+```
+i1 - ordinal
+i2 - funding utxo
+o1 - 1Sat_p2pkh + additional inscription
+o3 - change
+```
+
 ## Examples
 
 In this example, we inscribe a 3d model (GLTF binary) and tag it with a geolocation:
@@ -72,17 +96,6 @@ Transfer:
 https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d668de4d76407e
 ```
 
-## Transfers
-
-You can either just send the sat or append to the inscriptions on an ordinal
-
-```
-i1 - ordinal
-i2 - funding utxo
-o1 - 1Sat_p2pkh + additional inscription
-o3 - change
-```
-
 ## More Information
 
 - [Suplimental Readme](https://github.com/bitcoinschema/1sat-ordinals/blob/main/SUPPLEMENTAL.md)
@@ -94,3 +107,9 @@ o3 - change
 - [Go Library - go-1sat-ord](https://github.com/bitcoinschema/go-1sat-ord)
 - [Tx Parser - go-bmap](https://github.com/bitcoinschema/go-bmap)
 - [BTC Ordinals Specification](https://docs.ordinals.com/)
+
+## Maintainers
+
+| [<img src="https://github.com/rohenaz.png" height="50" alt="Satchmo" />](https://github.com/rohenaz) | [<img src="https://github.com/shruggr.png" height="50" alt="Shruggr" />](https://github.com/shruggr) |
+| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
+|                                [Satchmo](https://github.com/rohenaz)                                 |                                [Shruggr](https://github.com/shruggr)                                 |
