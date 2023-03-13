@@ -9,6 +9,6 @@
   * [Signing](op\_return/signing.md)
 * [HTML Ordinals](<HTML Ordinals.md>)
 * [Ordinal Lock](<Ordinal Lock.md>)
-* [Fair Release](readme/fair-release.md)
+* [Fair Distribution](readme/fair-release.md)
 * [Common Questions](readme/faq.md)
 * [ToDo List](readme/to-do.md)
