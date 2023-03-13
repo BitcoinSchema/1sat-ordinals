@@ -4,9 +4,7 @@ An ordinals protocol implementation on Bitcoin SV.
 
 ## Motivation
 
-There are several major differences between chains like BTC where ordinals originated, and a classic Bitcoin system like BSV. Most notably, BSV does not have taproot or segwit, so does not need a workaround to store large data files. BSV also has a pre-ordinals data protocol known as "B". The on-chain data structure is almost identical to ordinal inscriptions.
-
-BSV has several other interesting protocols for tagging on-chain data that can be used to extend the capabilities of ordinals much further. 1Sat Ordinals can be created using many existing protocols for inscription. This enables things like minting large videos (> 10MB) and attaching them to a real world geolocation.
+There are several major differences between chains like BTC where ordinals originated, and a classic Bitcoin system like BSV. Most notably, BSV does not have taproot or segwit, so does not need a workaround to store large data files.
 
 Ordinals target a specific satoshi but in practice a range is typically used to satisfy dust limits on other chains. Since BSV has no dust limit, we can dramatically simplify things by truly inscribing a single satoshi.
 
@@ -60,7 +58,13 @@ OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 6f7264 OP_1
 
 ### OP_RETURN
 
-OP_RETURN is not part of the protocol, but since there are several existing OP_RETURN data protocols in Bitcoin of course we would want to use them together. In this example, we geotag an ordinal with a location using Magic Attribute Protocol.
+```
+NODE: Enriching an inscription with OP_RETURN is completely optional.
+```
+
+BSV has several other protocols for tagging on-chain data that can be used in conjunction with these tokens. 1Sat Ordinals can be extended using many existing protocols during inscription. This enables things like minting large videos (> 10MB) and attaching them to a real world geolocation.
+
+There are several existing OP_RETURN data protocols in Bitcoin of course we would want to use them together. In this example, we geotag an ordinal with a location using Magic Attribute Protocol.
 
 ```
 1SAT_P2PKH INSCRIPTION OP_RETURN
@@ -87,15 +91,13 @@ While you cannot add the bcat data directly into the inscription fields (since o
 You can use metadata to add context to ordinals. For example, you can tag an ordinal with a geohash to place it on a physical location. Metadata is written using "Magic Attribute Protocol" which has a prefix of "1PuQa7K62MiKCtssSLKy1kh56WWU7MtUR5".
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN <B fields...> | MAP SET app <platform_name> type "ord" context "geohash" geohash "dhmgdqvr7"
+1SAT_P2PKH <INSCRIPTION> OP_RETURN <B fields...> | MAP SET app <platform_name> type "post" context "geohash" geohash "dhmgdqvr7"
 ```
 
 Similarly, you can attach an ordinal to a particular url:
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN <B fields...> | MAP SET app <platform_name> type "ord" context "url" url "https://google.com"
+1SAT_P2PKH <INSCRIPTION> OP_RETURN <B fields...> | MAP SET app <platform_name> type "post" context "url" url "https://google.com"
 ```
 
 ## Ordinal Lock
@@ -134,8 +136,7 @@ export class OrderLock extends SmartContract {
 Once the script is compiled, use it to mint and list an ordinal in a single 1 sat output:
 
 ```bash
-o1 - ORDINAL_LOCK (1 sat)
-o2 - OP_FALSE OP_RETURN "ord" | <B> <data> <encoding> <content-type>
+1Sat_ORDINAL_LOCK <INSCRIPTION>
 ```
 
 ## Signing
@@ -149,7 +150,7 @@ Since AIP was designed to sign OP_RETURN based protocols, we need to use a speci
 To sign when inscribing:
 
 ```bash
-o1 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN <AIP> <signing_address> "BITCOIN_ECDSA" <sig> -1
+1SAT_P2PKH <INSCRIPTION> OP_RETURN <AIP> <signing_address> "BITCOIN_ECDSA" <sig> -1
 ```
 
 ### Platform Signatures
@@ -161,6 +162,20 @@ You can not only use AIP signatures to prove a particular identity created an in
 ```
 
 ## Examples
+
+In this example, we inscribe a 3d model (GLTF binary) and tag it with a geolocation:
+
+Mint & Inscribe: (1 sat P2PKH + inscription)
+
+```
+https://whatsonchain.com/tx/10f4465cd18c39fbc7aa4089268e57fc719bf19c8c24f2e09156f4a89a2809d6
+```
+
+Transfer:
+
+```
+https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d668de4d76407e
+```
 
 ### Web Pages
 
@@ -194,49 +209,49 @@ You can also address the specific inscription by txid and output index.
 
 Complex example: To inscribe a video that exists across multiple transactions and place it
 on a specific geohash with identity signature
-tx1 - o1 - OP_PUSH 1sat OP_DROP
-tx1 - o2 - OP_FALSE OP_RETURN BCAT tx2 tx3 tx4... | MAP SET context geohash geohash <geohash> | AIP <sig...>
+
+```
+tx1 - o1 - 1SAT_P2PKH OP_RETURN BCAT tx2 tx3 tx4... | MAP SET context geohash geohash <geohash> | AIP <sig...> -1
 
 tx2 - o1 - BCAT_PART <tx2_data>
+```
 
 ### Inscription Collection
 
 You can also mint lots of ordinals at once, and link them to a specific collection.
 
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN <B> <data> ... | MAP SET app <mint_platform> type ord collection <unique-collection-name>
-o3 - 1SAT_P2PKH
-o4 - OP_FALSE OP_RETURN <B> <data> ... | MAP SET app <mint_platform> type ord collection <unique-collection-name>
+```
+o1 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP SET app <mint_platform> type ord collection <unique-collection-name>
+o2 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP SET app <mint_platform> type ord collection <unique-collection-name>
+```
 
 ## TRANSFERS
 
-You can either just send the sat or append to the inscription
+You can either just send the sat or append to the inscriptions on an ordinal
+
+```
 i1 - 1 sat
 i2 - funding utxo
-o1 - 1 sat
-o2 - "ord" | <B> <data> ... | AIP <sig...> append to inscriptions... 0 sat
+o1 - 1 sat + new inscription OP_RETURN AIP <sig...> -1
 o3 - change
-
-TOKENIZED 3D MODEL ON BITCOIN
-o1 - 1 sat
-o2 - ord | B <gltf_data> <binary> <gltf>
+```
 
 "All 1 sat outputs"
 
 ATTACHING TO REAL WORLD LOCATION
 
 Create with initial location
-o1 - 1 sat
-o2 - "ord" | MAP app <appname> type "ordinal" context geohash geohash <geohash> | AIP <sig...>
+
+```
+o1 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP app <appname> type "ordinal" context geohash geohash <geohash> | AIP <sig...>
+```
 
 Spend the ordinal with MAP geohash - updates are checked by indexer
-i1 - 1 sat o2 from inscription tx
-o1 - 1 sat
-o2 - "ord" | MAP geohash <geohash> | AIP <sig...>
 
-OP_PUSH <ord> OP_DROP
-
-we can append metadata to the script w OP_RETURN if needed
+```
+i1 - 1 sat o1 from inscription tx
+o1 - 1SAT_P2PKH OP_RETURN MAP geohash <geohash> | AIP <sig...>
+```
 
 ## Common Questions
 
