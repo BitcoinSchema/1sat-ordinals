@@ -57,36 +57,6 @@ i1 - 1 sat o1 from inscription tx
 o1 - 1SAT_P2PKH OP_RETURN MAP geohash <geohash> | AIP <sig...>
 ```
 
-### Web Pages
-
-To inscribe a webpage, simply:
-
-```bash
-1SAT_P2PKH OP_IF "ord" OP_1 "text/html;charset=utf8" OP_0 <html_data> OP_ENDIF
-```
-
-### o:// - Ordinal URL References
-
-You can embed references to other ordinals inside the on-chain HTML or markdown.
-
-An ordinalID is the precise satoshi identifier.
-
-```html
-<img src="o://ordinalID" />
-```
-
-Or in markdown
-
-```markdown
-[My Ordinal!]("o://ordinalID")
-```
-
-You can also address the specific inscription by txid and output index.
-
-```html
-<img src="b://txid{64}.o2" />
-```
-
 Complex example: To inscribe a video that exists across multiple transactions and place it
 on a specific geohash with identity signature
 
