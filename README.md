@@ -84,9 +84,9 @@ o3 - change
 
 ## More Information
 
-[Suplimental Readme](https://github.com/bitcoinschema/1sat-ordinals/blob/main/SUPPLIMENTAL.md)
-[Common Questions](https://github.com/bitcoinschema/1sat-ordinals/blob/main/FAQ.md)
+- [Suplimental Readme](https://github.com/bitcoinschema/1sat-ordinals/blob/main/SUPPLIMENTAL.md)
+- [Common Questions](https://github.com/bitcoinschema/1sat-ordinals/blob/main/FAQ.md)
 
 ## Resources
 
-[Ordinals Indexer](https://github.com/shruggr/bsv-ord-indexer)
+- [Ordinals Indexer](https://github.com/shruggr/bsv-ord-indexer)
