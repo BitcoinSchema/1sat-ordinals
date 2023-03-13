@@ -34,57 +34,52 @@ The output with this script must lock exactly 1 Sat.
 
 ### 1SAT P2PKH
 
-Spending a 1sat ordinal is as simple as sending the 1 sat output to another address and retaining the "1sat" prefix. `1SAT_P2PKH` refers to a standard p2pkh output with a single sat value and the porefix included. If the value is higher, or the prefix is missing, it will no longer be picked up by 1Sat Ordinal indexers. You can revive these transactions be spending them to 1sat outputs containing the prefix again.
+Spending a 1sat ordinal is as simple as sending the 1 sat output to another address. From here on, `1SAT_P2PKH` refers to a standard p2pkh output with a single sat value.
 
 ```bash
-OP_PUSHDATA1 <"1sat"> OP_DROP OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
+OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
 ```
-
-### OP_RETURN
-
-Now that the 1sqt output is created, add a second output for the inscription. `OP_FALSE OP_RETURN` and the ordinal protocol identifier `ord` to tag the inscription.
-
-```
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN 0x6F7264
-```
-
-Notice we do not add `OP_FALSE` so we can spend this transaction.
 
 ### Inscription
 
-Next, inscribe a data file by appending the B protocol to the script. This is a typical way to inscribe a data file of any kind on Bitcoin. B is a Bitcom protocol that uses the prefix "19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut".
+Next, inscribe a data file by filling in the two inscription fields, `data` and `content-type`.
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN "19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut" <data> <encoding> <content-type>
+1SAT_P2PKH OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
-
-Note the protocol separator "|". This is a convention used to separate composable protocols in OP_RETURN.
 
 ### All Together
 
 Here's a plain text "Hello world" inscription bringing it all together. This output script creates an ordinal and sends it to a recipient. The output value must be exactly 1 satoshi.
 
-Output #1:
+Output:
 
 ```bash
-OP_PUSHDATA1 0x31736174 OP_DROP OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
+OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF
 ```
 
-Output #2:
+### OP_RETURN
 
-```bash
-OP_FALSE OP_RETURN 0x31736174 0x7c 0x31394878696756345179427633744870515663554551797131707A5A56646F417574 0x48656C6C6F20776F726C6421 0x7574662D38 0x746578742F706C61696E
+OP_RETURN is not part of the protocol, but since there are several existing OP_RETURN data protocols in Bitcoin of course we would want to use them together. In this example, we geotag an ordinal with a location using Magic Attribute Protocol.
+
+```
+1SAT_P2PKH INSCRIPTION OP_RETURN
+```
+
+Notice we do not use `OP_FALSE OP_RETURN` as is typical in BSV. This is important as ommitting OP_FALSE allows us to spend the output.
+
+```
+OP_DUP OP_HASH160 <PUBKEY> OP_EQUALVERIFY OP_CHECKSIG OP_FALSE OP_IF 6f7264 OP_1 <content-type> OP_0 <INSCRIPTION_DATA> OP_ENDIF OP_RETURN 3150755161374b36324d694b43747373534c4b79316b683536575755374d74555235 534554 617070 6f72642d64656d6f 74797065 706f7374 636f6e74657874 67656f68617368 67656f68617368 6468786e643170776e
 ```
 
 ## Handling Large Files - BCAT
 
-Inscribes a data file using the BCAT protocol. It lists, in order, the transaction ids required to assemble the data file. BCAT is a Bitcom protocol that uses the prefix "15DHFxWZJT58f9nhyGnsRBqrgwK4W6h4Up". You can find more information about BCAT protocol [here](https://bcat.bico.media/).
+Inscribes a data file using the BCAT protocol. BCAT lists, in order, the transaction ids required to assemble the data file. It is a Bitcom protocol that uses the prefix "15DHFxWZJT58f9nhyGnsRBqrgwK4W6h4Up". You can find more information about BCAT protocol [here](https://bcat.bico.media/).
+
+While you cannot add the bcat data directly into the inscription fields (since ordinals protocol does not support concatenating external transactions), you can inscribe a thumbnail as the ordinal image, and attach the video using BCAT in OP_RETURN as follows.
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN <BCAT fields...> tx2 tx3 tx4...
+1SAT_P2PKH <INSCRIPTION> OP_RETURN <BCAT fields...> tx2 tx3 tx4...
 ```
 
 ## Adding Metadata
@@ -147,13 +142,14 @@ o2 - OP_FALSE OP_RETURN "ord" | <B> <data> <encoding> <content-type>
 
 It is possible to sign ordinals to link an identity to the creation of the token. Separating identity signatures from funding signatures is more flexible. This is useful for verified minting. Signatures use "Author Identity Protocol" which has a Bitcom prefix of "15PciHG22SNLQJXMoSUaWVi7WSqc7hCfva".
 
+Since AIP was designed to sign OP_RETURN based protocols, we need to use a special indices selector to sign the entire transaction, including the ordinal data. To do this, pass `[-1]` in the indices field to indicate the entire output script is being signed.
+
 ### User Signatures
 
 To sign when inscribing:
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN "ord" | <B> <data> <encoding> <content-type> | <AIP> <signing_address> "BITCOIN_ECDSA" <sig>
+o1 - 1SAT_P2PKH <INSCRIPTION> OP_RETURN <AIP> <signing_address> "BITCOIN_ECDSA" <sig> -1
 ```
 
 ### Platform Signatures
@@ -161,8 +157,7 @@ o2 - OP_FALSE OP_RETURN "ord" | <B> <data> <encoding> <content-type> | <AIP> <si
 You can not only use AIP signatures to prove a particular identity created an inscription, but you can sign once more to prove that a particular platform was used to create the transaction as well.
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_RETURN "ord" | <B> <data> ... | MAP SET app <mint_platform> type ord | AIP <user_address> <user_sig> | AIP <platform_address> <platform_sig>
+1SAT_P2PKH <INSCRIPTION> OP_RETURN AIP <user_address> <user_sig> -1 | AIP <platform_address> <platform_sig> -1
 ```
 
 ## Examples
@@ -172,8 +167,7 @@ o2 - OP_RETURN "ord" | <B> <data> ... | MAP SET app <mint_platform> type ord | A
 To inscribe a webpage, simply:
 
 ```bash
-o1 - 1SAT_P2PKH
-o2 - OP_FALSE OP_RETURN "ord" | <B> <html_data> "utf-8" "text/html"
+1SAT_P2PKH OP_IF "ord" OP_1 "text/html;charset=utf8" OP_0 <html_data> OP_ENDIF
 ```
 
 ### o:// - Ordinal URL References
