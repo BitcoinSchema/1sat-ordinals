@@ -2,6 +2,16 @@
 
 Compatible wallets should be aware that single satoshi outputs may have inscriptions and avoid spending them until it is known weather an ordinal is inscribed with the help of an indexer. To isolate ordinals and prevent accidental loss, separate keys should be used for payments and ordinals.
 
+## Resolving Ordinal Numbers
+
+To resolve ordinal numbers for unspent outputs an indexer is required. This diagram shows the process of resolving an ordinal number.
+
+<img src="https://github.com/BitcoinSchema/1sat-ordinals/blob/main/Ordinals_Indexer.jpg" alt="Ordinals Indexing" />
+
+A reference implementation has been started here (golang):
+
+[https://github.com/shruggr/bsv-ordinals-indexer](https://github.com/shruggr/bsv-ordinals-indexer)
+
 ## "Rare Sats"
 
 You can choose which Satoshi to inscribe by creating a transaction with two change outputs.
