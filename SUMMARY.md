@@ -1,12 +1,13 @@
 # Table of contents
 
-* [Protocol Specification](README.md)
+* [Introduction](README.md)
+* [Protocol Specification](readme/README.md)
+  * [Resolving Ordinals](readme/resolving-ordinals/README.md)
+    * [Rare Sats](readme/resolving-ordinals/rare-sats.md)
 * [Libraries](Libraries.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)
   * [URL References](html-ordinals/url-references.md)
-* [Resolving Ordinals](resolving-ordinals/README.md)
-  * ["Rare Sats"](resolving-ordinals/rare-sats.md)
 * [Enriching Ordinals](op\_return/README.md)
   * [Adding Metadata](op\_return/adding-metadata/README.md)
     * [Collections](op\_return/adding-metadata/collections.md)
