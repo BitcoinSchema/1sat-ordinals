@@ -1,7 +1,7 @@
 # Table of contents
 
 - [1Sat Ordinals](README.md)
-- [Libraries](README.md)
+- [Libraries](Libraries.md)
 - [Resolving Ordinals](resolving-ordinals/README.md)
 - ["Rare Sats"](resolving-ordinals/rare-sats.md)
 - [Managing Unspent Outputs](resolving-ordinals/managing-outputs.md)
