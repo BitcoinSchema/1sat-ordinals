@@ -18,4 +18,4 @@
 * [Managing Unspent Outputs](resolving-ordinals/managing-outputs.md)
 * [Partially Signed Transactions](partially-signed-transactions.md)
 * [Common Questions](readme/faq.md)
-* [Fair Distribution](readme/fair-release.md)
+* [Fair Launch](readme/fair-release.md)
