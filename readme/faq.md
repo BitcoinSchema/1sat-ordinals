@@ -6,7 +6,7 @@ Yes. It is possible to use any Bitcoin locking script you prefer when sending a 
 
 ## Why not use a smart contract that does X?
 
-This protocol is intended to adhere to the original Ordinals protocol as closely as possible withing reason and with some minor exceptions. This would be too far a departure for this from the precedent set on BTC for this project.
+This protocol is intended to adhere to the original Ordinals protocol as closely as possible within reason and with some minor exceptions. This would be too far a departure for this from the precedent set on BTC for this project.
 
 ## Can 1Sat Ordinals be merged?
 
