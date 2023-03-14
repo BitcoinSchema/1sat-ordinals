@@ -16,6 +16,3 @@ Similarly, you can attach an ordinal to a particular url:
 ```
 {% endcode %}
 
-## Bitcoin Schema
-
-To learn more about common metadata tags, and how to use them to create interoperable Bitcoin apps, check out the [BitcoinSchema.org](https://bitcoinschema.org).
