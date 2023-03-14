@@ -18,4 +18,4 @@ Run is no longer in development, and has some unique challenges. Problems buildi
 
 ## Why not use Stas?
 
-Stas scripts are larger than ordinals. Both systems ultimately require some level of indexer-based validation, and both can use OP_RETURN based token data. Stas protocol has licensing requirements for minting. This was something we found to be not suitable to many interested developers.
+Stas scripts are larger than ordinals. Both systems ultimately require some level of indexer-based validation, and both can use OP_RETURN based token data. Stas protocol has licensing requirements for minting. This was something some would prefer to avoid.
