@@ -34,7 +34,7 @@ Output #2 - Change
 
 The output with this script must lock exactly 1 Sat.
 
-#### 1Sat Locking Script
+#### Locking Script
 
 Typically, a P2PKH script is used to lock the ordinal. Simply send the 1 sat output to a new destination to transfer it. From here on, `1SAT_P2PKH` refers to a standard p2pkh output with a single sat value, but keep in mind, any locking script can be used.
 

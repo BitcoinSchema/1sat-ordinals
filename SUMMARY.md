@@ -1,9 +1,9 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Protocol Specification](readme/README.md)
-  * [Resolving Ordinals](readme/resolving-ordinals/README.md)
-    * [Rare Sats](readme/resolving-ordinals/rare-sats.md)
+* [Protocol Specification](<README (1).md>)
+  * [Resolving Ordinals](resolving-ordinals/README.md)
+    * [Rare Sats](resolving-ordinals/rare-sats.md)
 * [Libraries](Libraries.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)
