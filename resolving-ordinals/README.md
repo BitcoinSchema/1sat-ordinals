@@ -4,6 +4,6 @@ To resolve ordinal numbers for unspent outputs an indexer is required. This diag
 
 ![Ordinals Indexing](https://github.com/BitcoinSchema/1sat-ordinals/blob/main/Ordinals_Indexer.jpg)
 
-A reference implementation has been started here (golang):
+A reference implementation written in Go has been started here:
 
 [https://github.com/shruggr/bsv-ordinals-indexer](https://github.com/shruggr/bsv-ordinals-indexer)
