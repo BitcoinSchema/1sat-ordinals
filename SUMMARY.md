@@ -11,5 +11,3 @@
 - [HTML Ordinals](html-ordinals/README.md)
   - [URL References](html-ordinals/url-references.md)
 - [Ordinal Lock](<Ordinal Lock.md>)
-- [Common Questions](readme/faq.md)
-- [ToDo List](readme/to-do.md)
