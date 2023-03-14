@@ -1,7 +1,7 @@
 # Table of contents
 
-* [Introduction](README.md)
-* [Protocol Specification](<README (1).md>)
+* [Protocol Specification](README.md)
+  * [Introduction](readme/introduction.md)
   * [Resolving Ordinals](resolving-ordinals/README.md)
     * [Rare Sats](resolving-ordinals/rare-sats.md)
 * [Libraries](Libraries.md)
