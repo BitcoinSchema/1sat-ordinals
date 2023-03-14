@@ -2,7 +2,7 @@
 description: An Ordinals implementation on Bitcoin SV.
 ---
 
-# Protocol Specification
+# 1Sat Ordinals Protocol
 
 <figure><img src="https://github.com/BitcoinSchema/1sat-ordinals/blob/main/ordinals.png?raw=true" alt=""><figcaption></figcaption></figure>
 
