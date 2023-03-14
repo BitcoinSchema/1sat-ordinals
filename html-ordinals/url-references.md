@@ -12,6 +12,6 @@ An ordinalID is the precise satoshi identifier.
 
 Or in markdown
 
-```markdown
+```md
 [My Ordinal!]("o://ordinalID")
 ```
