@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [Protocol Specification](README.md)
+* [Protocol Specification](<README (1).md>)
   * [Resolving Ordinals](resolving-ordinals/README.md)
     * [Rare Sats](resolving-ordinals/rare-sats.md)
 * [Libraries](Libraries.md)
@@ -18,4 +18,4 @@
 * [Managing Unspent Outputs](resolving-ordinals/managing-outputs.md)
 * [Partially Signed Transactions](partially-signed-transactions.md)
 * [Common Questions](readme/faq.md)
-* [Fair Distribution](readme/fair-release.md)
+* [Fair Launch](readme/fair-release.md)

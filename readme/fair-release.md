@@ -1,4 +1,10 @@
-# Fair Release
+---
+description: No pre-mine, equal opportunity distribution
+---
+
+# Fair Launch
+
+## Genesis Coinbase
 
 Inscription numbers will begin 121 blocks after a block is mined with a specific coinbase string.
 
