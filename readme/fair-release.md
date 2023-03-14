@@ -18,6 +18,9 @@ When 121 blocks have been mined after this block, The inscriptions inside the 12
 
 ## First Block
 
+{% code overflow="wrap" %}
 ```
-The first block has not been mined yet
+The first block has not been mined yet.
+Watch the blockchain for the 1sat genesis coinbase string.
 ```
+{% endcode %}
