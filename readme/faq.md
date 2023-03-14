@@ -6,8 +6,8 @@ Not via script or by protocol but this can be accomplished at the application la
 
 ## Why not use Run?
 
-Run is no longer in development, and has some unique chalenges. Building the Run-Sdk in webpack bundled projects and the requirement for JavaScript to interprate token transactions has created a demand for alternatives.
+Run is no longer in development, and has some unique challenges. Problems building the Run-Sdk with webpack and the requirement for a JS-based environment has created a demand for alternatives.
 
 ## Why not use Stas?
 
-Stas scripts are larger than ordinals. Both systems ultimately require some level of indexer-based validation, and both can use OP\_RETURN based token data. Stas protocol is an owned and licensed protocol. We wanted something that would be publicly available without an individual licensing requirement.
+Stas scripts are larger than ordinals. Both systems ultimately require some level of indexer-based validation, and both can use OP_RETURN based token data. Stas protocol has licensing requirements for minting. This was something we found to be not suitable to many interested developers.
