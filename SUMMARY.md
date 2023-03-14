@@ -7,7 +7,7 @@
 * [Text Inscriptions](text-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)
   * [URL References](html-ordinals/url-references.md)
-* [Enriching inscriptions](op\_return/README.md)
+* [Enriching Ordinals](op\_return/README.md)
   * [Collections](Collections.md)
   * [Signing](op\_return/signing.md)
 * [Ordinal Lock](<Ordinal Lock.md>)
