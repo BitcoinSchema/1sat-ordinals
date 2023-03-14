@@ -2,7 +2,7 @@
 
 To resolve ordinal numbers for unspent outputs an indexer is required. This diagram shows the process of resolving an ordinal number.
 
-![Ordinals Indexing](https://github.com/BitcoinSchema/1sat-ordinals/blob/main/Ordinals_Indexer.jpg)
+![Ordinals Indexing](https://github.com/BitcoinSchema/1sat-ordinals/blob/main/Ordinals_Indexer.jpg?raw=true)
 
 A reference implementation written in Go has been started here:
 
