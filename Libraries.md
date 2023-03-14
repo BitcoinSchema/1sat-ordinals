@@ -1,12 +1,12 @@
 # Libraries
 
-There are a couple libraries available for creating 1Sat Ordinal transactions.
+There are a couple libraries available for working with 1Sat Ordinals.
 
 ## Go
 
 ### go-1sat-ord
 
-A go implementation supporting only \
+A go library for creating 1Sat Ordinal transactions \
 \
 [bitcoinschema/go-1sat-ord](https://github.com/bitcoinschema/go-1sat-ord)
 
