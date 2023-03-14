@@ -1,5 +1,5 @@
 ---
-description: An ordinals protocol implementation on Bitcoin SV.
+description: An Ordinals implementation on Bitcoin SV.
 ---
 
 # Protocol Specification
