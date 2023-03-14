@@ -1,6 +1,8 @@
 # Introduction
 
-There are some significant differences between BTC, where ordinals originated, and a classic Bitcoin system like BSV. Most notably, BSV does not have taproot or segregated witness. This is not a problem on BSV, since most data limits are either lifted or very high. We can simply put the ordinals in an output script, following the same pushdata scheme, creating an inscribed ordinal in a single step.
+There are some significant differences between BTC, where ordinals originated, and a classic Bitcoin system. Most notably, Bitcoin SV does not have taproot or segregated witness, which Ordinals leverage to inscribe data.
+
+This is not a problem, since data limits are much higher, we can simply encode ordinals directly into output scripts, following the same pushdata scheme, and creating an inscribed ordinal in a single step.
 
 ### 1Sat Protocol
 
