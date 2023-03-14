@@ -2,11 +2,11 @@
 
 * [Protocol Specification](README.md)
 * [Libraries](Libraries.md)
-* [Resolving Ordinals](resolving-ordinals/README.md)
-  * ["Rare Sats"](resolving-ordinals/rare-sats.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)
   * [URL References](html-ordinals/url-references.md)
+* [Resolving Ordinals](resolving-ordinals/README.md)
+  * ["Rare Sats"](resolving-ordinals/rare-sats.md)
 * [Enriching Ordinals](op\_return/README.md)
   * [Adding Metadata](op\_return/adding-metadata/README.md)
     * [Collections](op\_return/adding-metadata/collections.md)
