@@ -79,19 +79,15 @@ In this example, we inscribe a 3d model (GLTF binary) and tag it with a geolocat
 
 Mint & Inscribe: (1SAT\_P2PKH + inscription)
 
-{% code overflow="wrap" %}
 ```
 https://whatsonchain.com/tx/10f4465cd18c39fbc7aa4089268e57fc719bf19c8c24f2e09156f4a89a2809d6
 ```
-{% endcode %}
 
 Transfer:
 
-{% code overflow="wrap" %}
 ```
 https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d668de4d76407e
 ```
-{% endcode %}
 
 ### Resources
 
