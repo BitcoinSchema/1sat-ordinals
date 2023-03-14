@@ -14,7 +14,7 @@ The coinbase string that begins the countdown will be:
 1SAT ORDINALS IN 218 BLOCKS - docs.1satordinals.com
 ```
 
-When 218 blocks have been mined after this block, The inscriptions inside the 121st subsequent block, not including the block with the coinbase string, will contain the first numbered inscriptions, starting from 0.
+When 218 blocks have been mined after this block, The inscriptions inside the 218th subsequent block, not including the block with the coinbase string, will contain the first numbered inscriptions, starting from 0.
 
 ## First Block
 
