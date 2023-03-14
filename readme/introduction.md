@@ -10,4 +10,4 @@ Ordinals are based around an numbering scheme that targets a specific satoshi. I
 
 ### Interoperability
 
-The spirit of the original Ordinals protocol is alive and well here. Ordinal numbers, inscription numbers, and data formats are identical. We're hoping that Ordinals seeing cross-chain adoption encourages others to experience the value BSV can add, and build cool stuff leveraging the interoperability.
+The spirit of the original Ordinals protocol is alive and well here. Ordinal numbers, inscription numbers, and data formats are identical. We're hoping that a common protocol makes it easy for others to experience the value BSV can add to these ideas, and build cool stuff leveraging the interoperability along the way.
