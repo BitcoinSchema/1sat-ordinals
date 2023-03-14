@@ -7,6 +7,7 @@ description: Ordinals-compatible, built on Bitcoin SV
 ```
 Protocol:          1Sat Ordinals
 Status:            DRAFT
+Authors:           Jad, Satchmo, Shruggr, Siggi
 Documentation:     https://docs.1satordinals.com
 ```
 
