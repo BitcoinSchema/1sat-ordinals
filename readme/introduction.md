@@ -6,7 +6,7 @@ Since data limits are much higher on Bitcoin SV, we can encode ordinals directly
 
 ### 1Sat Protocol
 
-Ordinals are based around an numbering scheme that targets a specific satoshi. In practice, a range of Satoshis is used to satisfy dust limits. Since Bitcoin SV has no dust limit, we can simplify further by inscribing a single satoshi. The protocol name highlights this capability, and we focus on 1 satoshi outputs in these documents. It's important to note, we can easily add support for additional sats in a compatible way.
+Ordinals are based around a numbering scheme that targets a specific satoshi. In practice, a range of Satoshis is used to satisfy dust limits. Since Bitcoin SV has no dust limit, we can simplify further by inscribing a single satoshi. The protocol name highlights this capability, and we focus on 1 satoshi outputs in these documents. It's important to note, we can easily add support for additional sats in a compatible way.
 
 ### Interoperability
 
