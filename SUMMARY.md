@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Introduction](README.md)
+* [Introduction](Introduction.md)
 * [Protocol Specification](README.md)
   * [Resolving Ordinals](resolving-ordinals/README.md)
     * [Rare Sats](resolving-ordinals/rare-sats.md)
