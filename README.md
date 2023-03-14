@@ -2,15 +2,13 @@
 description: An ordinals protocol implementation on Bitcoin SV.
 ---
 
-# 1Sat Ordinals
+# Protocol Specification
 
 <figure><img src="https://github.com/BitcoinSchema/1sat-ordinals/blob/main/ordinals.png?raw=true" alt=""><figcaption></figcaption></figure>
 
 ```
 DRAFT SPECIFICATION
 ```
-
-#### Protocol
 
 This output script creates an inscription on an ordinal. The output value is 1 satoshi.
 
