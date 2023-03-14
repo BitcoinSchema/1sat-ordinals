@@ -1,10 +1,8 @@
 ---
-description: An Ordinals implementation on Bitcoin SV
+description: Ordinals-compatible, built on Bitcoin SV
 ---
 
 # Protocol Specification
-
-<figure><img src="https://github.com/BitcoinSchema/1sat-ordinals/blob/main/ordinals.png?raw=true" alt=""><figcaption></figcaption></figure>
 
 ```
 STATUS: DRAFT
