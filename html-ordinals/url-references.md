@@ -1,6 +1,6 @@
 # URL References
 
-### o:// - Ordinal URL References
+### o:// - On-Chain Data References
 
 You can embed references to other ordinals inside the on-chain HTML or markdown.
 
