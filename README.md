@@ -93,10 +93,3 @@ https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d6
 
 * [Discord](https://discord.gg/XUfss6StD8)
 * [BTC Ordinals Specification](https://docs.ordinals.com/)
-
-### Maintainers
-
-| [![Jad Wahab](https://github.com/jadwahab.png)](https://github.com/jadwahab) | [![Satchmo](https://github.com/rohenaz.png)](https://github.com/rohenaz) | [![Shruggr](https://github.com/shruggr.png)](https://github.com/shruggr) | [![Siggi](https://github.com/icellan.png)](https://github.com/icellan) |
-| :--------------------------------------------------------------------------: | :----------------------------------------------------------------------: | :----------------------------------------------------------------------: | :--------------------------------------------------------------------: |
-|                      [Jad](https://github.com/jadwahab)                      |                   [Satchmo](https://github.com/rohenaz)                  |                   [Shruggr](https://github.com/shruggr)                  |                   [Siggi](https://github.com/icellan)                  |
-
