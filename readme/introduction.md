@@ -1,5 +1,7 @@
 # Introduction
 
+<figure><img src="../.gitbook/assets/what.png" alt=""><figcaption></figcaption></figure>
+
 There are some significant differences between BTC, where ordinals originated, and Bitcoin SV. Most notably, BSV does not have taproot or segregated witness, which Ordinals protocol leverages to inscribe data on BTC.
 
 Since data limits are much higher on Bitcoin SV, we can encode ordinals directly to output scripts, following the same pushdata scheme, and creating an inscribed ordinal in a single stage compared to the two-step commit + reveal process on BTC.

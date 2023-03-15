@@ -10,8 +10,6 @@ Status:            DRAFT
 Documentation:     https://docs.1satordinals.com
 ```
 
-<figure><img src=".gitbook/assets/what.png" alt=""><figcaption></figcaption></figure>
-
 ### Overview
 
 This output script represents an inscription on an ordinal. The output value is 1 satoshi.
