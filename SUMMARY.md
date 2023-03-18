@@ -20,3 +20,4 @@
 * [Partially Signed Transactions](partially-signed-transactions.md)
 * [Common Questions](readme/faq.md)
 * [Fair Launch](readme/fair-release.md)
+* [Test Vectors](test-vectors.md)
