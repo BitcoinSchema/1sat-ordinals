@@ -59,7 +59,7 @@ OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
 To transfer ownership, simply send a 1sat output to the intended recipient as you normally would with any utxo.
 
 ```
-ii - funding utxo
+i - funding utxo
 o1 - 1sat_p2pkh
 o2 - change
 ```
