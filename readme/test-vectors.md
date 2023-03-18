@@ -4,7 +4,17 @@ description: Transaction examples you can use for testing
 
 # Test Vectors
 
-First test inscription:
+### Basic Image Inscription
+
+image/png inscription
+
+```
+fc2d9e145000154873cfd304bbadf450816a084cdd7725da8c614de55e0b8702
+```
+
+### Image + Metadata Inscription
+
+First test inscription w metadata:
 
 ```typescript
 10f4465cd18c39fbc7aa4089268e57fc719bf19c8c24f2e09156f4a89a2809d6
@@ -27,3 +37,4 @@ Re-Inscription with original key:
 ```
 // TODO
 ```
+
