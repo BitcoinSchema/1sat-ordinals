@@ -4,6 +4,7 @@
   * [Introduction](readme/introduction.md)
   * [Resolving Ordinals](resolving-ordinals/README.md)
     * [Rare Sats](resolving-ordinals/rare-sats.md)
+  * [Test Vectors](readme/test-vectors.md)
 * [Libraries](Libraries.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)
@@ -20,4 +21,3 @@
 * [Partially Signed Transactions](partially-signed-transactions.md)
 * [Common Questions](readme/faq.md)
 * [Fair Launch](readme/fair-release.md)
-* [Test Vectors](test-vectors.md)
