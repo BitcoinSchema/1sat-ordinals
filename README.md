@@ -70,7 +70,7 @@ You can also append to the inscriptions on an ordinal by inscribing the same sat
 i1 - previously inscribed ordinal
 i2 - funding utxo
 o1 - 1sat_p2pkh w/ second inscription
-o3 - change
+o2 - change
 ```
 
 ### Examples
