@@ -20,7 +20,6 @@ When 218 blocks have been mined after this block, The inscriptions inside the 21
 
 {% code overflow="wrap" %}
 ```
-The first block has not been mined yet.
-Watch the blockchain for the 1sat genesis coinbase string.
+The first block was mined by GorillaPool at block height 783,968.
 ```
 {% endcode %}
