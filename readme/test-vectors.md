@@ -24,6 +24,12 @@ image/png inscription
 e749a32652a69601ee407ccda605d4eb19d93bddf5b355e1b1cae383bc26a81e
 ```
 
+image/jpeg inscription
+
+```
+392840d529f1cf1b4afc37f04f93a68b5ae6c1b2ff66a2a3440e0435e7ee6e6f
+```
+
 ### Image + Metadata Inscription
 
 First test inscription w metadata:
