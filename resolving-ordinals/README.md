@@ -6,4 +6,4 @@ To resolve ordinal numbers for unspent outputs an indexer is required. This diag
 
 A reference implementation written in Go has been started here:
 
-[https://github.com/shruggr/bsv-ordinals-indexer](https://github.com/shruggr/bsv-ordinals-indexer)
+[https://github.com/shruggr/bsv-ord-indexer](https://github.com/shruggr/bsv-ord-indexer)
