@@ -20,6 +20,6 @@ When 218 blocks have been mined after this block, The inscriptions inside the 21
 
 {% code overflow="wrap" %}
 ```
-The first block was mined by GorillaPool at block height 783,968.
+The starting block was mined by GorillaPool at block height 783750, making the first live block 783,968.
 ```
 {% endcode %}
