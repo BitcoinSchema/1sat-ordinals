@@ -3,6 +3,7 @@
 * [Protocol Specification](README.md)
   * [Introduction](readme/introduction.md)
   * [Resolving Ordinals](resolving-ordinals/README.md)
+    * [Public APIs](readme/resolving-ordinals/public-apis.md)
     * [Rare Sats](resolving-ordinals/rare-sats.md)
   * [Test Vectors](readme/test-vectors.md)
 * [Libraries](Libraries.md)
