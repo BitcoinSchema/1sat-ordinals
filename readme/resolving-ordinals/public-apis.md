@@ -2,9 +2,29 @@
 
 GorillaPool maintains a public `1sat-server`
 
+## Get Files, Inscriptions
+
+```
+METHOD: GET
+```
+
+Get inscription file for a given origin. An `origin` is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
+
+```
+https://ordinals.gorillapool.io/api/files/inscriptions/:origin
+```
+
+Sample response
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 ## Get Inscriptions
 
-Get inscription data for a given origin. An origin is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
+```
+Method: GET
+```
+
+Get inscription data for a given origin. An `origin` is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
 
 ```
 https://ordinals.gorillapool.io/api/inscriptions/:origin
@@ -34,7 +54,11 @@ Sample response
 
 ## Get Ordinal Utxos
 
-Get unspent artifacts for an address.
+```
+Method: GET
+```
+
+Because ordinals exist in Bitcoin Script, . Get unspent utxos with ordinal locks matching a given address.
 
 ```
 https://ordinals.gorillapool.io/api/utxos/address/:address
@@ -66,3 +90,30 @@ Sample response
 ]
 ```
 {% endcode %}
+
+## Get Lock Utxos
+
+```
+Method: GET
+```
+
+Get unspent outputs for a given "lock", which is the scripthash of the locking script up to the point of an ordinal inscription.
+
+```
+https://ordinals.gorillapool.io/api/utxos/lock/:lock
+```
+
+Response type
+
+```json
+[{
+    "txid": string,
+    "vout": number,
+    "satoshis": number,
+    "acc_sats" number,
+    "lock": string,
+    "spend": string,
+    "origin": string,
+    "ordinal": number,
+}]
+```
