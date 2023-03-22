@@ -4,10 +4,10 @@ GorillaPool maintains a public `1sat-server`
 
 ## Get Inscriptions
 
-Get inscription data for a given outpoint. An outpoint is a transaction ID and output index with the following formatting: `` `txid_vout` ``
+Get inscription data for a given origin. An origin is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
 
 ```
-https://ordinals.gorillapool.io/api/inscriptions/:outpoint
+https://ordinals.gorillapool.io/api/inscriptions/:origin
 ```
 
 Sample response
