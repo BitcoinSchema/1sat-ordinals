@@ -32,7 +32,7 @@ https://ordinals.gorillapool.io/api/inscriptions/:origin
 
 Sample response
 
-```
+```json
 [
     {
       "id": 165,
