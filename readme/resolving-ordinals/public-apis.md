@@ -27,7 +27,11 @@ Method: GET
 Get inscription data for a given origin. An `origin` is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
 
 ```
-https://ordinals.gorillapool.io/api/inscriptions/:origin
+https://ordinals.gorillapool.io/api/inscriptions/origin/:origin
+```
+
+```
+https://ordinals.gorillapool.io/api/inscriptions/txid/:txid
 ```
 
 Sample response
