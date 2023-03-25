@@ -8,7 +8,7 @@ GorillaPool maintains a public `1sat-server`
 METHOD: GET
 ```
 
-Get inscription file for a given origin. An `inscriptionID`, sometimes referred to as `origin`, is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
+Get inscription file for a given inscription ID. An `inscriptionID`, sometimes referred to as `origin`, is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
 
 ```
 https://ordinals.gorillapool.io/api/files/inscriptions/:inscriptionID
