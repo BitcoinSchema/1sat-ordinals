@@ -1,6 +1,6 @@
 # URL References
 
-### o:// - On-Chain Data References
+### ord:// - On-Chain Data References
 
 You can embed references to other ordinals inside the on-chain HTML or markdown.
 
@@ -19,9 +19,9 @@ Origin is the txid of an inscription, and the output index like `txid_vout`
 Or in markdown
 
 ```md
-[My Ordinal!]("o://ordinalID")
+[My Ordinal!]("ord://ordinalID")
 ```
 
 ```markdown
-[My Ordinal!]("o://origin")
+[My Ordinal!]("ord://origin")
 ```
