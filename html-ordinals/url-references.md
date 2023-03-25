@@ -40,22 +40,22 @@ In a text/markdown inscription:
 [My Ordinal!]("ord://inscriptionID")
 ```
 
-## sat:// - Dynamic Inscription References
+## #latest - Dynamic Inscription References
 
-The sat prefix return the latest inscription for a given ordinal number, or ordinal ID.
+Use the `#latest` fragment to return the latest inscription for a given ordinal number, or inscription ID.
 
 ### Latest inscription by Ordinal Number
 
 In a text/html inscription:
 
 ```html
-<img src="ord://ordinalNumber" />
+<img src="ord://ordinalNumber#latest" />
 ```
 
 In a text/markdown inscription:
 
 ```markdown
-[My Ordinal!]("ord://ordinalNumber")
+[My Ordinal!]("ord://ordinalNumber#latest")
 ```
 
 ### Latest inscription by Inscription ID
@@ -63,18 +63,20 @@ In a text/markdown inscription:
 In a text/html inscription:
 
 ```html
-<img src="ord://inscriptionID" />
+<img src="ord://inscriptionID#latest" />
 ```
 
 In a text/markdown inscription:
 
 ```md
-[My Ordinal!]("ord://inscriptionID")
+[My Ordinal!]("ord://inscriptionID#latest")
 ```
 
-## Return Value Comparison
+## URL Resolution
 
-| value          | ord://               | sat://             |
-| -------------- | -------------------- | ------------------ |
-| ordinal Number | original inscription | latest inscription |
-| inscription ID | specific inscription | latest inscription |
+| URL                        | resolves to          |
+| -------------------------- | -------------------- |
+| ord://ordinalNumber        | original inscription |
+| ord://inscriptionID        | specific inscription |
+| ord://ordinalNumber#latest | latest inscription   |
+| ord://inscriptionID#latest | latest inscription   |
