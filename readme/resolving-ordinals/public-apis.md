@@ -8,10 +8,10 @@ GorillaPool maintains a public `1sat-server`
 METHOD: GET
 ```
 
-Get inscription file for a given origin. An `origin` is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
+Get inscription file for a given origin. An `inscriptionID`, sometimes referred to as `origin`, is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
 
 ```
-https://ordinals.gorillapool.io/api/files/inscriptions/:origin
+https://ordinals.gorillapool.io/api/files/inscriptions/:inscriptionID
 ```
 
 Sample response
@@ -24,10 +24,10 @@ Sample response
 Method: GET
 ```
 
-Get inscription data for a given origin. An `origin` is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
+Get inscription data for a given inscription ID. An `inscriptionID`, sometimes referred to as `origin`, is an outpoint comprised of the transaction ID and output index with the following formatting: `` `txid_vout` ``
 
 ```
-https://ordinals.gorillapool.io/api/inscriptions/origin/:origin
+https://ordinals.gorillapool.io/api/inscriptions/origin/:inscriptionID
 ```
 
 ```
@@ -101,7 +101,7 @@ Sample response
 Method: GET
 ```
 
-Get unspent outputs for a given "lock", which is the scripthash of the locking script up to the point of an ordinal inscription.
+Get unspent outputs for a given "lock", which is the scripthash of the locking script up to the point of an inscription.
 
 ```
 https://ordinals.gorillapool.io/api/utxos/lock/:lock
