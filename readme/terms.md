@@ -14,4 +14,4 @@ This is like a "low resolution" ordinal number. It represents the last time a pa
 
 #### Ordinal Number
 
-An ordinal is an identifier given to a specific satoshi. t is given when the sat comes into existence during a coinbase transaction. To learn more about this concept read the original "ordinal theory" documentation.
+An ordinal is an identifier given to a specific satoshi. It is given when the sat comes into existence during a coinbase transaction. To learn more about this concept read the original "ordinal theory" documentation.
