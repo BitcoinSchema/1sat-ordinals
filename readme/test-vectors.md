@@ -61,3 +61,11 @@ Re-Inscription with original key:
 ```
 9e4f93b535a8ab811ddd21f72abd337515cc0f42a110bcb0a51510c909bab57d
 ```
+
+## Audio Inscription
+
+Transfer
+
+```
+52214a6db95aff19826b507587ded5e65d5944ebf074448002af4f967766aa0b
+```
