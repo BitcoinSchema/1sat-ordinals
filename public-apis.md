@@ -138,6 +138,10 @@ Returns UTXOs:
 
 SSE endpoints are available for real-time mempool tx notifications. Watch multiple addresses or locking script hashes simultaneously, and get notified when a transaction occurs matching. Add query param `address` for each address you want to monitor, and `lock` for each script hash.
 
+You will receive both new Inscription UTXOs AND spends from the same messages. If the `spend` field is not `null`, that means you have received a spend, and you should remove the UTXO identified by `txid`:`vout` from your UTXO set.
+
+If the spend field is `null`, then this is a new Inscription in your wallet.
+
 {% code overflow="wrap" %}
 ```
 https://ordinals.gorillapool.io/api/subscribe?address=:address1&address=:address2&lock=:lock1&...
