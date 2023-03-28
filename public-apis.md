@@ -16,7 +16,7 @@ https://ordinals.gorillapool.io/api/files/inscriptions/:origin
 
 Sample response
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ## Get Inscriptions
 
@@ -129,3 +129,13 @@ Returns UTXOs:
     "ordinal": number,
 }]
 ```
+
+## Address Events - SSE
+
+SSE endpoints are available for real-time mempool tx notifications. Watch multiple addresses or locking script hashes simultaneously, and get notified when a transaction occurs matching. Add query param `address` for each address you want to monitor, and `lock` for each script hash.
+
+{% code overflow="wrap" %}
+```
+https://ordinals.gorillapool.io/api/subscribe?address=:address1&address=:address2&lock=:lock1&...
+```
+{% endcode %}
