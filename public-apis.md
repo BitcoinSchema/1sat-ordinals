@@ -6,6 +6,8 @@ See the auto-generated [swagger documentation](https://ordinals.gorillapool.io/a
 
 The API is also [available on Github](https://github.com/shruggr/1sat-server).
 
+There is also basic support from [#whats-on-chain](public-apis.md#whats-on-chain "mention")
+
 ## Get Files, Inscriptions
 
 ```
@@ -143,7 +145,30 @@ You will receive both new Inscription UTXOs AND spends from the same messages. I
 If the spend field is `null`, then this is a new Inscription in your wallet.
 
 {% code overflow="wrap" %}
-```
+```javascript
 https://ordinals.gorillapool.io/api/subscribe?address=:address1&address=:address2&lock=:lock1&...
+```
+{% endcode %}
+
+Listening for ordinal address activity:
+
+```tsx
+const API_HOST = "https://ordinals.gorillapool.io/api/"
+const s = new EventSource(`${API_HOST}subscribe?address=${ordAddress}`);
+
+s.onmessage = (e) => {
+    console.log({ message: e })
+}
+// s.onopen
+// s.onerror
+```
+
+## What's On Chain
+
+WhatsOnChain.com also provides 1Sat Ordinals support by tagging the inscriptions and providing a plugin for rending ordinals by txid and outpout index as follows:
+
+{% code overflow="wrap" %}
+```
+https://plugins.whatsonchain.com/api/plugin/main/:txid/:vout
 ```
 {% endcode %}
