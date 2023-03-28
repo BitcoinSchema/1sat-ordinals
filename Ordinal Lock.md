@@ -41,8 +41,8 @@ export class OrdinalLock extends SmartContract {
     }
 
     @method(SigHash.ANYONECANPAY_ALL)
-    public purchase(selfOutput: ByteString, trailingOutputs: ByteString) {
-        assert(hash256(selfOutput + this.payOutput + trailingOutputs) == this.ctx.hashOutputs)
+    public purchase(destOutput: ByteString, trailingOutputs: ByteString) {
+        assert(hash256(destOutput + this.payOutput + trailingOutputs) == this.ctx.hashOutputs)
     }
 
     @method()
@@ -52,6 +52,8 @@ export class OrdinalLock extends SmartContract {
     }
 }
 ```
+
+`destOutput` is the destination output for the utxo which is locked.
 
 Once the script is compiled, use it to mint and list an ordinal in a single 1 sat output:
 
