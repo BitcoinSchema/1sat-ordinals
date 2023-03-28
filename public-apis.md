@@ -2,6 +2,10 @@
 
 GorillaPool maintains a public `1sat-server`
 
+See the auto-generated [swagger documentation](https://ordinals.gorillapool.io/api/docs/) for a complete API reference.
+
+The API is also [available on Github](https://github.com/shruggr/1sat-server).
+
 ## Get Files, Inscriptions
 
 ```
