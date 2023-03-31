@@ -12,7 +12,21 @@ The JS library has its own docs site:
 
 It's also available on github:
 
-[bitcoinschema/js-1sat-ord](https://github.com/bitcoinschema/js-1sat-ord)\
+[bitcoinschema/js-1sat-ord](https://github.com/bitcoinschema/js-1sat-ord)
+
+### bmapjs
+
+```
+npm i bmapjs
+```
+
+A transaction parser that supports 1Sat inscriptions and metadata.
+
+{% embed url="https://github.com/rohenaz/bmap" %}
+
+It's also available on github:
+
+[rohenaz/bmap](https://github.com/rohenaz/bmap)\
 
 
 ## Go
@@ -25,6 +39,6 @@ A go library for creating 1Sat Ordinal transactions\
 
 ### go-bmap
 
-A transaction parser that supports 1Sat inscriptions\
+A transaction parser that supports 1Sat inscriptions and metadata.\
 \
 [bitcoinschema/go-bmap](https://github.com/bitcoinschema/go-bmap)
