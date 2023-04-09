@@ -1,5 +1,7 @@
 # Ordinal Lock
 
+{% embed url="https://github.com/shruggr/ordinal-lock" %}
+
 {% code overflow="wrap" %}
 ```
 WARNING: This is currently experimental, and not sufficiently tested. 

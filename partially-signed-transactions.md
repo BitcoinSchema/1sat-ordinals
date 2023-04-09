@@ -1,9 +1,10 @@
-# Partially Signed Bitcoin Transactions (PSBTs)
+# Partially Signed Transactions
 
 ## Listing an Ordinal for Sale
-You can create a PSBT to list a specific ordinal that you own for sale at a specific price where someone else can trustlessly complete the partially signed transaction with their inputs to pay the lsited amount as well as their output script which the ordinal will be sent to. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/listing.go  
 
-This can allow for a Dutch auction where the seller can start at a price and keep decreasing until someone takes the offer.  
+You can create a PSBT to list a specific ordinal that you own for sale at a specific price where someone else can trustlessly complete the partially signed transaction with their inputs to pay the lsited amount as well as their output script which the ordinal will be sent to. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/listing.go
+
+This can allow for a Dutch auction where the seller can start at a price and keep decreasing until someone takes the offer.
 
 To list an ordinal for sale, you just create a new Bitcoin transaction with 1 input (your ordinal utxo) and 1 output (where you want your payment to go with the listing amount) and sign with `SIGHASH_SIGNLE | SIGHASHANYONECANPAY` (using forkID). Here is an example:
 
@@ -386,7 +387,7 @@ You add you payment input (which needs to be strict greater than the bid amount)
 
 To accept the bid, you need to replace the dummy script in output at index #1 with the script that you want the money to go to and then sign the ordinal input regularly (`SIGHASH_ALL`).  
 
----
+### &#x20;Example diagram from [Magic Eden OSS docs](https://github.com/magiceden-oss/msigner/blob/main/docs/psbt.excalidraw.png):
 
 Example diagram showing the tx layout:  
 ![psbt.jpg](./psbt.jpg)

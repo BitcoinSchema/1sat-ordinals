@@ -1,14 +1,17 @@
 # Public APIs
 
-GorillaPool maintains a public `1sat-server`
-
-See the auto-generated [swagger documentation](https://ordinals.gorillapool.io/api/docs/) for a complete API reference.
+GorillaPool maintains a public `1sat-server` Basic usage is documented below. See the auto-generated [swagger documentation](https://ordinals.gorillapool.io/api/docs/) for a complete API reference.
 
 The API is also [available on Github](https://github.com/shruggr/1sat-server).
 
-There is also basic support from [#whats-on-chain](public-apis.md#whats-on-chain "mention")
+### Other APIs
 
-## Get Files, Inscriptions
+* There is also basic support from [#whats-on-chain](public-apis.md#whats-on-chain "mention")
+* The [#bmap-api](public-apis.md#bmap-api "mention") can be used to resolve inscriptions with support for several other data protocols.&#x20;
+
+## 1SAT Server Endpoints
+
+### Get Files, Inscriptions
 
 ```
 METHOD: GET
@@ -24,7 +27,7 @@ Sample response
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-## Get Inscriptions
+### Get Inscriptions
 
 ```
 Method: GET
@@ -73,7 +76,7 @@ Sample response
 ]
 ```
 
-## Get Ordinal Utxos
+### Get Ordinal Utxos
 
 ```
 Method: GET
@@ -109,6 +112,12 @@ Sample response
 ]
 ```
 {% endcode %}
+
+You can also get inscriptions for UTXOs in a single request
+
+```
+https://ordinals.gorillapool.io/api/utxos/address/:address/inscriptions
+```
 
 ## Get Lock Utxos
 
@@ -172,3 +181,30 @@ WhatsOnChain.com also provides 1Sat Ordinals support by tagging the inscriptions
 https://plugins.whatsonchain.com/api/plugin/main/:txid/:vout
 ```
 {% endcode %}
+
+## BMAP API
+
+Get a BMAP Transaction object as a formatted JSON string
+
+```
+https://b.map.sv/tx/:txid
+```
+
+or non-formatted bmap
+
+```
+https://b.map.sv/tx/:txid/bmap
+```
+
+raw transaction hex
+
+```
+https://b.map.sv/tx/:txid/raw
+```
+
+or BOB format
+
+```
+https://b.map.sv/tx/:txid/bob
+```
+
