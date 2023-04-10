@@ -3,7 +3,7 @@
 Create an Ordinal with initial location:
 
 ```
-1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP app <appname> type "ordinal" context geohash geohash <geohash> | AIP <sig...>
+1SAT_P2PKH <INSCRIPTION> OP_RETURN MAP app <appname> type "token" context geohash geohash <geohash> | AIP <sig...>
 ```
 
 Move the location by spending the ordinal with a MAP geohash of the new location. Updates can be checked by an indexer, the signature validated it came from the inscriber, and surface the new location to the user along with an update history. See the signing section for more information on signing Ordinals.
