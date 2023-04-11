@@ -16,3 +16,9 @@ Similarly, you can attach an ordinal to a particular url:
 ```
 {% endcode %}
 
+## The "Ord" type
+
+We have begin drafting a proposed specification for Ordinal inscription metadata called "ord". The draft spec is available here:
+
+\
+[https://gist.github.com/danwag06/53dcf913c8fd0de7a0233faafb51083f](https://gist.github.com/danwag06/53dcf913c8fd0de7a0233faafb51083f)
