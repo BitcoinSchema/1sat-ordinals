@@ -4,6 +4,10 @@ If you were to inscribe files larger than 10MB (at the time of writing this) the
 
 While you cannot add the bcat data directly into the inscription fields (since ordinals protocol does not support concatenating external transactions), you can inscribe a thumbnail as the ordinal image, and attach the video using BCAT in OP\_RETURN as follows.
 
+
+
+TODO: Update with info from collection definition inscription (same structure)
+
 ```bash
 1SAT_P2PKH <INSCRIPTION> OP_RETURN <BCAT fields...> tx2 tx3 tx4...
 ```
