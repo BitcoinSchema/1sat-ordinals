@@ -1,10 +1,10 @@
 # CollectionItem SubType
 
-When the top level type is `art` the `subTypeData` is defined here.
+When the top level type is `collectionItem` the `subTypeData` is defined here.
 
 ### subTypeData data
 
-The following properties define the `subTypeData` object and should be used if your `art` ordinal has additional information that should be associated with it. A `collectionId` at the top level is required for all `art` ordinals if they are a member of a collection. Since a collection is an ordinal, all top level required fields are still required.&#x20;
+The following properties define the `subTypeData` object and should be used if your `collectionItem` ordinal has additional information that should be associated with it. A `collectionId` at the top level is required for `collectionItem` ordinals. Since a collection is an ordinal, all top level required fields are still required as well.&#x20;
 
 | Name & Description                                                                                     | Required | Type                                          | Example                                                                                                      |
 | ------------------------------------------------------------------------------------------------------ | -------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |

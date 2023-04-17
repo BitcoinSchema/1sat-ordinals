@@ -56,6 +56,12 @@ Re-Inscription with original key:
 // TODO
 ```
 
+## Large 3D Model
+
+```
+281484f9ba41f5dd10dac0b6445b10ba8a49c4fc71247a8a40a03691194324e5
+```
+
 ## Collection - 2 Image Inscriptions
 
 ```
