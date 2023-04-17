@@ -13,7 +13,7 @@ While subtypes can be created at will, a list of common subTypes is maintained a
 
 `type` - This should always be "ord". This helps indexers find the metadata based on type.
 
-`description` - Brief description of the ordinal.
+`name` - Name description of the ordinal.
 
 ## 1Sat Ordinals - Metadata Proposal
 
