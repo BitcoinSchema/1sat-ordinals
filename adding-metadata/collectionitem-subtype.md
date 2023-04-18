@@ -14,6 +14,8 @@ The following properties define the `subTypeData` object and should be used if y
 | <p><code>rarityLabel</code><br><br>The overall rarity label for this ordinal</p>                       | N        | string enum based on `subTypeData`            | "legendary"                                                                                                                                         |
 | <p><code>traits</code><br><br>Array of traits that describe the ordinal</p>                            | N        | traits as defined by collection `subTypeData` | see examples below                                                                                                                                  |
 
+### TODO: Luke Add Attachments here
+
 ## Traits
 
 The definition of `trait` within the `traits` array:
@@ -24,6 +26,15 @@ The definition of `trait` within the `traits` array:
 | value             | The value of the trait                                        | Y        | string      |
 | rarityLabel       | A rarity label to associate with the trait                    | N        | RarityLabel |
 | occurrencePercent | The percentage which this trait occurs within this collection | N        | string      |
+
+## Attachments
+
+| Name              | Description                                                   | Required | Type        |
+| ----------------- | ------------------------------------------------------------- | -------- | ----------- |
+| name              | The name of the attachment                                    | Y        | string      |
+| description       | The description of the attachment                             | N        | string      |
+| content-type      | The content-type of the attachment                            | Y        | string      |
+| url               | The url of the attachment                                     | Y        | string      |
 
 ## Transaction Structure
 
