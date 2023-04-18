@@ -25,19 +25,20 @@ Added to the inscription output using MAP protocol in OP\_RETURN.
 
 Please note that the MAP protocol expects all data types for the value in the key value pair to be of type `string`.
 
-| Description                                                                                                                                     | Required                   | Type                                | Example                                    |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------------- | ------------------------------------------ |
-| <p><code>app</code><br><br>The name of the app that originally produced the ordinal</p>                                                         | Y                          | string                              | handcash                                   |
-| <p><code>type</code><br><br>The type of MAP data. For this spec we use <code>ord</code></p>                                                     | Y                          | string                              | ord                                        |
-| <p><code>name</code><br><br>Name of the ordinal</p>                                                                                             | Y                          | string                              | Joe Racoon                                 |
-| <p><code>subType</code><br><br>The subType</p>                                                                                                  | N                          | string                              | collectionItem, collection, website        |
-| <p><code>subTypeData</code><br><br>A stringified version of the data required by the specific subType specified. See subType documentation.</p> | <p>N<br>SubType: Y<br></p> | stringified JSON                    | { file: ..., fileType: ... }               |
-| <p><code>royalties</code><br><br>Where creator royalties should be sent</p>                                                                     | N                          | stringified JSON array of `royalty` | see definition below                       |
-| <p><code>...</code><br><br>You can add additional fields with MAP as needed.</p>                                                                | N                          | any                                 | see [metadata examples](./#other-metadata) |
+| Description                                                                                                                                     | Required                   | Type                                | Example                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| <p><code>app</code><br><br>The name of the app that originally produced the ordinal</p>                                                         | Y                          | string                              | handcash                                                                                              |
+| <p><code>type</code><br><br>The type of MAP data. For this spec we use <code>ord</code></p>                                                     | Y                          | string                              | ord                                                                                                   |
+| <p><code>name</code><br><br>Name of the ordinal</p>                                                                                             | Y                          | string                              | Joe Racoon                                                                                            |
+| <p><code>subType</code><br><br>The subType</p>                                                                                                  | N                          | string                              | collectionItem, collection, website                                                                   |
+| <p><code>subTypeData</code><br><br>A stringified version of the data required by the specific subType specified. See subType documentation.</p> | <p>N<br>SubType: Y<br></p> | stringified JSON                    | { file: ..., fileType: ... }                                                                          |
+| <p><code>royalties</code><br><br>Where creator royalties should be sent</p>                                                                     | N                          | stringified JSON array of `royalty` | see definition below                                                                                  |
+| `previewUrl`                                                                                                                                    | N                          | string URL                          | <p>http://so.me/prev.png<br>b://&#x3C;txid><em>&#x3C;idx></em><br><em>c://&#x3C;contentH</em>ash></p> |
+| <p><code>...</code><br><br>You can add additional fields with MAP as needed.</p>                                                                | N                          | any                                 | see [metadata examples](./#other-metadata)                                                            |
 
 ## Royalties
 
-The definition of `royalty` within the `royalties` array:
+Royalties should be applied when a sale of an item occurs. The definition of `royalty` within the `royalties` array:
 
 | Name        | Description                                                     | Required | Type          |
 | ----------- | --------------------------------------------------------------- | -------- | ------------- |

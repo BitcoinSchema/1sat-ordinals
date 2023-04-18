@@ -4,9 +4,9 @@ description: A special subType to describe a collection of ordinals
 
 # Collection SubType
 
-The collection subType is an ordinal including an on-chain record describing acollection. Member ordinals reference the collection subType by `txid_vout` using the `collectionId` field.
+The collection subType is an ordinal including an on-chain record describing a collection. Member ordinals reference the collection subType by `txid_vout` using the `collectionId` field.
 
-A collection subType should be created first before any ordinals that reference it. If you do not record the collection subType before the member ordinals, they will not be considered valid members of the collection.
+A collection inscription should be created first before any ordinals that reference it. If you do not record the collection inscription before the member ordinals, they will not be considered valid members of the collection.
 
 The collection record should be signed with AIP using a key that matches the signature on member ordinals.
 
