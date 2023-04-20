@@ -13,11 +13,11 @@ The following properties define the `subTypeData` object and should be used if y
 | <p><code>rank</code><br><br>A integer starting at 1 where 1 is the most 'rare'</p>                     | N        | int                                           | 10                                                                                                                                                  |
 | <p><code>rarityLabel</code><br><br>The overall rarity label for this ordinal</p>                       | N        | string enum based on `subTypeData`            | "legendary"                                                                                                                                         |
 | <p><code>traits</code><br><br>Array of traits that describe the ordinal</p>                            | N        | traits as defined by collection `subTypeData` | see examples below                                                                                                                                  |
-| `attachments`                                                                                          | N        | valid URLs `string[]`                         | <p>https://...<br>b://...<br>c://...</p>                                                                                                            |
+| `attachments`                                                                                          | N        | `Attachment[]`                                | <p>https://...<br>b://...<br>c://...</p>                                                                                                            |
 
 
 
-## Traits
+## Trait
 
 The definition of `trait` within the `traits` array:
 
@@ -28,7 +28,7 @@ The definition of `trait` within the `traits` array:
 | rarityLabel       | A rarity label to associate with the trait                    | N        | RarityLabel |
 | occurrencePercent | The percentage which this trait occurs within this collection | N        | string      |
 
-## Attachments
+## Attachment
 
 | Name         | Description                        | Required | Type   |
 | ------------ | ---------------------------------- | -------- | ------ |
