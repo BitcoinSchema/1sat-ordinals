@@ -41,10 +41,10 @@ In order to deploy an BSV-20 token, you must make sure that that token ticker ha
 
 #### Example
 
-To deploy the `ordi` token, you would create an inscription with the following json:
+To deploy the `ordi` token, you would create an inscription with the following json (with `ContentType: application/bsv-20`):
 ```json
 { 
-  "p": "brc-20",
+  "p": "bsv-20",
   "op": "deploy",
   "tick": "ordi",
   "max": "21000000",
@@ -65,10 +65,10 @@ In order to mint tokens of a specific BSV-20 token, you must make sure that that
 
 #### Example
 
-To mint `ordi` tokens, you would create an inscription with the following json:
+To mint `ordi` tokens, you would create an inscription with the following json (with `ContentType: application/bsv-20`):
 ```json
 { 
-  "p": "brc-20",
+  "p": "bsv-20",
   "op": "mint",
   "tick": "ordi",
   "amt": "1000"
@@ -92,12 +92,12 @@ Using the same procedure as regular Satoshi transfers allows us to benefit from 
 
 #### Example
 
-To transfer the `ordi` tokens that you minted as shown above, you would create a transaction spending the minting UTXO (providing the signature and public key normally to spend the P2PKH script) with an output (or many) with similar scripts with the following json, as shown below:
+To transfer the `ordi` tokens that you minted as shown above, you would create a transaction spending the minting UTXO (providing the signature and public key normally to spend the P2PKH script) with an output (or many) with similar scripts with the following json (with `ContentType: application/bsv-20`), as shown below:
 
 To mint `ordi` tokens, you would create an inscription with the following json:
 ```json
 { 
-  "p": "brc-20",
+  "p": "bsv-20",
   "op": "transfer",
   "tick": "ordi",
   "amt": "1000"
@@ -106,9 +106,9 @@ To mint `ordi` tokens, you would create an inscription with the following json:
 
 | Inputs               | Outputs                                                                 |
 |----------------------|-------------------------------------------------------------------------|
-| Signature Public_key (spending mint of 1000 ordis) | inscription(`{"p":"brc-20","op":"transfer","tick":"ordi","amt":"100"}`) |
-|                      | inscription(`{"p":"brc-20","op":"transfer","tick":"ordi","amt":"500"}`) |
-|                      | inscription(`{"p":"brc-20","op":"transfer","tick":"ordi","amt":"400"}`) |
+| Signature Public_key (spending mint of 1000 ordis) | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"100"}`) |
+|                      | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"500"}`) |
+|                      | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"400"}`) |
 
 ## Implementations
 
