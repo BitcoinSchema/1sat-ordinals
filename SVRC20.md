@@ -38,9 +38,15 @@ In order to deploy an SVRC20 token, you must make sure that that token ticker ha
 
 #### Example
 
-To deploy the `ordi` token, you would create a transaction with an output with the following script:
-```
-OP_FALSE OP_RETURN <BRC20> <deploy> <ordi> <21000000> <1000>
+To deploy the `ordi` token, you would create an inscription with the following json:
+```json
+{ 
+  "p": "brc-20",
+  "op": "deploy",
+  "tick": "ordi",
+  "max": "21000000",
+  "lim": "1000"
+}
 ```
 
 ### Mint
@@ -56,9 +62,14 @@ In order to mint tokens of a specific SVRC20 token, you must make sure that that
 
 #### Example
 
-To mint `ordi` tokens, you would create a transaction with an output with the following script:
-```
-OP_DUP OP_HASH160 f8f21843ff7de63f79f8ac4644dc10e7c99a2583 OP_EQUALVERIFY OP_CHECKSIG OP_RETURN <BRC20> <mint> <ordi> <1000>
+To mint `ordi` tokens, you would create an inscription with the following json:
+```json
+{ 
+  "p": "brc-20",
+  "op": "mint",
+  "tick": "ordi",
+  "amt": "1000"
+}
 ```
 
 ### Transfer
@@ -78,13 +89,23 @@ Using the same procedure as regular Satoshi transfers allows us to benefit from 
 
 #### Example
 
-To transfer the `ordi` tokens that you minted as shown above, you would create a transaction spending the minting UTXO (providing the signature and public key normally) with an output (or many) with similar scripts, as shown below:
+To transfer the `ordi` tokens that you minted as shown above, you would create a transaction spending the minting UTXO (providing the signature and public key normally to spend the P2PKH script) with an output (or many) with similar scripts with the following json, as shown below:
 
-| Inputs               | Outputs                                                                                                                         |
-|----------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| Signature Public_key | OP_DUP OP_HASH160 9b5b453039d79ed5bbcea2c5202c12401ad228a7 OP_EQUALVERIFY OP_CHECKSIG OP_RETURN <BRC20> <transfer> <ordi> <100> |
-|                      | OP_DUP OP_HASH160 816768e191f5406b0e7f503f1df4945f8bb890b5 OP_EQUALVERIFY OP_CHECKSIG OP_RETURN <BRC20> <transfer> <ordi> <500> |
-|                      | OP_DUP OP_HASH160 1d2c5d8db97dbf2020570b2f14b263db40dc1c7b OP_EQUALVERIFY OP_CHECKSIG OP_RETURN <BRC20> <transfer> <ordi> <400> |
+To mint `ordi` tokens, you would create an inscription with the following json:
+```json
+{ 
+  "p": "brc-20",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "1000"
+}
+```
+
+| Inputs               | Outputs                                                                 |
+|----------------------|-------------------------------------------------------------------------|
+| Signature Public_key (spending mint of 1000 ordis) | inscription(`{"p":"brc-20","op":"transfer","tick":"ordi","amt":"100"}`) |
+|                      | inscription(`{"p":"brc-20","op":"transfer","tick":"ordi","amt":"500"}`) |
+|                      | inscription(`{"p":"brc-20","op":"transfer","tick":"ordi","amt":"400"}`) |
 
 ## Implementations
 
