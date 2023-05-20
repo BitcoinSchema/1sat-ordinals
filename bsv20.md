@@ -10,10 +10,9 @@ The purpose of this proposal is to provide a standard that offers the same funct
 
 ## Specification
 
-This specification is meant be as similar to the BTC BRC20 standard so it also follows the 'first is first' approach. In order to deploy or mint a token, the process is almost identical to the protocol on BTC: you would create a transaction output with the data fields below and tranasction are indexed on a 'first is first' approach with duplicates or overflows being invalid and ignored. The main differences between the protocol on BTC and this one is that with this one:
+This specification is meant be as similar to the BTC BRC20 standard so it also follows the 'first is first' approach. In order to deploy or mint a token, the process is almost identical to the protocol on BTC: you would create a transaction output with the data fields below and tranasction are indexed on a 'first is first' approach with duplicates or overflows being invalid and ignored. The main difference between bsv-20 (this protocol) and bsv-20 protocol (on BTC) is:
 
-* the data is just pushed to the stack in different chunks instead of a JSON inscription
-* the UTXO created is a 1 satoshi output but is not in the same format as regular 1-sat-ordinal inscriptions since transfers will work differently than ordinal transfers
+* A content type of `application/bsv-20` is used in place of `text/plain`. This change means a bsv-20 indexer does not need to parse every text inscription to test for embedded JSON content (and failing most of the time) in order to determine if an inscription is BSV-20 related.
 
 ### Notes
 
@@ -25,6 +24,7 @@ Following BRC20 on btc:
 * Number of decimals cannot exceed 18 (default)
 * Standard limited to uint128
 * Maximum supply cannot exceed uint64\_max
+* the UTXO created is a 1 Satoshi output but is not transferred the same way as regular 1-sat-ordinal inscriptions since transfers will work differently than ordinal transfers
 
 ### Deploy
 
