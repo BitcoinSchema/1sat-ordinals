@@ -1,4 +1,4 @@
-# Fungible Token Standard - SVRC-20 (BRC20 on BSV)
+# Fungible Token Standard - BSV-20/SVRC-20 (BRC20 on BSV)
 
 ## Abstract
 
