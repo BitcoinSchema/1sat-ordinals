@@ -8,6 +8,7 @@
   * [Test Vectors](readme/test-vectors.md)
 * [Public APIs](public-apis.md)
 * [Libraries](Libraries.md)
+* [BSV-20](bsv20.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)
   * [URL References](html-ordinals/url-references.md)
