@@ -1,4 +1,4 @@
-# Fungible Token Standard - BSV-20 (BRC20 on BSV)
+# BSV-20
 
 ## Abstract
 
@@ -32,16 +32,17 @@ In order to deploy an BSV-20 token, you must make sure that that token ticker ha
 
 | Key  | Required? | Description                                                        |
 | ---- | --------- | ------------------------------------------------------------------ |
-| p    | Yes       | Protocol: Helps other systems identify and process brc-20 events   |
+| p    | Yes       | Protocol: Helps other systems identify and process bsv-20 events   |
 | op   | Yes       | Operation: Type of event (Deploy, Mint, Transfer)                  |
-| tick | Yes       | Ticker: 4 letter identifier of the brc-20                          |
-| max  | Yes       | Max supply: set max supply of the brc-20                           |
+| tick | Yes       | Ticker: 4 letter identifier of the bsv-20                          |
+| max  | Yes       | Max supply: set max supply of the bsv-20                           |
 | lim  | No        | Mint limit: If letting users mint to themsleves, limit per ordinal |
 | dec  | No        | Decimals: set decimal precision, default to 18                     |
 
 #### Example
 
 To deploy the `ordi` token, you would create an inscription with the following json (with `ContentType: application/bsv-20`):
+
 ```json
 { 
   "p": "bsv-20",
@@ -58,14 +59,15 @@ In order to mint tokens of a specific BSV-20 token, you must make sure that that
 
 | Key  | Required? | Description                                                                                        |
 | ---- | --------- | -------------------------------------------------------------------------------------------------- |
-| p    | Yes       | Protocol: Helps other systems identify and process brc-20 events                                   |
+| p    | Yes       | Protocol: Helps other systems identify and process bsv-20 events                                   |
 | op   | Yes       | Operation: Type of event (Deploy, Mint, Transfer)                                                  |
-| tick | Yes       | Ticker: 4 letter identifier of the brc-20                                                          |
-| amt  | Yes       | Amount to mint: States the amount of the brc-20 to mint. Has to be less than "lim" above if stated |
+| tick | Yes       | Ticker: 4 letter identifier of the bsv-20                                                          |
+| amt  | Yes       | Amount to mint: States the amount of the bsv-20 to mint. Has to be less than "lim" above if stated |
 
 #### Example
 
 To mint `ordi` tokens, you would create an inscription with the following json (with `ContentType: application/bsv-20`):
+
 ```json
 { 
   "p": "bsv-20",
@@ -85,16 +87,17 @@ Using the same procedure as regular Satoshi transfers allows us to benefit from 
 
 | Key  | Required? | Description                                                      |
 | ---- | --------- | ---------------------------------------------------------------- |
-| p    | Yes       | Protocol: Helps other systems identify and process brc-20 events |
+| p    | Yes       | Protocol: Helps other systems identify and process bsv-20 events |
 | op   | Yes       | Operation: Type of event (Deploy, Mint, Transfer)                |
-| tick | Yes       | Ticker: 4 letter identifier of the brc-20                        |
-| amt  | Yes       | Amount to transfer: States the amount of the brc-20 to transfer. |
+| tick | Yes       | Ticker: 4 letter identifier of the bsv-20                        |
+| amt  | Yes       | Amount to transfer: States the amount of the bsv-20 to transfer. |
 
 #### Example
 
 To transfer the `ordi` tokens that you minted as shown above, you would create a transaction spending the minting UTXO (providing the signature and public key normally to spend the P2PKH script) with an output (or many) with similar scripts with the following json (with `ContentType: application/bsv-20`), as shown below:
 
 To mint `ordi` tokens, you would create an inscription with the following json:
+
 ```json
 { 
   "p": "bsv-20",
@@ -104,11 +107,11 @@ To mint `ordi` tokens, you would create an inscription with the following json:
 }
 ```
 
-| Inputs               | Outputs                                                                 |
-|----------------------|-------------------------------------------------------------------------|
-| Signature Public_key (spending mint of 1000 ordis) | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"100"}`) |
-|                      | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"500"}`) |
-|                      | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"400"}`) |
+| Inputs                                              | Outputs                                                                 |
+| --------------------------------------------------- | ----------------------------------------------------------------------- |
+| Signature Public\_key (spending mint of 1000 ordis) | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"100"}`) |
+|                                                     | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"500"}`) |
+|                                                     | inscription(`{"p":"bsv-20","op":"transfer","tick":"ordi","amt":"400"}`) |
 
 ## Implementations
 
@@ -116,4 +119,4 @@ To mint `ordi` tokens, you would create an inscription with the following json:
 
 ## References
 
-- <a name="footnote-1">1</a>: [BRC20 on BTC](https://domo-2.gitbook.io/brc-20-experiment/)
+* 1: [BRC20 on BTC](https://domo-2.gitbook.io/brc-20-experiment/)
