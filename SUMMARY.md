@@ -22,5 +22,6 @@
 * [Ordinal Lock](<Ordinal Lock.md>)
 * [Managing Unspent Outputs](resolving-ordinals/managing-outputs.md)
 * [Partially Signed Transactions](partially-signed-transactions.md)
+* [BSV-20](BSV20.md)
 * [Common Questions](readme/faq.md)
 * [Fair Launch](readme/fair-release.md)
