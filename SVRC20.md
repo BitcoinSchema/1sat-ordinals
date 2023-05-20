@@ -1,8 +1,8 @@
-# Fungible Token Standard - BSV-20/SVRC-20 (BRC20 on BSV)
+# Fungible Token Standard - BSV-20 (BRC20 on BSV)
 
 ## Abstract
 
-This proposal introduces a fungible token standard based off of the BRC20[1](./#footnote-1) standard on BTC introduced by Domo [here](https://domo-2.gitbook.io/brc-20-experiment/) but customised to work on BSV (Bitcoin Satoshi Vision). In order to avoid cofusion with the BRC20 standard on BTC, we are calling this standard SVRC-20.
+This proposal introduces a fungible token standard based off of the BRC20[1](./#footnote-1) standard on BTC introduced by Domo [here](https://domo-2.gitbook.io/brc-20-experiment/) but customised to work on BSV (Bitcoin Satoshi Vision). In order to avoid cofusion with the BRC-20 standard on BTC, we are calling this standard BSV-20.
 
 ## Motivation
 
@@ -28,7 +28,7 @@ Following BRC20 on btc:
 
 ### Deploy
 
-In order to deploy an SVRC20 token, you must make sure that that token ticker has not already been deployed and then create a TXO with the following data present in the script. It does not matter whether this UTXO is spendable or not.
+In order to deploy an BSV-20 token, you must make sure that that token ticker has not already been deployed and then create a TXO with the following data present in the script. It does not matter whether this UTXO is spendable or not.
 
 | Key  | Required? | Description                                                        |
 | ---- | --------- | ------------------------------------------------------------------ |
@@ -54,7 +54,7 @@ To deploy the `ordi` token, you would create an inscription with the following j
 
 ### Mint
 
-In order to mint tokens of a specific SVRC20 token, you must make sure that that token ticker has already been deployed and then create a UTXO with 1 satoshi value as well as with the following data present in the script. This UTXO should be spendable in order for you to be able to transfer these minted tokens.
+In order to mint tokens of a specific BSV-20 token, you must make sure that that token ticker has already been deployed and then create a UTXO with 1 satoshi value as well as with the following data present in the script. This UTXO should be spendable in order for you to be able to transfer these minted tokens.
 
 | Key  | Required? | Description                                                                                        |
 | ---- | --------- | -------------------------------------------------------------------------------------------------- |
