@@ -119,7 +119,7 @@ To mint `ordi` tokens, you would create an inscription with the following json:
 
 ## Grandfathering in older inscriptions
 
-There are several inscriptions on the blockchain prior to the release of this spec that use brc-20 as a "p" value and `text/plain` as the content type instead of `application/bsv-20`. We will continue to index these up to block height `793000`. Starting with this block, bsv-20 inscriptions must have a content type of `application/bsv-20` and `bsv-20` as the "p" values.
+There are several inscriptions on the blockchain prior to the release of this spec that use `text/plain` as the content type instead of `application/bsv-20`. We will continue to index these up to block height `793000`. Starting with this block, BSV-20 inscriptions must have a content type of `application/bsv-20` to be considered valid by indexers.
 
 ## References
 
