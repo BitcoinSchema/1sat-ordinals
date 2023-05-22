@@ -30,14 +30,14 @@ Following BRC20 on btc:
 
 In order to deploy an BSV-20 token, you must make sure that that token ticker has not already been deployed and then create a TXO with the following data present in the script. It does not matter whether this UTXO is spendable or not.
 
-| Key  | Required? | Description                                                        |
-| ---- | --------- | ------------------------------------------------------------------ |
-| p    | Yes       | Protocol: Helps other systems identify and process bsv-20 events   |
-| op   | Yes       | Operation: Type of event (Deploy, Mint, Transfer)                  |
-| tick | Yes       | Ticker: 4 letter identifier of the bsv-20                          |
-| max  | Yes       | Max supply: set max supply of the bsv-20                           |
-| lim  | No        | Mint limit: If letting users mint to themsleves, limit per ordinal |
-| dec  | No        | Decimals: set decimal precision, default to 18                     |
+| Key  | Required? | Description                                                                                                  |
+| ---- | --------- | ------------------------------------------------------------------------------------------------------------ |
+| p    | Yes       | Protocol: Helps other systems identify and process bsv-20 events                                             |
+| op   | Yes       | Operation: Type of event (Deploy, Mint, Transfer)                                                            |
+| tick | Yes       | Ticker: 4 letter identifier of the bsv-20                                                                    |
+| max  | Yes       | Max supply: set max supply of the bsv-20                                                                     |
+| lim  | No        | Mint limit: If letting users mint to themselves, limit per ordinal. If ommitted or 0, mint amt us unlimited. |
+| dec  | No        | Decimals: set decimal precision, default to 18                                                               |
 
 #### Example
 
