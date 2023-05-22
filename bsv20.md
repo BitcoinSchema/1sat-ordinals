@@ -81,9 +81,29 @@ To mint `ordi` tokens, you would create an inscription with the following json (
 
 In order to transfer the minted tokens, all you need to do is to spend that specific UTXO and create new outputs the same way you spend a regular Satoshis in UTXO but instead you would use the value in data `amt` field to specify the amount (instead of the Satoshi field in the transaction output) and create as many outputs as needed.
 
-If more tokens are created in the outputs than are available in the inputs then the transaction is considered invalid and the tokens are considered burnt. If less tokens are created in the outputs than are available in the intput, then the missing tokens are considered burnt.
+If more tokens are created in the outputs than are available in the inputs then the transaction is considered invalid and the tokens are considered burnt. If less tokens are created in the outputs than are available in the intput, then the missing tokens are considered burnt.  
+
+You have 2 options for transferring BSV-20 tokens:  
+
+1- Transferring the whole inscription balance (for example, if you've minted 1000 `ordi` tokens and you want to send that whole balance to someone)   
+2- Transferring part of an inscription balance (for example, if you've minted 1000 `ordi` tokens and you want to send only 200 of those tokens to someone)
+
+
+Let's say you've minted 1000 `bank` tokens 3 times (as seen in image below). Your options are to either send one of the whole 1000 tokens to someone (option 1 below) or split that up and send send part of the 1000 tokens, let's say 200 tokens, to someone (option 2 below).
+
+<figure><img src="unisat-example-brc20.png" alt=""><figcaption></figcaption></figure>
+
+#### 1- Transferring whole inscription balance
+
+To transfer the whole inscriptino balance, you just simple transfer the inscribed ordinal regularly (the same way you would send any other inscription/inscribed ordinal) to someone else. This also works with [ordinal-lock](Ordinal-Lock.md) - and if you cancel a specific ordinal-lock transaction then the tokens would go back to the original owner.
+
+#### 2- Transferring part of inscription balance
+
+In order to transfer a subset/part of the inscription balance (for example, sending only 400 of the minted or received 1000 tokens), you must follow the procedure described below:  
 
 Using the same procedure as regular Satoshi transfers allows us to benefit from the parallelisation that regular Satoshis in Bitcoin benefit from where you can split a specific UTXO with a large amount into smaller UTXOs and spend those in parallel (the same way you could exchange a $100 bill into $1 bills and spend those in parallel) with no sequential bottlenecks that something like ERC20 sufffers from.
+
+Please note that with BSV-20 (unlike with BRC-20 on BTC) the process is only 1 step not 2 steps - you don't need to move tokens to a "transferrable" balance. This provides a better user experience and avoids issues associated with indexing (especially at scale).
 
 | Key  | Required? | Description                                                      |
 | ---- | --------- | ---------------------------------------------------------------- |
