@@ -95,7 +95,7 @@ Let's say you've minted 1000 `bank` tokens 3 times (as seen in image below). You
 
 #### 1- Transferring whole inscription balance
 
-To transfer the whole inscriptino balance, you just simple transfer the inscribed ordinal regularly (the same way you would send any other inscription/inscribed ordinal) to someone else. This also works with [ordinal-lock](Ordinal-Lock.md) - and if you cancel a specific ordinal-lock transaction then the tokens would go back to the original owner.
+To transfer the whole inscription balance, you just simple transfer the inscribed ordinal regularly (the same way you would send any other inscription/inscribed ordinal) to someone else. This also works with [ordinal-lock](Ordinal-Lock.md) - and if you cancel a specific ordinal-lock transaction then the tokens would go back to the original owner.
 
 #### 2- Transferring part of inscription balance
 
