@@ -10,17 +10,17 @@ The purpose of this proposal is to provide a standard that offers the same funct
 
 ## Specification
 
-This specification is meant be as similar to the BTC BRC20 standard so it also follows the 'first is first' approach. In order to deploy or mint a token, the process is almost identical to the protocol on BTC: you would create a transaction output with the data fields below and tranasction are indexed on a 'first is first' approach with duplicates or overflows being invalid and ignored. The main difference between bsv-20 (this protocol) and bsv-20 protocol (on BTC) is:
+This specification is meant be as similar to the BTC BRC20 standard so it also follows the `first is first` approach. In order to deploy or mint a token, the process is almost identical to the protocol on BTC: you would create a transaction output with the data fields below and tranasction are indexed on a 'first is first' approach with duplicates or overflows being invalid and ignored. The main difference between bsv-20 (this protocol) and bsv-20 protocol (on BTC) is:
 
 * A content type of `application/bsv-20` is used in place of `text/plain`. This change means a bsv-20 indexer does not need to parse every text inscription to test for embedded JSON content (and failing most of the time) in order to determine if an inscription is BSV-20 related.
 
-## V2 - Tickerless Mode
+## New in V2 - Tickerless Mode
 
-`First is fist` deployment and minting allows for a single use-case where a token is publicly mintable, by anyone, outside of the control of any token issuer. V2 of the BSV-20 protocol introduces a new `tickerless` mode functionality. `Tickerless` mode forgoes the `first is first` nature of BRC20-BTC, and allows the capibilities to have a smart contrct control distribution or administrarive control. Additionally, every transaction of a V2, `tickerless` token, forms part of a single on-chain DAG (Directed Acyclic Graph), such that the transaction can easily be traced back to that token's genesis.
+`First is fist` deployment and minting allows for a single use-case where a token is publicly mintable, by anyone, outside of the control of any token issuer. V2 of the BSV-20 protocol introduces a new `tickerless` mode functionality. `Tickerless` mode forgoes the `first is first` nature of BRC20-BTC, and allows the capibilities to have a smart contract, or an adminstrator, control distribution. Additionally, every transaction of a `tickerless` mode token, forms part of a single on-chain DAG (Directed Acyclic Graph), such that the transaction can easily be tracked back to that token's genesis `mint`.
 
 In `first is first` mode, tokens are deployed and minted in separate transactions, with the only correlation between them being the token's ticker. Additionally, the ticker may be deployed multiple times, and may have more tokens minted than are defined in the token deployment. The only way to determine if any token UTXO is valid is to scan the entire blockchain and and perform complex analysis. `Tickerless` mode takes a different approach, where a token is deployed, and it's entire supply is minted in a single transaction output. This output can be locked with any logic which can be implemented in Bitcoin script. It can be as simple as a standard adminstrator address (P2PKH script), Proof-of-Work distribution, or even an entire Proof-of-Stake blockchain running on top of Bitcoin SV.
 
-In order to deploy/mint a token, you create a JSON ordinal inscription output with the data fields below and content type of application/bsv-20.
+In order to deploy/mint a token, you create a JSON ordinal inscription output with the data fields below and content type of `application/bsv-20`.
 
 ### V2 - Mint (Tickerless mode)
 
@@ -43,7 +43,7 @@ To mint a token, you would create an inscription with the following json (Conten
 }
 ```
 
-Unlike `first is first` mode of v1, no `tick` field is defined on mint. A token is identified by an `id` field, which is the transaction id and output index where the token was minted, in the form of `<txid>_<vout>`.
+Unlike `first is first` mode of v1, no `tick` field is defined. A token is identified by an `id` field, which is the transaction id and output index where the token was minted, in the form of `<txid>_<vout>`.
 
 ### V1 - Deploy (First-is-first mode only)
 
@@ -54,8 +54,6 @@ Unlike `first is first` mode of v1, no `tick` field is defined on mint. A token 
 * The first mint to exceed the maximum supply will receive the fraction that is valid. (ex. 21,000,000 maximum supply, 20,999,242 circulating supply, and 1000 mint inscription = 758 balance state applied)
 * Number of decimals cannot exceed 18 (default)
 * Maximum supply cannot exceed uint64\_max
-<!-- * the UTXO created is a 1 Satoshi output but is not transferred the same way as regular 1-sat-ordinal inscriptions since transfers will work differently than ordinal transfers -->
-
 
 In order to deploy an BSV-20 `first is first` token, you must make sure that that token ticker has not already been deployed and then create a TXO with the following data present in the script. It does not matter whether this UTXO is spendable or not.
 
