@@ -36,7 +36,7 @@ In order to deploy/mint a token, you create a JSON ordinal inscription output wi
 To mint a token, you would create an inscription with the following json (ContentType: application/bsv-20):
 ```
 { 
-  "p": "op-20",
+  "p": "bsv-20",
   "op": "mint",
   "amt": "21000000",
   "dec": "10"
@@ -45,7 +45,7 @@ To mint a token, you would create an inscription with the following json (Conten
 
 Unlike `first is first` mode of v1, no `tick` field is defined. A token is identified by an `id` field, which is the transaction id and output index where the token was minted, in the form of `<txid>_<vout>`.
 
-### V1 - Deploy (First-is-first mode only)
+### V1 - Deploy (`First is first` mode only)
 
 #### Notes
 
@@ -80,7 +80,7 @@ To deploy the `ordi` token, you would create an inscription with the following j
 }
 ```
 
-### V1 - Mint (First is first mode)
+### V1 - Mint (`First is first` mode)
 
 In order to mint tokens of a specific BSV-20 token, you must make sure that that token ticker has already been deployed and then create a UTXO with 1 satoshi value as well as with the following data present in the script. This UTXO should be spendable in order for you to be able to transfer these minted tokens.
 
@@ -108,12 +108,12 @@ To mint `ordi` tokens, you would create an inscription with the following json (
 
 Tokens in BSV-20 are held in UTXOs, similar to native bitcoins. This is different from BRC20, which holds balance in an account model. In order to transfer tokens, you spend that specific UTXO and create new outputs the same way you spend regular Satoshis, but the output(s) must contain `transfer` inscriptions.
 
-If more tokens are transferred in the outputs than are available in the inputs then the transaction is considered invalid and the tokens are burned. If less tokens are created in the outputs than are available in the intput, the unallocated tokens are burned.
+If more tokens are transferred in the output(s) than are available in the input(s) then the transaction is considered invalid and the tokens are burned. If less tokens are created in the outputs than are available in the intput(s), the unallocated tokens are burned.
 
-Using the same procedure as regular Satoshi transfers allows us to benefit from the parallelisation that regular Satoshis in Bitcoin benefit from where you can split a specific UTXO with a large amount into smaller UTXOs and spend those in parallel (the same way you could exchange a $100 bill into $1 bills and spend those in parallel) with no sequential bottlenecks that something like ERC20 sufffers from.
+Using the same procedure as regular Satoshi transfers allows us to benefit from the parallelisation Bitcoin benefits from, where you can split a specific UTXO with a large amount into smaller UTXOs and spend those in parallel (the same way you could exchange a $100 bill into $1 bills and spend those in parallel) with no sequential bottlenecks that something like ERC20 (Ethereum) sufffers from.
 | Key | Required? | Description |
 | --- | --------- | ----------- |
-| p | Yes | Protocol: `op-20` |
+| p | Yes | Protocol: `bsv-20` |
 | op | Yes | Operation: `transfer` |
 | id | Yes* | `<txid>_<vout>` of mint output (* - `tickerless` only) |
 | tick | Yes* | Ticker: 4 letter identifier of the bsv-20 (* - `first is first` only) |
@@ -137,14 +137,14 @@ Using the same procedure as regular Satoshi transfers allows us to benefit from 
 **Outputs**
 
 P2PKH inscription
-- {"p":"op-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1","amt":"100"} 
+- {"p":"bsv-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1","amt":"100"} 
   
 P2PKH inscription
-- {"p":"op-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1","amt":"500"} 
+- {"p":"bsv-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1","amt":"500"} 
 
 
 P2PKH inscription
-- {"p":"op-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1","amt":"400"} 
+- {"p":"bsv-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1","amt":"400"} 
 
 
 #### `First is first` Example
