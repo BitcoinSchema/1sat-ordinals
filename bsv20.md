@@ -22,22 +22,22 @@ In `first is first` mode, tokens are deployed and minted in separate transaction
 
 In order to deploy/mint a token, you create a JSON ordinal inscription output with the data fields below and content type of `application/bsv-20`.
 
-### V2 - Mint (Tickerless mode)
+### V2 - Deploy+Mint (Tickerless mode)
 
 | Key | Required? | Description |
 | --- | --------- | ----------- |
 | p | Yes | Protocol: `bsv-20` |
-| op | Yes | Operation: `mint` |
+| op | Yes | Operation: `deploy+mint` |
 | amt | Yes | Supply of token. Max 2^64-1 |
 | dec | No | Decimals: set decimal precision, defaults to 0. This is different from BRC20 which defaults to 18 |
 
 
 *Example*:
-To mint a token, you would create an inscription with the following json (ContentType: application/bsv-20):
+To deploy and mint a token, you would create an inscription with the following json (ContentType: application/bsv-20):
 ```
 { 
   "p": "bsv-20",
-  "op": "mint",
+  "op": "deploy+mint",
   "amt": "21000000",
   "dec": "10"
 }
