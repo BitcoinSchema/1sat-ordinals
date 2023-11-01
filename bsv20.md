@@ -28,6 +28,7 @@ In order to deploy/mint a token, you create a JSON ordinal inscription output wi
 | --- | --------- | ----------- |
 | p | Yes | Protocol: `bsv-20` |
 | op | Yes | Operation: `deploy+mint` |
+| sym | No | Token symbol. This should be unique, but uniqueness is not enforced.
 | amt | Yes | Supply of token. Max 2^64-1 |
 | dec | No | Decimals: set decimal precision, defaults to 0. This is different from BRC20 which defaults to 18 |
 
