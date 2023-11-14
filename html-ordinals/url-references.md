@@ -2,7 +2,11 @@
 description: Using ord:// and sat:// URL protocol handlers to reference inscriptions.
 ---
 
-# URL References
+# HTML References
+
+### /content - dynamic content resolution
+
+HTML inscriptions can reference relative file paths to `/content/<outpoint>` to automatically have the content detected and returned as a file. For more information on how this resolution works under the hood visit [ordfs.network](https://ordfs.network).
 
 ### ord:// - On-Chain Inscription References
 
