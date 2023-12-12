@@ -103,7 +103,7 @@ If a satoshi is subsequently packaged up in an output of more than one satoshi, 
 Due to the use of Tap Root in BTC, inscriptions are exposed in the input scripts. On BSV, they are written in outputs. 
 Due to this difference, Inscription IDs in 1SatOrdinals are stated in relation to the output of a transaction, and take the form of `<txid hex>_<vout>`.
 
-Only the first inscription in an output script is valid. Any subsequent inscriptions SHALL be ignored.
+Only the first inscription in an output script is valid. Any subsequent inscriptions MUST be ignored.
 
 ### Standard Inscription Script
 Up to the current time, the `ord` envelope has been valid anywhere within an output script. This leads to some significant inefficiencies for wallets, indexers, and APIs. Beginning with block 850000 inscription envelopes larger than 1024 bytes MUST be inscribed in the following script template: `<ord envelope> OP_CODESEPERATOR <locking script>`. For envelopes <= 1024 bytes, `OP_CODESEPERATOR` SHOULD be used for broadest wallet support, but is not required for an inscription to be valid.
