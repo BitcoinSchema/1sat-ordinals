@@ -27,8 +27,6 @@ A locking script (typically P2PKH) is then appended to the inscription script se
 <inscription script> OP_CODE_SEPERATOR <locking script>
 ```
 
-Note: `OP_CODE_SEPERATOR` is not strictly required for an inscription to be valid, but should be used with P2PKH for compatiblity across wallets.
-
 ### Creating an Inscription
 Creating an inscription requires a single transaction. To summarize the transaction template:
 
@@ -92,7 +90,7 @@ https://whatsonchain.com/tx/61fd6e240610a9e9e071c34fc87569ef871760ea1492fe1225d6
 ## Ordinals vs 1SatOrdinals
 The BSV blockchain is unique among blockchains which support ordinals, in that BSV supports single satoshi outputs. This allows us to take some short-cuts in indexing efficiently. We call this `origin`-based indexing.
 
-Since ordinals are a unique serial number for each satoshi, an `origin` can be defined as the first outpoint where a satoshi exists alone, in a one satoshi output. Each subsequent spend of that satoshi will be crawled back only to the first ancestor is an output which contains more than one satoshi.
+Since ordinals are a unique serial number for each satoshi, an `origin` can be defined as the first outpoint where a satoshi exists alone, in a one satoshi output. Each subsequent spend of that satoshi can be crawled back to the first ancestor where an output contains more than one satoshi.
 
 If a satoshi is subsequently packaged up in an output of more than one satoshi, the origin is no longer carried forward and the token can be considered burned. If the satoshi is later spent into another one satoshi output, a new origin will be created. Both of these origins would be the same ordinal, but are distinct tokens in 1SatOrdinals.
 
@@ -101,6 +99,11 @@ If a satoshi is subsequently packaged up in an output of more than one satoshi, 
 ### Inscribing in Outputs
 Due to the use of Tap Root in BTC, inscriptions are exposed in the input scripts. On BSV, they are written in outputs. 
 Due to this difference, Inscription IDs in 1SatOrdinals are stated in relation to the output of a transaction, and take the form of `<txid hex>_<vout>`.
+
+Only 1 inscription may be inscribed per output. If an output contains more than one inscription, both inscriptions are invalid.
+
+### Standard Inscription Script
+Up to the current time, the `ord` envelope has been valid anywhere within an output script. This leads to some significant inefficiencies for wallets, indexers, and APIs. Beginning with block 850000 inscription envelopes larger than 1024 bytes MUST be inscribed in the following script template: `<ord envelope> OP_CODESEPERATOR <locking script>`. For envelopes <= 1024 bytes, `OP_CODESEPERATOR` SHOULD be used for broadest wallet support, but is not required for an inscription to be valid.
 
 ### 1 Satoshi Outputs
 1SatOrinals requires inscrptions to be made on a single satoshi output.
