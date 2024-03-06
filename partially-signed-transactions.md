@@ -2,7 +2,7 @@
 
 ## Listing an Ordinal for Sale
 
-You can create a PSBT to list a specific ordinal that you own for sale at a specific price where someone else can trustlessly complete the partially signed transaction with their inputs to pay the lsited amount as well as their output script which the ordinal will be sent to. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/listing.go
+You can create a PSBT to list a specific ordinal that you own for sale at a specific price where someone else can trustlessly complete the partially signed transaction with their inputs to pay the listed amount as well as their output script which the ordinal will be sent to. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/list.go
 
 This can allow for a Dutch auction where the seller can start at a price and keep decreasing until someone takes the offer.
 
