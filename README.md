@@ -27,7 +27,8 @@ A locking script (typically P2PKH) is then prepended/appended to the inscription
 // Recommended
 <inscription script> OP_CODESEPERATOR <locking script>
 
-// Note: OP_CODESEPERATOR is not strictly required for an inscription to be valid, but should be used for future compatiblity across wallets.
+// Note: OP_CODESEPERATOR is not strictly required for an inscription to be valid, 
+//   but should be used for future compatiblity across wallets.
 // The following are legacy approaches, but supported
 <locking script> <inscription script>
 <inscription script> <locking script>
