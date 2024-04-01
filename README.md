@@ -21,13 +21,14 @@ This inscription script represents an inscription on an ordinal. The output valu
 OP_FALSE OP_IF 6f7264 OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
 
-A locking script (typically P2PKH) is then prepended/appended to the inscription script, optionally seperated with OP_CODESEPERATOR.
+A locking script (typically P2PKH) is then prepended/appended to the inscription script, seperated with OP_CODESEPERATOR.
 
 ```bash
 // Recommended
 <inscription script> OP_CODESEPERATOR <locking script>
 
-// Note: OP_CODESEPERATOR is not strictly required for an inscription to be valid, but should be used with P2PKH for future compatiblity across wallets.
+// Note: OP_CODESEPERATOR is not strictly required for an inscription to be valid, but should be used for future compatiblity across wallets.
+// The following is legacy, but supported
 <locking script> <inscription script>
 ```
 
