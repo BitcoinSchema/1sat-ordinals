@@ -2,7 +2,7 @@
 
 ## Listing an Ordinal for Sale
 
-You can create a PSBT to list a specific ordinal that you own for sale at a specific price where someone else can trustlessly complete the partially signed transaction with their inputs to pay the lsited amount as well as their output script which the ordinal will be sent to. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/listing.go
+You can create a PSBT to list a specific ordinal that you own for sale at a specific price where someone else can trustlessly complete the partially signed transaction with their inputs to pay the listed amount as well as their output script which the ordinal will be sent to. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/list.go
 
 This can allow for a Dutch auction where the seller can start at a price and keep decreasing until someone takes the offer.
 
@@ -69,7 +69,7 @@ To accept the offer, you need to create a new tx, add 2 dummy inputs, the input 
 
 ## Making a bid for an Ordinal
 
-You can create a PSBT to bid at a specific price for a specific ordinal that someone else owns where they can accept the bid truslessly by completing the partially signed transaction. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/bidding.go
+You can create a PSBT to bid at a specific price for a specific ordinal that someone else owns where they can accept the bid truslessly by completing the partially signed transaction. Code to do this can be found here: https://github.com/libsv/go-bt/blob/master/ord/bid.go
 
 To bid at a price for a specific ordinal, you just create a new Bitcoin transaction (similar to the one above) but backwards. You add 2 dummy inputs, then the ordinal input, then your input(s); 1 dummy output (equal to the amount of the 2 dummy inputs), then your receive output, then dummy seller receive output, then change and platform fees. Then you sign all inputs except for the ordinal input (at index #2) with `SIGHASH_SIGNLE` (using forkID). Here is an example:
 
