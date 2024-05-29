@@ -6,9 +6,16 @@
   * [Resolving Ordinals](resolving-ordinals/README.md)
     * [Rare Sats](resolving-ordinals/rare-sats.md)
   * [Test Vectors](readme/test-vectors.md)
+
+## Fungible Tokens
+
+* [BSV-20](fungible-tokens/bsv20.md)
+* [BSV-21](fungible-tokens/bsv-21.md)
+
+***
+
 * [Public APIs](public-apis.md)
 * [Libraries](Libraries.md)
-* [BSV-20](bsv20.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [Reference Inscriptions](reference-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)

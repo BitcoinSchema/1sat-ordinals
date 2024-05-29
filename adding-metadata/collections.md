@@ -14,12 +14,7 @@ The collection record should be signed with AIP using a key that matches the sig
 
 Since a collection is an ordinal, all top level required fields are still required. When defining a collection there will be no `collectionId` present in top level metadata.
 
-| Name         | Description                            | Req. | Type                   | Example           |
-| ------------ | -------------------------------------- | ---- | ---------------------- | ----------------- |
-| description  | A brief description of the collection. | Y    | string                 |                   |
-| quantity     | Number in collection                   | N    | string                 |                   |
-| rarityLabels | valid rarity labels & occurrences      | N    | stringified JSON       | see example below |
-| traits       | list of valid traits objects           | N    | stringified JSON Array | see example below |
+<table><thead><tr><th width="178">Name</th><th width="188">Description</th><th width="67">Req.</th><th width="115">Type</th><th>Example</th></tr></thead><tbody><tr><td>description</td><td>A brief description of the collection.</td><td>Y</td><td>string</td><td></td></tr><tr><td>quantity</td><td>Number in collection</td><td>N</td><td>string</td><td></td></tr><tr><td>rarityLabels</td><td>valid rarity labels &#x26; occurrences</td><td>N</td><td>stringified JSON</td><td>see example below</td></tr><tr><td>traits</td><td>list of valid traits objects</td><td>N</td><td>stringified JSON Array</td><td>see example below</td></tr></tbody></table>
 
 ## Collection Inscription
 
