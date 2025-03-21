@@ -21,14 +21,14 @@ This inscription script represents an inscription on an ordinal. The output valu
 OP_FALSE OP_IF 6f7264 OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
 
-A locking script (typically P2PKH) is then prepended/appended to the inscription script, optionally separated by OP_CODE_SEPERATOR.
+A locking script (typically P2PKH) is then prepended/appended to the inscription script, optionally separated by OP_CODE_SEPARATOR.
 
 ```bash
 <locking script> <inscription script>
 OR
 <inscription script> <locking script>
 OR
-<inscription script> OP_CODE_SEPERATOR <locking script>
+<inscription script> OP_CODE_SEPARATOR <locking script>
 ```
 
 ### Creating an Inscription
@@ -43,10 +43,10 @@ Output #2 - Change
 The output with this script should lock exactly 1 Sat.
 
 #### `ord` Envelope
-Inscribe a data file by filling in the two inscription fields, `data` and `content-type`. 
+Inscribe a data file by filling in the two inscription fields, `data` and `content-type`.
 
 ```bash
-OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF 
+OP_FALSE OP_IF "ord" OP_1 <content-type> OP_0 <data> OP_ENDIF
 ```
 
 #### Locking Script
@@ -104,7 +104,7 @@ If a satoshi is subsequently packaged up in an output of more than one satoshi, 
 1SatOrdinals uses the same [inscription rules](https://docs.ordinals.com/inscriptions.html) as the founding implementation on BTC, with the following caveats/clarifications:
 
 ### Inscribing in Outputs
-Due to the use of Tap Root in BTC, inscriptions are exposed in the input scripts. On BSV, they are written in outputs. 
+Due to the use of Tap Root in BTC, inscriptions are exposed in the input scripts. On BSV, they are written in outputs.
 Due to this difference, Inscription IDs in 1SatOrdinals are stated in relation to the output of a transaction, and take the form of `<txid hex>_<vout>`.
 
 Only the first valid inscription envelope produces a 1SatOrdinal. Any subsequent inscriptions MUST be ignored.
@@ -125,7 +125,7 @@ OP_FALSE OP_IF 6f7264
     <field1> <value1>
     ...
     <fieldN> <valueN>
-    OP_0 <content> 
+    OP_0 <content>
 OP_ENDIF
 ```
 - `field` and `value` MUST alway appear as pairs
@@ -138,12 +138,12 @@ See the [Ordinals Docs](https://docs.ordinals.com/inscriptions.html) for more in
 Due to ambiguity of documentation and implementations of Bitcoin ASM, `OP_1`-`OP_16` are treated as alieses of the corisponding push values of `OP_DATA_1` followed by the value 1-16
 
 ### Repeated Fields
-Parsing considerations for handling if a field is repeated is not defined in the Ordinals Spec. 1SatOrdinals treats repeated fields such that later values will overwrite previous values. 
+Parsing considerations for handling if a field is repeated is not defined in the Ordinals Spec. 1SatOrdinals treats repeated fields such that later values will overwrite previous values.
 
 ### Origin
 1SatOrdinals is a superset of the Ordinals Protocol and is 100% backward compatible.
 
-We take a different approach to indexing due to the expanded capacity of the BSV blockchain. `origin` indexing is built on the idea that it ultimately doesn't matter WHICH specific ordinal is being transferred across the blockchain, as long as it can be easily determined that multiple transactions are referencing the SAME ordinal. 
+We take a different approach to indexing due to the expanded capacity of the BSV blockchain. `origin` indexing is built on the idea that it ultimately doesn't matter WHICH specific ordinal is being transferred across the blockchain, as long as it can be easily determined that multiple transactions are referencing the SAME ordinal.
 
 `origin`s are tracked within the 1SatOrdinals indexer only as 1-satoshi outputs. If you inscribe on more than 1 satoshi, that the inscription is not a valid 1SatOrdinal.
 
