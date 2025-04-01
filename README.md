@@ -40,7 +40,7 @@ Output #1 - Inscription w/ Locking Script (1 Satoshi)
 Output #2 - Change
 ```
 
-The output with this script should lock exactly 1 Sat.
+The output with this script should lock exactly 1 Satoshi.
 
 #### `ord` Envelope
 Inscribe a data file by filling in the two inscription fields, `data` and `content-type`.
@@ -57,7 +57,7 @@ OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
 ```
 
 ### Transfers
-To transfer ownership, simply send the 1sat output to the intended recipient as you normally would with any utxo while maintaining ordinality of the satoshi being transferred. (i.e. the `n`th satoshi input to the transaction is transferred to the `n`th satoshi output of the transaction)
+To transfer ownership, send the 1sat output to the intended recipient as you normally would with any utxo while maintaining ordinality of the satoshi being transferred. (i.e. the `n`th satoshi input to the transaction is transferred to the `n`th satoshi output of the transaction)
 
 ```
 i1 - 1sat_p2pkh
@@ -111,7 +111,7 @@ Only the first valid inscription envelope produces a 1SatOrdinal. Any subsequent
 
 
 ### 1 Satoshi Outputs
-1SatOrinals requires inscrptions to be made on a single satoshi output.
+1SatOrdinals requires inscrptions to be made on a single satoshi output.
 
 ### PUSH DATA
 On BSV, push data are NOT limited to 520 bytes and values should NOT be concatenated across multiple data pushes.
@@ -135,7 +135,7 @@ OP_ENDIF
 See the [Ordinals Docs](https://docs.ordinals.com/inscriptions.html) for more information on Ordinals fields.
 
 ### Field Aliases
-Due to ambiguity of documentation and implementations of Bitcoin ASM, `OP_1`-`OP_16` are treated as alieses of the corisponding push values of `OP_DATA_1` followed by the value 1-16
+Due to ambiguity of documentation and implementations of Bitcoin ASM, `OP_1`-`OP_16` are treated as aliases of the corresponding push values of `OP_DATA_1` followed by the value 1-16.
 
 ### Repeated Fields
 Parsing considerations for handling if a field is repeated is not defined in the Ordinals Spec. 1SatOrdinals treats repeated fields such that later values will overwrite previous values.
@@ -145,7 +145,7 @@ Parsing considerations for handling if a field is repeated is not defined in the
 
 We take a different approach to indexing due to the expanded capacity of the BSV blockchain. `origin` indexing is built on the idea that it ultimately doesn't matter WHICH specific ordinal is being transferred across the blockchain, as long as it can be easily determined that multiple transactions are referencing the SAME ordinal.
 
-`origin`s are tracked within the 1SatOrdinals indexer only as 1-satoshi outputs. If you inscribe on more than 1 satoshi, that the inscription is not a valid 1SatOrdinal.
+`origin`s are tracked within the 1SatOrdinals indexer only as 1-satoshi outputs. If you inscribe on more than 1 satoshi, that inscription is not a valid 1SatOrdinal.
 
 
 ### Resources
