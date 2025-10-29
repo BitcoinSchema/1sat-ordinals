@@ -59,8 +59,8 @@ Using the same procedure as regular Satoshi transfers allows us to benefit from 
 { 
   "p": "bsv-20",
   "op": "transfer",
-  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1"
-  "amt": "10000",
+  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1",
+  "amt": "10000"
 }
 ```
 
