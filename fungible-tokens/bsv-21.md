@@ -38,6 +38,81 @@ _Example_: To deploy and mint a token, you would create an inscription with the 
 
 Unlike `first is first` mode of v1, no `tick` field is defined. A token is identified by an `id` field, which is the transaction id and output index where the token was minted, in the form of `<txid>_<vout>`.
 
+### Deploy+Auth
+
+For tokens requiring ongoing minting capabilities, use `deploy+auth` instead of `deploy+mint`. This creates an authority UTXO that can be spent to mint new tokens or create additional authority UTXOs.
+
+| Key  | Required? | Description                                                                                                           |
+| ---- | --------- | --------------------------------------------------------------------------------------------------------------------- |
+| p    | Yes       | Protocol: `bsv-20`                                                                                                    |
+| op   | Yes       | Operation: `deploy+auth`                                                                                              |
+| sym  | No        | Token symbol. This should be unique, but uniqueness is not enforced.                                                  |
+| icon | No        | Token icon. This value should contain the origin of another inscription OR the outpoint of a `B` protocol file upload |
+| amt  | No        | **Must not be present**. Auth outputs carry minting authority, not token value.                                      |
+| dec  | No        | Decimals: set decimal precision, defaults to 0.                                                                       |
+
+_Example_: To deploy an auth-based token:
+
+```
+{
+  "p": "bsv-20",
+  "op": "deploy+auth",
+  "sym": "GOLD",
+  "dec": "8"
+}
+```
+
+### Mint
+
+Spending an auth UTXO allows minting new tokens. The `mint` operation creates new token supply.
+
+| Key | Required? | Description                                  |
+| --- | --------- | -------------------------------------------- |
+| p   | Yes       | Protocol: `bsv-20`                           |
+| op  | Yes       | Operation: `mint`                            |
+| id  | Yes       | `<txid>_<vout>` of the deploy+auth output   |
+| amt | Yes       | Amount of tokens to mint in this output.     |
+
+_Example_: To mint tokens (requires auth input):
+
+```
+{
+  "p": "bsv-20",
+  "op": "mint",
+  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_0",
+  "amt": "1000000"
+}
+```
+
+### Auth
+
+Auth UTXOs can be split, combined, or transferred. Spending an auth UTXO to create new auth outputs maintains minting capability.
+
+| Key | Required? | Description                                  |
+| --- | --------- | -------------------------------------------- |
+| p   | Yes       | Protocol: `bsv-20`                           |
+| op  | Yes       | Operation: `auth`                            |
+| id  | Yes       | `<txid>_<vout>` of the deploy+auth output   |
+| amt | No        | **Must not be present**. Auth outputs carry minting authority, not token value. |
+
+_Example_: To continue auth capability (requires auth input):
+
+```
+{
+  "p": "bsv-20",
+  "op": "auth",
+  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_0"
+}
+```
+
+**Auth Validation Rules:**
+- Auth and mint outputs require a valid auth input to be admitted
+- Auth inputs do not contribute to token balance validation
+- Auth can be split (one auth input → multiple auth outputs)
+- Auth can be combined (multiple auth inputs → one auth output)
+- Auth can be burned (spend auth without creating new auth output)
+- Transfers still require proper token balance regardless of auth presence
+
 ### Transfer
 
 Tokens in BSV-20 are held in UTXOs, similar to native bitcoins. This is different from BRC20, which holds balance in an account model. In order to transfer tokens, you spend that specific UTXO and create new outputs the same way you spend regular Satoshis, but the output(s) must contain `transfer` inscriptions.
