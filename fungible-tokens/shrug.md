@@ -2,7 +2,7 @@
 description: Script-native fungible token protocol for Bitcoin SV
 ---
 
-# ¯\\_(ツ)\_/¯ (Shrug)
+# Shrug ¯\\_(ツ)\_/¯
 
 {% hint style="warning" %}
 ¯\\_(ツ)\_/¯ is experimental and the specification may still change. For production tokens, use [BSV-21](bsv-21.md).
