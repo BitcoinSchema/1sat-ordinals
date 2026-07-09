@@ -6,7 +6,7 @@ description: Binary fungible token encoding following the BSV-21 rules
 
 ## Overview
 
-Shrug is a binary encoding of the [BSV-21](bsv-21.md) fungible token rules. It is not a competing standard — the token model, identification scheme, and validation rules are the same as BSV-21. Where BSV-21 encodes token data as a JSON inscription, shrug encodes it as raw data pushes at the front of the locking script.
+Shrug is a binary evolution of the [BSV-21](bsv-21.md) fungible token standard. It carries forward the BSV-21 token model — outpoint token ids, UTXO-held balances, authority-gated minting, conservation-validated transfers — while replacing the JSON inscription with raw data pushes at the front of the locking script. The capabilities are not identical: shrug trades metadata and explicit operation labels for a minimal binary format that Bitcoin script can work with directly (see the comparison table below).
 
 This makes shrug outputs significantly easier to work with from Bitcoin script. The token id and amount sit at fixed positions in a compact binary prefix, so contracts and covenants can construct and inspect token outputs directly — no JSON parsing, no inscription envelope.
 
