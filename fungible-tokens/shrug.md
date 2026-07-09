@@ -1,18 +1,18 @@
 ---
-description: Binary fungible token encoding following the BSV-21 rules
+description: Script-native fungible token protocol
 ---
 
 # ¯\\_(ツ)\_/¯ (Shrug)
 
 ## Overview
 
-Shrug is a binary evolution of the [BSV-21](bsv-21.md) fungible token standard. It carries forward the BSV-21 token model — outpoint token ids, UTXO-held balances, authority-gated minting, conservation-validated transfers — while replacing the JSON inscription with raw data pushes at the front of the locking script. The capabilities are not identical: shrug trades in-protocol metadata and explicit operation labels for a minimal binary format that Bitcoin script can work with directly (see the comparison table below).
+Shrug is a fungible token protocol where the token data lives directly in the locking script as plain data pushes — no JSON, no envelope to unwrap. Every token output starts with a short, fixed prefix: the shrug tag, a token id, and an amount. Everything after the prefix is an ordinary locking script.
 
-This makes shrug outputs significantly easier to work with from Bitcoin script. The token id and amount sit at fixed positions in a compact binary prefix, so contracts and covenants can construct and inspect token outputs directly — no JSON parsing, no inscription envelope.
+Because the prefix is just pushes and drops, it has no effect on the script that follows. And because the fields sit at fixed positions in raw bytes, Bitcoin script can read and check them directly — a contract can constrain a token id or an amount without parsing anything.
+
+Shrug is an evolution of [BSV-21](bsv-21.md) and follows the same general rules. If you know BSV-21, the mapping is summarized in the comparison below; if you don't, this page stands on its own.
 
 ## Wire Format
-
-A shrug output is an ordinary locking script with a five-element prefix:
 
 ```
 <push "¯\_(ツ)_/¯"> <push token id | OP_0> OP_2DROP <push amount | OP_0> OP_DROP <owner locking script>
@@ -21,45 +21,47 @@ A shrug output is an ordinary locking script with a five-element prefix:
 | Element | Encoding |
 |---|---|
 | Tag | Push of the 13-byte UTF-8 string `¯\_(ツ)_/¯` (hex `c2af5c5f28e38384295f2fc2af`) |
-| Token id | Push of the 36-byte outpoint (32-byte txid + 4-byte little-endian vout), or `OP_0` for deploys |
-| `OP_2DROP` | Drops tag and id from the stack |
-| Amount | Push of a minimally-encoded script number, or `OP_0` for zero |
-| `OP_DROP` | Drops the amount from the stack |
-| Owner script | Any valid Bitcoin locking script (P2PKH, multisig, custom contracts) |
+| Token id | Push of a 36-byte outpoint (32-byte txid + 4-byte little-endian vout), or `OP_0` on deploys |
+| `OP_2DROP` | Drops the tag and id from the stack |
+| Amount | Push of the amount as a script number, or `OP_0` for zero |
+| `OP_DROP` | Drops the amount |
+| Owner script | Any locking script — P2PKH, multisig, a custom contract |
 
-The prefix is stack-neutral: it pushes three values and drops all three, so the owner script that follows executes exactly as it would alone.
+The prefix pushes three values and drops all three, so the owner script runs exactly as it would on its own.
+
+## Token Identity
+
+A token is identified by the outpoint of the output that created it — its deploy output — written as 36 bytes: the txid followed by the output index. A deploy output leaves the id field empty (`OP_0`); its own outpoint becomes the token id. Every later output for that token carries the id.
+
+This is the same 36-byte outpoint encoding that appears inside sighash preimages, so a covenant can compare a token id against a spent outpoint byte for byte.
 
 ## Operations
 
-Shrug has no operation field. The operation is implied by which fields are present:
+There is no operation field. What an output means follows from which fields it carries:
 
-| Token id | Amount | BSV-21 equivalent | Meaning |
-|---|---|---|---|
-| Absent (`OP_0`) | > 0 | `deploy+mint` | Genesis with fixed supply in this output |
-| Absent (`OP_0`) | 0 | `deploy+auth` | Genesis; this output is the initial minting authority |
-| Present | 0 | `auth` | Minting authority |
-| Present | > 0 | `transfer` / `mint` | Token value (see Validation Rules) |
+| Token id | Amount | Meaning |
+|---|---|---|
+| Empty | > 0 | Deploy a token; the fixed supply is held in this output |
+| Empty | 0 | Deploy a token; this output is the initial minting authority |
+| Present | 0 | Minting authority |
+| Present | > 0 | Token value |
 
-As in BSV-21, a deploy output self-identifies: the token id is the outpoint of the deploy output itself. All subsequent outputs reference it in binary form — the same 36-byte outpoint encoding that appears in sighash preimages, so covenants can compare a token id against a spent outpoint without conversion.
-
-There is no explicit `burn` operation. Tokens are burned implicitly by spending value inputs without creating matching value outputs.
+There is no explicit burn operation. Tokens are burned by spending them without creating matching outputs.
 
 ## Amounts
 
-Amounts are Bitcoin script numbers: minimally encoded, non-negative, little-endian sign-magnitude — the exact byte format BSV script arithmetic consumes, so `OP_BIN2NUM`, `OP_ADD`, and comparison opcodes operate on the pushed value directly. There is no width limit: BSV script numbers are unbounded after Genesis, and shrug adds no artificial cap. An output whose amount push is non-minimal or negative is not a shrug output. An amount of 0 is not a token value; it marks the output as a minting authority.
+Amounts are script numbers — the same little-endian format Bitcoin's arithmetic opcodes work with, so `OP_BIN2NUM` or `OP_ADD` can use the pushed value as-is. They must be minimally encoded and non-negative, and there is no upper limit: script numbers have no fixed width, and shrug does not add one. An amount of zero is not a token value; it marks the output as a minting authority.
 
-The unbounded domain is a capability difference from BSV-21, which caps each output's amount at 2^64-1. Neither protocol bounds total supply — a cap only limits a single output — so shrug drops the constraint rather than enforce a rule script does not have. Implementations must accumulate amounts with arbitrary-precision arithmetic; fixed-width accumulators can overflow even under BSV-21's per-output cap.
+Since amounts have no width limit, software that adds them up must use arithmetic that cannot overflow.
 
 ## Metadata
 
-The token protocol itself carries no metadata — no symbol, icon, or decimals in the prefix. Display metadata is a separate layer: a CBOR inscription on the deploy output with content type `application/shrug+cbor`, reusing the BSV-21 field semantics with native binary encoding.
-
-The document is a CBOR map, deterministically encoded (RFC 8949 §4.2: definite lengths, sorted keys), with text-string keys. Unknown keys are ignored.
+The prefix carries no display information — no symbol, icon, or decimals. That belongs in a separate document: a CBOR inscription on the deploy output with content type `application/shrug+cbor`.
 
 | Key | CBOR type | Description |
 |---|---|---|
 | `sym` | text string | Token symbol. Uniqueness is not enforced |
-| `icon` | byte string (36 bytes) | Outpoint of an inscription or B protocol file — 32-byte txid + 4-byte little-endian vout, same encoding as the prefix token id |
+| `icon` | byte string (36 bytes) | Outpoint of an inscription or B protocol file — same encoding as the token id |
 | `dec` | unsigned integer | Decimal precision 0-18, default 0 |
 
 Diagnostic notation example:
@@ -68,62 +70,64 @@ Diagnostic notation example:
 {"sym": "GOLD", "icon": h'11…01000000', "dec": 8}
 ```
 
-All fields are optional, and the document may be omitted entirely. Indexers read metadata from the deploy output and apply it to the token, the same way BSV-21 deploy fields are inherited. Deterministic encoding means two encoders always produce identical bytes, so the document can be hashed, signed, or deduplicated reliably. The `+cbor` structured suffix identifies the serialization; a future encoding of the same document is a new suffix, not a new standard.
+The document is a CBOR map encoded deterministically (RFC 8949 §4.2) — the same fields always produce the same bytes, so the document can be hashed or signed reliably. Keys are text strings; unknown keys are ignored. All fields are optional, and so is the document itself. Indexers read the metadata once from the deploy output and apply it to the whole token.
 
 ## Composition
 
-The prefix is stack-neutral and makes no claim about the rest of the script, so shrug composes with other script-level protocols by concatenation. In particular, a standard 1Sat inscription envelope can sit between the prefix and the owner script:
+The prefix makes no claims about the rest of the script, so it stacks with other script-level protocols by simple concatenation. In particular, a standard 1Sat inscription envelope can sit between the prefix and the owner script:
 
 ```
 <shrug prefix> <inscription envelope> <owner locking script>
 ```
 
-Decoders layer cleanly: the shrug parser peels the prefix and hands the remainder to the inscription parser. By convention, content and metadata belong on the deploy output; transfer outputs carry the bare prefix.
+A shrug decoder reads the prefix and hands the rest to the inscription decoder. By convention, content and metadata go on the deploy output; transfer outputs carry just the prefix.
 
 ### Non-Fungible Ordinals
 
-A deploy with supply 1 carrying an inscription is a non-fungible token — and remains a completely standard 1Sat ordinal. What the prefix adds is origin identification in the locking script:
+A deploy with a supply of 1, carrying an inscription, is a non-fungible token — and still a completely normal 1Sat ordinal. What the prefix adds is the token's origin, right in the locking script:
 
-- Ordinal origin resolution normally requires crawling the spend chain back to an unknown genesis. With the prefix, every output carries its origin as a stable 36-byte token id, and shrug validation verifies it incrementally — each amount-1 output is admitted only if it spends the amount-1 input of the same token id — so the origin is proven without any crawl.
-- Indexers can limit their scope to shrug-prefixed ordinals for cheap subset indexing.
-- Inscription-only indexers parse the envelope as usual and ignore the prefix entirely; the output is not invalidated for them in any way.
+- Normally, finding an ordinal's origin means walking the spend chain backwards to its genesis. With the prefix, every output states its origin, and shrug validation proves the claim one transaction at a time — each output is only valid if it spends a valid input of the same token — so no walk is ever needed.
+- An indexer can choose to track only shrug-prefixed ordinals and skip origin crawling entirely.
+- Indexers that only understand inscriptions see a normal ordinal and ignore the prefix. Nothing about the output is invalidated for them.
 
-The origin data has three consumption tiers on the same output: verified (shrug-validating indexers), untrusted hint (reading the script without validation), or invisible (legacy 1Sat indexers).
+The same origin data serves three audiences: shrug indexers verify it, anyone reading the raw script can use it as a hint, and inscription-only indexers never see it.
 
 ## Validation Rules
 
-Validation follows the BSV-21 model:
+**Deploys** (empty id) are always valid. The output's own outpoint becomes the token id.
 
-**Deploy outputs** (no id):
-- Automatically valid — no input validation required
-- Token id is set to the deployment output's outpoint
+**Authority outputs** (id present, amount 0) are valid only when the transaction spends a valid authority output of the same token. A deploy with amount 0 is the token's first authority. Authority can be:
 
-**Authority outputs** (id, amount 0):
-- Admitted only when the transaction spends a valid authority output of the same token
-- A deploy output with amount 0 is the token's genesis authority
-- Authority can be split (one authority input → many authority outputs), combined, transferred, or burned (spent without creating a new authority output)
-- Authority inputs contribute nothing to token balance
+- Split — one authority input, many authority outputs
+- Combined — many in, one out
+- Passed to a new owner
+- Ended — spend it without creating a new one, and minting stops for good
 
-**Value outputs** (id, amount > 0):
-- If the transaction spends a valid authority input for the token: value outputs are admitted without balance coverage. This is minting — authority holders create new supply.
-- Otherwise: token conservation applies. Value outputs are admitted only when valid value inputs cover the total output amount, all-or-nothing per token.
-- If outputs exceed inputs without authority present, the outputs are invalid and the input tokens are burned
-- If inputs exceed outputs, the excess is burned
+Spending an authority adds nothing to token balance.
 
-Because minting and transferring share one encoding, per-output labels do not exist. Circulating supply is computed as the net value delta of authority-bearing transactions, minus implicit burns.
+**Value outputs** (id present, amount > 0):
+
+- If the transaction spends a valid authority for the token, its value outputs are valid without needing input balance. This is how new tokens are minted.
+- Otherwise, the transaction's value outputs must be covered by its valid value inputs — all of them or none of them, per token.
+- If outputs exceed inputs with no authority present, the outputs are invalid and the input tokens are burned.
+- If inputs exceed outputs, the difference is burned.
+
+Because minting and transferring look the same on-chain, individual outputs are not labeled one or the other. Circulating supply is the net value created in authority-backed transactions, minus everything burned.
 
 ## Comparison with BSV-21
+
+Shrug follows the BSV-21 token model — outpoint identity, UTXO balances, authority-gated minting, balance-checked transfers — re-encoded for script:
 
 | | BSV-21 | Shrug |
 |---|---|---|
 | Encoding | JSON inscription (`application/bsv-20`) | Binary script prefix |
 | Token id | `<txid>_<vout>` string | 36-byte binary outpoint |
-| Operations | Explicit `op` field (6 ops) | Implicit from field presence |
+| Operations | Explicit `op` field (6 ops) | Implied by field presence |
 | Explicit burn | Yes | No (implicit only) |
 | Metadata (`sym`, `icon`, `dec`) | Optional at deploy | Inscription on deploy output (`application/shrug+cbor`) |
-| Amount | String uint64 in JSON | Script number, unbounded |
+| Amount | String uint64 in JSON | Script number, no width limit |
 | Script access to token data | Requires envelope/JSON parsing | Fixed-position pushes |
-| Validation model | Auth-gated minting + conservation | Same |
+| Validation model | Auth-gated minting + balance checks | Same |
 
 ## Examples
 
@@ -150,7 +154,7 @@ Output 0 (value):     "¯\_(ツ)_/¯" <36-byte token id> OP_2DROP 1000000 OP_DRO
 Output 1 (authority): "¯\_(ツ)_/¯" <36-byte token id> OP_2DROP OP_0 OP_DROP <owner script>
 ```
 
-Transfer 400 of 1,000 held tokens (no authority input — conservation applies):
+Transfer 400 of 1,000 held tokens (no authority input — balance rules apply):
 
 ```
 Inputs: value outpoint holding 1,000 tokens
