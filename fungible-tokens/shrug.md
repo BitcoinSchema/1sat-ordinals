@@ -6,7 +6,7 @@ description: Binary fungible token encoding following the BSV-21 rules
 
 ## Overview
 
-Shrug is a binary evolution of the [BSV-21](bsv-21.md) fungible token standard. It carries forward the BSV-21 token model — outpoint token ids, UTXO-held balances, authority-gated minting, conservation-validated transfers — while replacing the JSON inscription with raw data pushes at the front of the locking script. The capabilities are not identical: shrug trades metadata and explicit operation labels for a minimal binary format that Bitcoin script can work with directly (see the comparison table below).
+Shrug is a binary evolution of the [BSV-21](bsv-21.md) fungible token standard. It carries forward the BSV-21 token model — outpoint token ids, UTXO-held balances, authority-gated minting, conservation-validated transfers — while replacing the JSON inscription with raw data pushes at the front of the locking script. The capabilities are not identical: shrug trades in-protocol metadata and explicit operation labels for a minimal binary format that Bitcoin script can work with directly (see the comparison table below).
 
 This makes shrug outputs significantly easier to work with from Bitcoin script. The token id and amount sit at fixed positions in a compact binary prefix, so contracts and covenants can construct and inspect token outputs directly — no JSON parsing, no inscription envelope.
 
@@ -50,7 +50,43 @@ Amounts are Bitcoin script numbers, minimally encoded, in the range 0 to 2^64-1 
 
 ## Metadata
 
-Shrug carries no metadata — no symbol, icon, or decimals. Indexers may present shrug amounts with 0 decimal precision.
+The token protocol itself carries no metadata — no symbol, icon, or decimals in the prefix. Display metadata is a separate layer: a JSON inscription on the deploy output with content type `application/shrug+json`, reusing the BSV-21 field names and meanings:
+
+```json
+{
+  "sym": "GOLD",
+  "icon": "<txid>_<vout>",
+  "dec": 8
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `sym` | string | Token symbol. Uniqueness is not enforced |
+| `icon` | string | Outpoint of an inscription or B protocol file, `<txid>_<vout>` |
+| `dec` | integer | Decimal precision 0-18, default 0 |
+
+All fields are optional, and the document may be omitted entirely. Indexers read metadata from the deploy output and apply it to the token, the same way BSV-21 deploy fields are inherited. The `+json` suffix leaves room for future serializations of the same document (e.g. `application/shrug+msgpack`) without a new standard.
+
+## Composition
+
+The prefix is stack-neutral and makes no claim about the rest of the script, so shrug composes with other script-level protocols by concatenation. In particular, a standard 1Sat inscription envelope can sit between the prefix and the owner script:
+
+```
+<shrug prefix> <inscription envelope> <owner locking script>
+```
+
+Decoders layer cleanly: the shrug parser peels the prefix and hands the remainder to the inscription parser. By convention, content and metadata belong on the deploy output; transfer outputs carry the bare prefix.
+
+### Non-Fungible Ordinals
+
+A deploy with supply 1 carrying an inscription is a non-fungible token — and remains a completely standard 1Sat ordinal. What the prefix adds is origin identification in the locking script:
+
+- Ordinal origin resolution normally requires crawling the spend chain back to an unknown genesis. With the prefix, every output carries its origin as a stable 36-byte token id, and shrug validation verifies it incrementally — each amount-1 output is admitted only if it spends the amount-1 input of the same token id — so the origin is proven without any crawl.
+- Indexers can limit their scope to shrug-prefixed ordinals for cheap subset indexing.
+- Inscription-only indexers parse the envelope as usual and ignore the prefix entirely; the output is not invalidated for them in any way.
+
+The origin data has three consumption tiers on the same output: verified (shrug-validating indexers), untrusted hint (reading the script without validation), or invisible (legacy 1Sat indexers).
 
 ## Validation Rules
 
@@ -82,7 +118,7 @@ Because minting and transferring share one encoding, per-output labels do not ex
 | Token id | `<txid>_<vout>` string | 36-byte binary outpoint |
 | Operations | Explicit `op` field (6 ops) | Implicit from field presence |
 | Explicit burn | Yes | No (implicit only) |
-| Metadata (`sym`, `icon`, `dec`) | Optional at deploy | None |
+| Metadata (`sym`, `icon`, `dec`) | Optional at deploy | Inscription on deploy output (`application/shrug+json`) |
 | Amount | String uint64 in JSON | Script number, uint64 range |
 | Script access to token data | Requires envelope/JSON parsing | Fixed-position pushes |
 | Validation model | Auth-gated minting + conservation | Same |

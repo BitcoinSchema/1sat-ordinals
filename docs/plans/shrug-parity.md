@@ -44,7 +44,7 @@ The token id is the deploy outpoint (36 bytes binary: txid + LE vout), identical
 
 **D4 — Amount domain.** Amounts capped at uint64; larger script numbers fail to decode. Matches BSV-21 exactly.
 
-**D5 — Metadata: none in v1.** Shared data structures keep `sym`/`dec`/`icon` nullable.
+**D5 — Metadata: separate inscription layer.** The prefix carries no metadata. Display metadata (`sym`/`icon`/`dec`, BSV-21 field names) is a JSON inscription on the deploy output with content type `application/shrug+json`. Shared data structures keep the fields nullable. Composition: an inscription envelope may sit between the prefix and the owner script — also the basis for non-fungible ordinals (supply 1 + inscription, origin identified in the locking script). No version field in the prefix; evolution happens via new tags or composed prefixes.
 
 **D6 — Event naming.** Follow the BSV-21 event conventions in each repo.
 
@@ -58,7 +58,7 @@ The token id is the deploy outpoint (36 bytes binary: txid + LE vout), identical
 
 ### Phase 2 — Validation + topics (1sat-stack)
 3. Topic managers in a new `pkg/shrug` mirroring `pkg/bsv21`: discovery (deploys) + validated (auth-gated minting, conservation for value outputs). Copy the pattern; leave the deployed BSV-21 path untouched. Unify into a shared core later if warranted
-4. Lookup service: the BSV-21 `token_outputs` schema fits as-is; register the shrug topics in server config
+4. Lookup service: the BSV-21 `token_outputs` schema fits as-is; register the shrug topics in server config. Owner extraction must peel an optional inscription envelope from the script suffix before decoding the lock. Read `application/shrug+json` metadata from deploy outputs into sym/dec/icon
 5. Emit events per D6
 
 ### Phase 3 — Engine + SDK
