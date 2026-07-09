@@ -4,6 +4,10 @@ description: Extensible fungible token specification for Bitcoin SV
 
 # BSV-21 Fungible Token Standard
 
+{% hint style="info" %}
+BSV-21 was originally called BSV-20 v2 but was renamed for clarity. This is why the "p" field is the same for both token types.
+{% endhint %}
+
 ## Overview
 
 BSV-21 is a fungible token standard for Bitcoin SV that uses ordinal inscriptions to create, mint, and transfer tokens. Tokens are identified by their genesis transaction output (`<txid>_<vout>`) and exist as UTXOs on the Bitcoin SV blockchain.
@@ -297,6 +301,7 @@ Burn outputs are recorded so that circulating supply can be computed (mints − 
 - Optional: `deploy+mint`, `deploy+auth`
 - Range: 0-18
 - Default: 0
+- Format: String representation of an integer (numeric JSON values are not recognized)
 - Determines token divisibility
 
 ## Locking Scripts
