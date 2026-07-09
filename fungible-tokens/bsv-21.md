@@ -1,159 +1,432 @@
 ---
-description: extensible fungible token specification
+description: Extensible fungible token specification for Bitcoin SV
 ---
 
-# BSV-21
+# BSV-21 Fungible Token Standard
 
-{% hint style="info" %}
-BSV-21 was originally called BSV-20 v2 but was renamed for clarity. This is why the "p" field is the same for both token types.
-{% endhint %}
+## Overview
 
-This iteration to the BSV-20 protocol introduces a new `tickerless` mode functionality. `Tickerless` mode forgoes the `first is first` nature of BRC20-BTC, and allows the capabilities to have a smart contract, or an administrator, control distribution. Additionally, every transaction of a `tickerless` mode token, forms part of a single on-chain DAG (Directed Acyclic Graph), such that the transaction can easily be tracked back to that token's genesis `mint`.
+BSV-21 is a fungible token standard for Bitcoin SV that uses ordinal inscriptions to create, mint, and transfer tokens. Tokens are identified by their genesis transaction output (`<txid>_<vout>`) and exist as UTXOs on the Bitcoin SV blockchain.
 
-In `first is first` mode, tokens are deployed and minted in separate transactions, with the only correlation between them being the token's ticker. Additionally, the ticker may be deployed multiple times, and may have more tokens minted than are defined in the token deployment. The only way to determine if any token UTXO is valid is to scan the entire blockchain and and perform complex analysis. `Tickerless` mode takes a different approach, where a token is deployed, and it's entire supply is minted in a single transaction output. This output can be locked with any logic which can be implemented in Bitcoin script. It can be as simple as a standard adminstrator address (P2PKH script), Proof-of-Work distribution, or even an entire Proof-of-Stake blockchain running on top of Bitcoin SV.
+The protocol supports two token models:
+- **Fixed Supply**: Entire token supply created in a single deployment transaction
+- **Auth Tokens**: Auth-based system allowing ongoing token creation
 
-In order to deploy/mint a token, you create a JSON ordinal inscription output with the data fields below and content type of `application/bsv-20`.
+## Core Concepts
 
-### Deploy+Mint
+### Token Identification
 
-| Key  | Required? | Description                                                                                                           |
-| ---- | --------- | --------------------------------------------------------------------------------------------------------------------- |
-| p    | Yes       | Protocol: `bsv-20`                                                                                                    |
-| op   | Yes       | Operation: `deploy+mint`                                                                                              |
-| sym  | No        | Token symbol. This should be unique, but uniqueness is not enforced.                                                  |
-| icon | No        | Token icon. This value should contain the origin of another inscription OR the outpoint of a `B` protocol file upload |
-| amt  | Yes       | Supply of token. Max 2^64-1                                                                                           |
-| dec  | No        | Decimals: set decimal precision, defaults to 0. This is different from BRC20 which defaults to 18                     |
+Tokens are identified by the outpoint of their deployment transaction in the format `<txid>_<vout>`. This unique identifier remains constant throughout the token's lifecycle.
 
-_Example_: To deploy and mint a token, you would create an inscription with the following json (ContentType: application/bsv-20):
+### UTXO Model
 
-```
-{ 
+BSV-21 tokens exist in UTXOs, identical to native Bitcoin. This enables:
+- Parallel transaction processing
+- Natural splitting and combining of token amounts
+- Standard Bitcoin script locking mechanisms
+- Direct integration with Bitcoin's security model
+
+### Content Type
+
+All BSV-21 operations use the content type `application/bsv-20` for ordinal inscriptions.
+
+### JSON Field Handling
+
+BSV-21 inscriptions may contain additional JSON fields beyond those specified in this standard. Implementations must ignore unrecognized fields - only the fields defined in this specification affect token behavior.
+
+## Fixed Supply Tokens
+
+### Deploy+Mint Operation
+
+Creates a token with a fixed, immutable supply. The entire token supply is minted in a single transaction output.
+
+**Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `p` | Yes | Protocol identifier: `bsv-20` |
+| `op` | Yes | Operation: `deploy+mint` |
+| `amt` | Yes | Total token supply (max: 2^64-1) |
+| `sym` | No | Token symbol (not enforced unique) |
+| `icon` | No | Icon reference (inscription origin or B protocol file outpoint) |
+| `dec` | No | Decimal precision (default: 0, max: 18) |
+
+**Example:**
+
+```json
+{
   "p": "bsv-20",
   "op": "deploy+mint",
   "amt": "21000000",
-  "dec": "10"
-}
-```
-
-Unlike `first is first` mode of v1, no `tick` field is defined. A token is identified by an `id` field, which is the transaction id and output index where the token was minted, in the form of `<txid>_<vout>`.
-
-### Deploy+Auth
-
-For tokens requiring ongoing minting capabilities, use `deploy+auth` instead of `deploy+mint`. This creates an authority UTXO that can be spent to mint new tokens or create additional authority UTXOs.
-
-| Key  | Required? | Description                                                                                                           |
-| ---- | --------- | --------------------------------------------------------------------------------------------------------------------- |
-| p    | Yes       | Protocol: `bsv-20`                                                                                                    |
-| op   | Yes       | Operation: `deploy+auth`                                                                                              |
-| sym  | No        | Token symbol. This should be unique, but uniqueness is not enforced.                                                  |
-| icon | No        | Token icon. This value should contain the origin of another inscription OR the outpoint of a `B` protocol file upload |
-| amt  | No        | **Must not be present**. Auth outputs carry minting authority, not token value.                                      |
-| dec  | No        | Decimals: set decimal precision, defaults to 0.                                                                       |
-
-_Example_: To deploy an auth-based token:
-
-```
-{
-  "p": "bsv-20",
-  "op": "deploy+auth",
   "sym": "GOLD",
   "dec": "8"
 }
 ```
 
-### Mint
+The token ID will be set to the outpoint where this inscription is created (e.g., `3b31...e000_0`).
 
-Spending an auth UTXO allows minting new tokens. The `mint` operation creates new token supply.
+## Auth Tokens
 
-| Key | Required? | Description                                  |
-| --- | --------- | -------------------------------------------- |
-| p   | Yes       | Protocol: `bsv-20`                           |
-| op  | Yes       | Operation: `mint`                            |
-| id  | Yes       | `<txid>_<vout>` of the deploy+auth output   |
-| amt | Yes       | Amount of tokens to mint in this output.     |
+Auth tokens enable controlled, ongoing minting through auth UTXOs that grant minting capability.
 
-_Example_: To mint tokens (requires auth input):
+### Deploy+Auth Operation
 
+Creates a token with no initial supply and generates an authority UTXO that can be spent to mint new tokens.
+
+**Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `p` | Yes | Protocol identifier: `bsv-20` |
+| `op` | Yes | Operation: `deploy+auth` |
+| `sym` | No | Token symbol (not enforced unique) |
+| `icon` | No | Icon reference (inscription origin or B protocol file outpoint) |
+| `dec` | No | Decimal precision (default: 0, max: 18) |
+| `amt` | No | **Must not be present** - auth outputs carry authority, not value |
+
+**Example:**
+
+```json
+{
+  "p": "bsv-20",
+  "op": "deploy+auth",
+  "sym": "STABLE",
+  "dec": "2"
+}
 ```
+
+### Mint Operation
+
+Creates new token supply by spending an auth UTXO. Any number of mint outputs can be created from a single auth input.
+
+**Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `p` | Yes | Protocol identifier: `bsv-20` |
+| `op` | Yes | Operation: `mint` |
+| `id` | Yes | Token ID (`<txid>_<vout>` of deploy+auth output) |
+| `amt` | Yes | Amount of tokens to mint |
+
+**Example:**
+
+```json
 {
   "p": "bsv-20",
   "op": "mint",
-  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_0",
+  "id": "3b31...e000_0",
   "amt": "1000000"
 }
 ```
 
-### Auth
-
-Auth UTXOs can be split, combined, or transferred. Spending an auth UTXO to create new auth outputs maintains minting capability.
-
-| Key | Required? | Description                                  |
-| --- | --------- | -------------------------------------------- |
-| p   | Yes       | Protocol: `bsv-20`                           |
-| op  | Yes       | Operation: `auth`                            |
-| id  | Yes       | `<txid>_<vout>` of the deploy+auth output   |
-| amt | No        | **Must not be present**. Auth outputs carry minting authority, not token value. |
-
-_Example_: To continue auth capability (requires auth input):
-
+**Transaction Structure:**
 ```
+Inputs:
+  - Auth UTXO (from deploy+auth or previous auth output)
+
+Outputs:
+  - Mint inscription (creates 1,000,000 new tokens)
+  - Auth inscription (continues minting capability)
+```
+
+### Auth Operation
+
+Manages auth UTXOs by creating new auth outputs. Auth can be split, combined, or transferred to delegate minting authority.
+
+**Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `p` | Yes | Protocol identifier: `bsv-20` |
+| `op` | Yes | Operation: `auth` |
+| `id` | Yes | Token ID (`<txid>_<vout>` of deploy+auth output) |
+| `amt` | No | **Must not be present** - auth outputs carry authority, not value |
+
+**Example:**
+
+```json
 {
   "p": "bsv-20",
   "op": "auth",
-  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_0"
+  "id": "3b31...e000_0"
 }
 ```
 
-**Auth Validation Rules:**
-- Auth and mint outputs require a valid auth input to be admitted
-- Auth inputs do not contribute to token balance validation
-- Auth can be split (one auth input → multiple auth outputs)
-- Auth can be combined (multiple auth inputs → one auth output)
-- Auth can be burned (spend auth without creating new auth output)
-- Transfers still require proper token balance regardless of auth presence
+**Auth Capabilities:**
+- **Split**: One auth input → multiple auth outputs (delegate authority)
+- **Combine**: Multiple auth inputs → one auth output (consolidate authority)
+- **Transfer**: Spend auth to new locking script (transfer authority)
+- **Burn**: Spend auth without creating new auth output (permanently end minting)
 
-### Transfer
+## Token Transfers
 
-Tokens in BSV-20 are held in UTXOs, similar to native bitcoins. This is different from BRC20, which holds balance in an account model. In order to transfer tokens, you spend that specific UTXO and create new outputs the same way you spend regular Satoshis, but the output(s) must contain `transfer` inscriptions.
+Tokens are transferred by spending token UTXOs and creating new token outputs, identical to spending native Bitcoin.
 
-If more tokens are transferred in the output(s) than are available in the input(s) then the transaction is considered invalid and the tokens are burned. If less tokens are created in the outputs than are available in the intput(s), the unallocated tokens are burned.
+### Transfer Operation
 
-Using the same procedure as regular Satoshi transfers allows us to benefit from the parallelisation Bitcoin benefits from, where you can split a specific UTXO with a large amount into smaller UTXOs and spend those in parallel (the same way you could exchange a $100 bill into $1 bills and spend those in parallel) with no sequential bottlenecks that something like ERC20 (Ethereum) suffers from.
+**Fields:**
 
-| Key | Required? | Description                                  |
-| --- | --------- | -------------------------------------------- |
-| p   | Yes       | Protocol: `bsv-20`                           |
-| op  | Yes       | Operation: `transfer`                        |
-| id  | Yes\*     | `<txid>_<vout>` of mint output               |
-| amt | Yes       | Amount of tokens transferred in this output. |
+| Field | Required | Description |
+|-------|----------|-------------|
+| `p` | Yes | Protocol identifier: `bsv-20` |
+| `op` | Yes | Operation: `transfer` |
+| `id` | Yes | Token ID (`<txid>_<vout>` of deployment output) |
+| `amt` | Yes | Amount of tokens in this output |
 
-#### `Tickerless` Example
+**Example:**
 
-```
-{ 
+```json
+{
   "p": "bsv-20",
   "op": "transfer",
-  "id": "3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000_1"
-  "amt": "10000",
+  "id": "3b31...e000_0",
+  "amt": "5000"
 }
 ```
 
-**Inputs**
+### Transfer Validation Rules
 
-1. previous transfer output holding 500 tokens
-2. previous transfer output holding 500 tokens
+**Token Conservation:**
+- Total output tokens ≤ Total input tokens
+- If outputs exceed inputs: transaction invalid, tokens burned
+- If outputs < inputs: excess tokens burned
 
-**Outputs**
+**Example Transaction:**
 
-P2PKH inscription
+```
+Inputs:
+  - Transfer UTXO: 1,000 tokens
+  - Transfer UTXO: 500 tokens
 
-* {"p":"bsv-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000\_1","amt":"100"}
+Outputs:
+  - Transfer: 800 tokens (to recipient A)
+  - Transfer: 600 tokens (to recipient B)
+  - Transfer: 100 tokens (change to sender)
 
-P2PKH inscription
+Total In: 1,500 tokens
+Total Out: 1,500 tokens
+Status: Valid
+```
 
-* {"p":"bsv-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000\_1","amt":"500"}
+**Invalid Example:**
 
-P2PKH inscription
+```
+Inputs:
+  - Transfer UTXO: 500 tokens
 
-* {"p":"bsv-20","op":"transfer","id":"3b313338fa0555aebeaf91d8db1ffebd74773c67c8ad5181ff3d3f51e21e0000\_1","amt":"400"}
+Outputs:
+  - Transfer: 300 tokens
+  - Transfer: 400 tokens
+
+Total In: 500 tokens
+Total Out: 700 tokens
+Status: Invalid - All tokens burned
+```
+
+## Burning Tokens
+
+Tokens are permanently removed from circulating supply with the `burn` operation.
+
+### Burn Operation
+
+**Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `p` | Yes | Protocol identifier: `bsv-20` |
+| `op` | Yes | Operation: `burn` |
+| `id` | Yes | Token ID (`<txid>_<vout>` of deployment output) |
+| `amt` | Yes | Amount of tokens to burn |
+
+**Example:**
+
+```json
+{
+  "p": "bsv-20",
+  "op": "burn",
+  "id": "3b31...e000_0",
+  "amt": "1000"
+}
+```
+
+Burn outputs are recorded so that circulating supply can be computed (mints − burns), but they carry no spendable token value. Spending a burn output later has no effect on token validation.
+
+## Validation Rules
+
+### Operation-Specific Rules
+
+**Deploy Operations (deploy+mint, deploy+auth):**
+- Automatically valid - no input validation required
+- Token ID is set to the deployment output's outpoint
+- Creates token genesis
+
+**Mint Operations:**
+- Requires at least one auth input to be valid
+- Minted tokens are created, not transferred from inputs
+- Any number of mint outputs can be created from a single auth input
+
+**Auth Operations:**
+- Requires valid auth input spending
+- Auth inputs do not contribute to token balance
+- Can create multiple auth outputs from single auth input
+
+**Transfer Operations:**
+- Requires token conservation: `total_input_tokens ≥ total_output_tokens` (transfer and burn outputs combined)
+- Auth inputs do not affect transfer validation
+- Presence of auth does not bypass balance requirements
+
+**Burn Operations:**
+- Validated together with transfers: transfer and burn outputs are admitted only when token inputs cover the combined amount
+- Burn outputs carry no spendable token value
+- Burn inputs contribute nothing to balance validation
+
+### Field Validation
+
+**Amount Field (`amt`):**
+- Required: `deploy+mint`, `mint`, `transfer`, `burn`
+- Prohibited: `deploy+auth`, `auth`
+- Format: String representation of uint64 (max: 18,446,744,073,709,551,615)
+
+**Token ID Field (`id`):**
+- Required: `mint`, `auth`, `transfer`, `burn`
+- Format: `<txid>_<vout>` where txid is 64 hex characters
+- Must reference valid deployment output
+- Auto-set for deploy operations
+
+**Decimals Field (`dec`):**
+- Optional: `deploy+mint`, `deploy+auth`
+- Range: 0-18
+- Default: 0
+- Determines token divisibility
+
+## Locking Scripts
+
+BSV-21 tokens support any valid Bitcoin locking script, including P2PKH, multisig, custom smart contracts, and complex spending conditions. Tokens can be locked using the same mechanisms available to native Bitcoin satoshis.
+
+## Token Metadata
+
+Token metadata (`sym`, `icon`, `dec`) is set during deployment and inherited by all subsequent operations.
+
+The `icon` field references an image by its outpoint in `<txid>_<vout>` format, pointing to either an inscription containing an image or a B protocol file upload.
+
+**Deployment:** Sets metadata
+```json
+{
+  "p": "bsv-20",
+  "op": "deploy+mint",
+  "amt": "1000000",
+  "sym": "GOLD",
+  "dec": "8",
+  "icon": "abc123...def456_0"
+}
+```
+
+**Transfer:** Metadata auto-populated from deployment
+```json
+{
+  "p": "bsv-20",
+  "op": "transfer",
+  "id": "3b31...e000_0",
+  "amt": "100"
+}
+```
+The transfer inherits `sym: "GOLD"`, `dec: 8`, `icon: "abc..."` from the deployment.
+
+## Protocol Identifier
+
+All BSV-21 operations use `"p": "bsv-20"` as the protocol identifier for backward compatibility with existing infrastructure.
+
+## Transaction Examples
+
+### Complete Fixed Supply Token Lifecycle
+
+**1. Deploy Token**
+```json
+{
+  "p": "bsv-20",
+  "op": "deploy+mint",
+  "amt": "10000",
+  "sym": "FIXED",
+  "dec": "2"
+}
+```
+Creates token `abc...123_0` with 10,000 tokens (100.00 with 2 decimals)
+
+**2. Split Tokens**
+```
+Input: Deploy output (10,000 tokens)
+Outputs:
+  - Transfer: 5,000 tokens
+  - Transfer: 5,000 tokens
+```
+
+**3. Transfer to User**
+```
+Input: Transfer UTXO (5,000 tokens)
+Outputs:
+  - Transfer: 4,900 tokens (to user)
+  - Transfer: 100 tokens (change)
+```
+
+### Complete Auth Token Lifecycle
+
+**1. Deploy with Auth**
+```json
+{
+  "p": "bsv-20",
+  "op": "deploy+auth",
+  "sym": "STABLE",
+  "dec": "6"
+}
+```
+Creates token `def...456_0` with auth capability
+
+**2. Initial Mint**
+```
+Input: Auth UTXO (from deploy+auth)
+Outputs:
+  - Mint: 1,000,000 tokens
+  - Auth: Continue minting capability
+```
+
+**3. Distribute Minted Tokens**
+```
+Input: Mint output (1,000,000 tokens)
+Outputs:
+  - Transfer: 500,000 tokens (to user A)
+  - Transfer: 500,000 tokens (to user B)
+```
+
+**4. Additional Mint**
+```
+Input: Auth UTXO (from previous auth output)
+Outputs:
+  - Mint: 500,000 tokens
+  - Auth: Continue minting capability
+```
+
+**5. Delegate Minting Authority**
+```
+Input: Auth UTXO
+Outputs:
+  - Auth: Locked to admin A
+  - Auth: Locked to admin B
+```
+
+**6. Burn Auth (End Minting)**
+```
+Input: Auth UTXO
+Outputs:
+  - (No auth outputs created)
+```
+Minting permanently disabled for this token.
+
+## Summary
+
+BSV-21 provides two complementary token models on Bitcoin SV:
+
+**Fixed Supply Tokens** offer simplicity and immutability - the entire supply is created at deployment and cannot be changed.
+
+**Auth Tokens** offer flexibility - auth UTXOs enable controlled, ongoing minting with delegatable authority.
+
+Both models leverage Bitcoin's UTXO architecture for parallel processing, standard script locking, and native security guarantees.
