@@ -50,23 +50,23 @@ Amounts are Bitcoin script numbers, minimally encoded, in the range 0 to 2^64-1 
 
 ## Metadata
 
-The token protocol itself carries no metadata — no symbol, icon, or decimals in the prefix. Display metadata is a separate layer: a JSON inscription on the deploy output with content type `application/shrug+json`, reusing the BSV-21 field names and meanings:
+The token protocol itself carries no metadata — no symbol, icon, or decimals in the prefix. Display metadata is a separate layer: a CBOR inscription on the deploy output with content type `application/shrug+cbor`, reusing the BSV-21 field semantics with native binary encoding.
 
-```json
-{
-  "sym": "GOLD",
-  "icon": "<txid>_<vout>",
-  "dec": 8
-}
+The document is a CBOR map, deterministically encoded (RFC 8949 §4.2: definite lengths, sorted keys), with text-string keys. Unknown keys are ignored.
+
+| Key | CBOR type | Description |
+|---|---|---|
+| `sym` | text string | Token symbol. Uniqueness is not enforced |
+| `icon` | byte string (36 bytes) | Outpoint of an inscription or B protocol file — 32-byte txid + 4-byte little-endian vout, same encoding as the prefix token id |
+| `dec` | unsigned integer | Decimal precision 0-18, default 0 |
+
+Diagnostic notation example:
+
+```
+{"sym": "GOLD", "icon": h'11…01000000', "dec": 8}
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `sym` | string | Token symbol. Uniqueness is not enforced |
-| `icon` | string | Outpoint of an inscription or B protocol file, `<txid>_<vout>` |
-| `dec` | integer | Decimal precision 0-18, default 0 |
-
-All fields are optional, and the document may be omitted entirely. Indexers read metadata from the deploy output and apply it to the token, the same way BSV-21 deploy fields are inherited. The `+json` suffix leaves room for future serializations of the same document (e.g. `application/shrug+msgpack`) without a new standard.
+All fields are optional, and the document may be omitted entirely. Indexers read metadata from the deploy output and apply it to the token, the same way BSV-21 deploy fields are inherited. Deterministic encoding means two encoders always produce identical bytes, so the document can be hashed, signed, or deduplicated reliably. The `+cbor` structured suffix identifies the serialization; a future encoding of the same document is a new suffix, not a new standard.
 
 ## Composition
 
@@ -118,7 +118,7 @@ Because minting and transferring share one encoding, per-output labels do not ex
 | Token id | `<txid>_<vout>` string | 36-byte binary outpoint |
 | Operations | Explicit `op` field (6 ops) | Implicit from field presence |
 | Explicit burn | Yes | No (implicit only) |
-| Metadata (`sym`, `icon`, `dec`) | Optional at deploy | Inscription on deploy output (`application/shrug+json`) |
+| Metadata (`sym`, `icon`, `dec`) | Optional at deploy | Inscription on deploy output (`application/shrug+cbor`) |
 | Amount | String uint64 in JSON | Script number, uint64 range |
 | Script access to token data | Requires envelope/JSON parsing | Fixed-position pushes |
 | Validation model | Auth-gated minting + conservation | Same |
