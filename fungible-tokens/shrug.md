@@ -4,13 +4,25 @@ description: Script-native fungible token protocol
 
 # ¯\\_(ツ)\_/¯ (Shrug)
 
+{% hint style="warning" %}
+¯\\_(ツ)\_/¯ is experimental. Nothing has been deployed yet, and the specification may still change.
+{% endhint %}
+
 ## Overview
 
 Shrug is a fungible token protocol where the token data lives directly in the locking script as plain data pushes. Every token output starts with a short, fixed prefix — the shrug tag, a token id, and an amount — followed by an ordinary locking script.
 
-Because the prefix is just pushes and drops, it has no effect on the script that follows. And because the fields sit at fixed positions in raw bytes, Bitcoin script can read and check them directly — a contract can constrain a token id or an amount without parsing anything.
-
 Shrug is an evolution of [BSV-21](bsv-21.md) and follows the same general rules. If you know BSV-21, the mapping is summarized in the comparison below; if you don't, this page stands on its own.
+
+## Why not BSV-21?
+
+BSV-21 has wide adoption and works well when wallets and indexers are the only software handling tokens. Its weak spot is Bitcoin script. Token data is a JSON document inside an inscription envelope, and script cannot work with that easily:
+
+- A contract that creates a token output must build JSON in script: assemble the inscription envelope, quote the fields, and convert amounts from numbers into ASCII decimal strings.
+- A contract that checks a token output does the same in reverse — hunting for fields inside a text document instead of reading bytes at known positions.
+- Token ids are hex text in the opposite byte order from the outpoints script sees in sighash preimages, so even comparing an id means converting and reversing first.
+
+Shrug puts the same data where script can use it. The amount is a script number, so arithmetic opcodes use the pushed value as-is. The token id is the same 36 bytes as a preimage outpoint, so comparing them is one equality check. Building a new token output is concatenating a few pushes. Everything else about the token model stays as BSV-21 defined it.
 
 ## Wire Format
 
