@@ -10,7 +10,7 @@
 ## Fungible Tokens
 
 * [BSV-21](fungible-tokens/bsv-21.md)
-* [BSV-20](fungible-tokens/bsv20.md)
+* [BSV-20 (deprecated)](fungible-tokens/bsv20.md)
 
 ***
 
