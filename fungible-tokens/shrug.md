@@ -1,5 +1,5 @@
 ---
-description: Script-native fungible token protocol
+description: Script-native fungible token protocol for Bitcoin SV
 ---
 
 # ¯\\_(ツ)\_/¯ (Shrug)
@@ -10,7 +10,7 @@ description: Script-native fungible token protocol
 
 ## Overview
 
-Shrug is a fungible token protocol where the token data lives directly in the locking script as plain data pushes. Every token output starts with a short, fixed prefix — the shrug tag, a token id, and an amount — followed by an ordinary locking script.
+Shrug is a fungible token protocol for Bitcoin SV where the token data lives directly in the locking script as plain data pushes. Every token output starts with a short, fixed prefix — the shrug tag, a token id, and an amount — followed by an ordinary locking script.
 
 Shrug is an evolution of [BSV-21](bsv-21.md) and follows the same general rules. If you know BSV-21, the mapping is summarized in the comparison below; if you don't, this page stands on its own.
 
