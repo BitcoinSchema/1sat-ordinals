@@ -29,6 +29,17 @@ It's also available on github:
 [rohenaz/bmap](https://github.com/rohenaz/bmap)\
 
 
+## Typescript
+### scrypt-ord
+
+```
+npm i scrypt-ord
+
+```
+sCrypt `1sat Ordinal ` SDK
+it offers an easy to use interface for deploying and transferring 1sat ordinals with the power of sCrypt Smart Contracts.
+[docs](https://docs.scrypt.io/tokens/)
+
 ## Go
 
 ### go-1sat-ord
