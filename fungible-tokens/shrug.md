@@ -151,6 +151,8 @@ Shrug follows the BSV-21 token model — outpoint identity, UTXO balances, autho
 
 ## Examples
 
+### Output Scripts
+
 Deploy a token with a fixed supply of 21,000,000, owned by a P2PKH address:
 
 ```
@@ -165,20 +167,165 @@ Deploy an authority-based token (no initial supply):
 OP_DUP OP_HASH160 <pubkeyhash> OP_EQUALVERIFY OP_CHECKSIG
 ```
 
-Mint 1,000,000 tokens (transaction spends the authority output above and recreates it):
+A value output for an existing token:
 
 ```
-Input:  genesis authority outpoint
-
-Output 0 (value):     "¯\_(ツ)_/¯" <36-byte token id> OP_2DROP 1000000 OP_DROP <owner script>
-Output 1 (authority): "¯\_(ツ)_/¯" <36-byte token id> OP_2DROP OP_0 OP_DROP <owner script>
+"¯\_(ツ)_/¯" <36-byte token id> OP_2DROP 5000 OP_DROP <owner script>
 ```
 
-Transfer 400 of 1,000 held tokens (no authority input — balance rules apply):
+An authority output for an existing token:
 
 ```
-Inputs: value outpoint holding 1,000 tokens
+"¯\_(ツ)_/¯" <36-byte token id> OP_2DROP OP_0 OP_DROP <owner script>
+```
 
-Output 0 (value): "¯\_(ツ)_/¯" <36-byte token id> OP_2DROP 400 OP_DROP <recipient script>
-Output 1 (value): "¯\_(ツ)_/¯" <36-byte token id> OP_2DROP 600 OP_DROP <change script>
+### Fixed Supply Lifecycle
+
+**1. Deploy**
+
+```
+Outputs:
+  - Deploy: 10,000 tokens (the token id is this output's outpoint)
+```
+
+**2. Split the supply**
+
+```
+Input:  deploy output (10,000 tokens)
+
+Outputs:
+  - Value: 5,000 tokens
+  - Value: 5,000 tokens
+```
+
+**3. Transfer to a user**
+
+```
+Input:  value output (5,000 tokens)
+
+Outputs:
+  - Value: 4,900 tokens (recipient)
+  - Value: 100 tokens (change)
+```
+
+### Authority Lifecycle
+
+**1. Deploy with authority**
+
+```
+Outputs:
+  - Authority: amount 0 (the token id is this output's outpoint)
+```
+
+**2. Mint the first supply**
+
+```
+Input:  genesis authority
+
+Outputs:
+  - Value: 1,000,000 tokens (newly created — an authority input is present)
+  - Authority: amount 0 (keeps minting open)
+```
+
+**3. Distribute**
+
+```
+Input:  value output (1,000,000 tokens)
+
+Outputs:
+  - Value: 500,000 tokens (user A)
+  - Value: 500,000 tokens (user B)
+```
+
+**4. Mint again later**
+
+```
+Input:  authority from step 2
+
+Outputs:
+  - Value: 500,000 tokens
+  - Authority: amount 0
+```
+
+**5. Delegate authority**
+
+```
+Input:  authority
+
+Outputs:
+  - Authority: amount 0 (admin A)
+  - Authority: amount 0 (admin B)
+```
+
+**6. End minting**
+
+```
+Input:  authority
+
+Outputs:
+  - (no authority output)
+```
+
+Minting is permanently closed for this token.
+
+### Balance Validation
+
+A valid transfer — outputs covered by inputs:
+
+```
+Inputs:
+  - Value: 1,000 tokens
+  - Value: 500 tokens
+
+Outputs:
+  - Value: 800 tokens (recipient A)
+  - Value: 600 tokens (recipient B)
+  - Value: 100 tokens (change)
+
+Total in: 1,500. Total out: 1,500. Valid.
+```
+
+An invalid transfer — outputs exceed inputs with no authority present:
+
+```
+Inputs:
+  - Value: 500 tokens
+
+Outputs:
+  - Value: 300 tokens
+  - Value: 400 tokens
+
+Total in: 500. Total out: 700. All outputs invalid; the 500 input tokens are burned.
+```
+
+An implicit burn — inputs exceed outputs:
+
+```
+Inputs:
+  - Value: 1,000 tokens
+
+Outputs:
+  - Value: 250 tokens
+
+750 tokens are burned.
+```
+
+### Non-Fungible Ordinal
+
+Deploy a supply of 1 with content, on a 1-satoshi output:
+
+```
+Outputs:
+  - Deploy: 1 token
+    script: <shrug prefix> <inscription envelope (image)> <owner P2PKH>
+```
+
+Transfer it — the origin travels in the script:
+
+```
+Input:  the token (1)
+
+Outputs:
+  - Value: 1 token
+    script: <shrug prefix with token id> <new owner P2PKH>
 ```
