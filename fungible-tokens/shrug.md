@@ -6,7 +6,7 @@ description: Script-native fungible token protocol
 
 ## Overview
 
-Shrug is a fungible token protocol where the token data lives directly in the locking script as plain data pushes — no JSON, no envelope to unwrap. Every token output starts with a short, fixed prefix: the shrug tag, a token id, and an amount. Everything after the prefix is an ordinary locking script.
+Shrug is a fungible token protocol where the token data lives directly in the locking script as plain data pushes. Every token output starts with a short, fixed prefix — the shrug tag, a token id, and an amount — followed by an ordinary locking script.
 
 Because the prefix is just pushes and drops, it has no effect on the script that follows. And because the fields sit at fixed positions in raw bytes, Bitcoin script can read and check them directly — a contract can constrain a token id or an amount without parsing anything.
 
@@ -37,7 +37,7 @@ This is the same 36-byte outpoint encoding that appears inside sighash preimages
 
 ## Operations
 
-There is no operation field. What an output means follows from which fields it carries:
+The two prefix fields say everything about what an output does:
 
 | Token id | Amount | Meaning |
 |---|---|---|
@@ -46,17 +46,17 @@ There is no operation field. What an output means follows from which fields it c
 | Present | 0 | Minting authority |
 | Present | > 0 | Token value |
 
-There is no explicit burn operation. Tokens are burned by spending them without creating matching outputs.
+Tokens are burned by spending them without creating matching outputs.
 
 ## Amounts
 
-Amounts are script numbers — the same little-endian format Bitcoin's arithmetic opcodes work with, so `OP_BIN2NUM` or `OP_ADD` can use the pushed value as-is. They must be minimally encoded and non-negative, and there is no upper limit: script numbers have no fixed width, and shrug does not add one. An amount of zero is not a token value; it marks the output as a minting authority.
+Amounts are script numbers — the same little-endian format Bitcoin's arithmetic opcodes work with, so `OP_BIN2NUM` or `OP_ADD` can use the pushed value as-is. They must be minimally encoded and non-negative, and there is no upper limit: script numbers have no fixed width. An amount of zero marks the output as a minting authority rather than a token value.
 
 Since amounts have no width limit, software that adds them up must use arithmetic that cannot overflow.
 
 ## Metadata
 
-The prefix carries no display information — no symbol, icon, or decimals. That belongs in a separate document: a CBOR inscription on the deploy output with content type `application/shrug+cbor`.
+Display information — symbol, icon, and decimal precision — lives in its own document: a CBOR inscription on the deploy output with content type `application/shrug+cbor`.
 
 | Key | CBOR type | Description |
 |---|---|---|
