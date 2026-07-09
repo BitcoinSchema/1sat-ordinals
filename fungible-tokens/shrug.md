@@ -68,12 +68,9 @@ Since amounts have no width limit, software that adds them up must use arithmeti
 
 ## Satoshi Value
 
-The protocol places no requirement on how many satoshis a token output holds. Validation reads only the script — the token and the satoshis travel together when the output is spent, but neither affects the other.
+By convention, token outputs hold exactly 1 satoshi, and that is the recommended default. Wallets and indexers across the 1Sat ecosystem are built around single-satoshi outputs, and a deploy output carrying an inscription needs one identifiable satoshi for the inscription to bind to.
 
-Two cases do call for exactly 1 satoshi:
-
-- A deploy output carrying an inscription (metadata or content) follows the 1Sat Ordinals convention of a single-satoshi output, so the inscription binds to one identifiable satoshi.
-- Individual overlays or applications may enforce a strict 1-satoshi rule for their own use cases. That is a policy of the overlay, not a rule of the protocol.
+This is a convention, not a strict protocol rule. Validation reads only the script, so a token output may hold any number of satoshis, and the token and the satoshis travel together when the output is spent. Carrying additional value is an advanced option: it can have legal and regulatory implications depending on how a token is structured, so avoid it unless you understand the consequences. A token that needs a firm rule about output value can enforce one in the owner locking script itself, or through the policy of the overlay that tracks it.
 
 ## Metadata
 
