@@ -5,7 +5,7 @@ description: '"first-is-first" style fungible token specification'
 # BSV-20
 
 {% hint style="warning" %}
-BSV-20 is deprecated. There is no valid reference implementation for BSV-20. Use [BSV-21](bsv-21.md) for new tokens.
+BSV-20 is deprecated. There is no reference implementation for BSV-20. Use [BSV-21](bsv-21.md) for new tokens.
 {% endhint %}
 
 `First is fist` deployment and minting allows for a single use-case where a token is publicly mintable, by anyone, outside of the control of any token issuer.&#x20;
