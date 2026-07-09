@@ -88,7 +88,7 @@ Diagnostic notation example:
 {"sym": "GOLD", "icon": h'11…01000000', "dec": 8}
 ```
 
-The document is a CBOR map encoded deterministically (RFC 8949 §4.2) — the same fields always produce the same bytes, so the document can be hashed or signed reliably. Keys are text strings; unknown keys are ignored. All fields are optional, and so is the document itself. Indexers read the metadata once from the deploy output and apply it to the whole token.
+The document is a CBOR map encoded deterministically (RFC 8949 §4.2) — the same fields always produce the same bytes, so the document can be hashed or signed reliably. Keys are text strings. Software reading the document must skip keys it does not recognize, so fields can be added later without breaking existing readers. All fields are optional, and so is the document itself. Indexers read the metadata once from the deploy output and apply it to the whole token.
 
 ## Composition
 
