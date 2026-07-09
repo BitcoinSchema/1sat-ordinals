@@ -229,7 +229,7 @@ Status: Invalid - All tokens burned
 
 ## Burning Tokens
 
-Tokens are permanently removed from circulating supply with the `burn` operation.
+Tokens are explicitly and permanently removed from circulating supply with the `burn` operation.
 
 ### Burn Operation
 
