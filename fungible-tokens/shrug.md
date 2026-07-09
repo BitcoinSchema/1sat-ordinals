@@ -66,6 +66,15 @@ Amounts are script numbers — the same little-endian format Bitcoin's arithmeti
 
 Since amounts have no width limit, software that adds them up must use arithmetic that cannot overflow.
 
+## Satoshi Value
+
+The protocol places no requirement on how many satoshis a token output holds. Validation reads only the script — the token and the satoshis travel together when the output is spent, but neither affects the other.
+
+Two cases do call for exactly 1 satoshi:
+
+- A deploy output carrying an inscription (metadata or content) follows the 1Sat Ordinals convention of a single-satoshi output, so the inscription binds to one identifiable satoshi.
+- Individual overlays or applications may enforce a strict 1-satoshi rule for their own use cases. That is a policy of the overlay, not a rule of the protocol.
+
 ## Metadata
 
 Display information — symbol, icon, and decimal precision — lives in its own document: a CBOR inscription on the deploy output with content type `application/shrug+cbor`.
