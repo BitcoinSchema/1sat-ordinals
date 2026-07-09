@@ -5,7 +5,7 @@ description: Script-native fungible token protocol for Bitcoin SV
 # ¯\\_(ツ)\_/¯ (Shrug)
 
 {% hint style="warning" %}
-¯\\_(ツ)\_/¯ is experimental. Nothing has been deployed yet, and the specification may still change.
+¯\\_(ツ)\_/¯ is experimental and the specification may still change. For production tokens, use [BSV-21](bsv-21.md).
 {% endhint %}
 
 ## Overview
