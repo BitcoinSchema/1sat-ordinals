@@ -10,6 +10,7 @@
 ## Fungible Tokens
 
 * [BSV-21](fungible-tokens/bsv-21.md)
+* [¯\\_(ツ)\_/¯ (experimental)](fungible-tokens/shrug.md)
 * [BSV-20 (deprecated)](fungible-tokens/bsv20.md)
 
 ***
