@@ -76,6 +76,8 @@ This is a convention, not a strict protocol rule. Validation reads only the scri
 
 Display information — symbol, icon, and decimal precision — lives in its own document: a CBOR inscription on the deploy output with content type `application/shrug+cbor`.
 
+The document is an open key/value map. The deployer may include any data they like; these keys have defined meanings:
+
 | Key | CBOR type | Description |
 |---|---|---|
 | `sym` | text string | Token symbol. Uniqueness is not enforced |
@@ -88,7 +90,7 @@ Diagnostic notation example:
 {"sym": "GOLD", "icon": h'11…01000000', "dec": 8}
 ```
 
-The document is a CBOR map encoded deterministically (RFC 8949 §4.2) — the same fields always produce the same bytes, so the document can be hashed or signed reliably. Keys are text strings. Software reading the document must skip keys it does not recognize, so fields can be added later without breaking existing readers. All fields are optional, and so is the document itself. Indexers read the metadata once from the deploy output and apply it to the whole token.
+The document is encoded deterministically (RFC 8949 §4.2) — the same fields always produce the same bytes, so it can be hashed or signed reliably. Keys are text strings; readers use the keys they understand. The spec may define more keys over time. All fields are optional, and so is the document itself. Indexers read the metadata once from the deploy output and apply it to the whole token.
 
 ## Composition
 
