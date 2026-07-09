@@ -40,13 +40,15 @@ Shrug has no operation field. The operation is implied by which fields are prese
 | Present | 0 | `auth` | Minting authority |
 | Present | > 0 | `transfer` / `mint` | Token value (see Validation Rules) |
 
-As in BSV-21, a deploy output self-identifies: the token id is the outpoint of the deploy output itself. All subsequent outputs reference it in binary form.
+As in BSV-21, a deploy output self-identifies: the token id is the outpoint of the deploy output itself. All subsequent outputs reference it in binary form — the same 36-byte outpoint encoding that appears in sighash preimages, so covenants can compare a token id against a spent outpoint without conversion.
 
 There is no explicit `burn` operation. Tokens are burned implicitly by spending value inputs without creating matching value outputs.
 
 ## Amounts
 
-Amounts are Bitcoin script numbers, minimally encoded, in the range 0 to 2^64-1 — the same domain as BSV-21. An output whose amount push is non-minimal, negative, or wider than 64 bits is not a shrug output. An amount of 0 is not a token value; it marks the output as a minting authority.
+Amounts are Bitcoin script numbers: minimally encoded, non-negative, little-endian sign-magnitude — the exact byte format BSV script arithmetic consumes, so `OP_BIN2NUM`, `OP_ADD`, and comparison opcodes operate on the pushed value directly. There is no width limit: BSV script numbers are unbounded after Genesis, and shrug adds no artificial cap. An output whose amount push is non-minimal or negative is not a shrug output. An amount of 0 is not a token value; it marks the output as a minting authority.
+
+The unbounded domain is a capability difference from BSV-21, which caps each output's amount at 2^64-1. Neither protocol bounds total supply — a cap only limits a single output — so shrug drops the constraint rather than enforce a rule script does not have. Implementations must accumulate amounts with arbitrary-precision arithmetic; fixed-width accumulators can overflow even under BSV-21's per-output cap.
 
 ## Metadata
 
@@ -119,7 +121,7 @@ Because minting and transferring share one encoding, per-output labels do not ex
 | Operations | Explicit `op` field (6 ops) | Implicit from field presence |
 | Explicit burn | Yes | No (implicit only) |
 | Metadata (`sym`, `icon`, `dec`) | Optional at deploy | Inscription on deploy output (`application/shrug+cbor`) |
-| Amount | String uint64 in JSON | Script number, uint64 range |
+| Amount | String uint64 in JSON | Script number, unbounded |
 | Script access to token data | Requires envelope/JSON parsing | Fixed-position pushes |
 | Validation model | Auth-gated minting + conservation | Same |
 

@@ -42,7 +42,7 @@ The token id is the deploy outpoint (36 bytes binary: txid + LE vout), identical
 
 **D3 — Burn: deferred.** Implicit burning (outputs < inputs) only; an explicit encoding is left as a future extension.
 
-**D4 — Amount domain.** Amounts capped at uint64; larger script numbers fail to decode. Matches BSV-21 exactly.
+**D4 — Amount domain (revised 2026-07-09): unbounded.** Amounts are minimally-encoded, non-negative script numbers with no width cap — script numbers are unbounded after Genesis and a cap only limits a single output, not supply. Documented as a capability difference from BSV-21. Template `Amount` is `*big.Int`; validation must accumulate with big-integer arithmetic. Note: the BSV-21 stack validator's `tokensIn += Amt` uint64 accumulation has a latent overflow bug — fix separately. Engine proto amount should be bytes/string; stack `token_outputs.amount` is already TEXT.
 
 **D5 — Metadata: separate inscription layer.** The prefix carries no metadata. Display metadata (`sym`/`icon`/`dec`, BSV-21 field semantics) is a deterministically-encoded CBOR inscription on the deploy output with content type `application/shrug+cbor` (icon as 36-byte binary outpoint). Shared data structures keep the fields nullable. Composition: an inscription envelope may sit between the prefix and the owner script — also the basis for non-fungible ordinals (supply 1 + inscription, origin identified in the locking script). No version field in the prefix; evolution happens via new tags or composed prefixes.
 
