@@ -121,7 +121,7 @@ The same origin data serves three audiences: shrug indexers verify it, anyone re
 - Split — one authority input, many authority outputs
 - Combined — many in, one out
 - Passed to a new owner
-- Ended — spend it without creating a new one, and minting stops for good
+- Ended — spend it without creating a replacement; that authority is destroyed. Minting for the token as a whole ends only when its last authority is spent this way
 
 Spending an authority adds nothing to token balance.
 
@@ -257,7 +257,7 @@ Outputs:
   - Authority: amount 0 (admin B)
 ```
 
-**6. End minting**
+**6. End an authority**
 
 ```
 Input:  authority
@@ -266,7 +266,7 @@ Outputs:
   - (no authority output)
 ```
 
-Minting is permanently closed for this token.
+This authority is destroyed. Any other authorities for the token keep working; minting is closed for the whole token only when its last authority is spent without a replacement.
 
 ### Balance Validation
 

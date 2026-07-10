@@ -156,7 +156,7 @@ Manages auth UTXOs by creating new auth outputs. Auth can be split, combined, or
 - **Split**: One auth input → multiple auth outputs (delegate authority)
 - **Combine**: Multiple auth inputs → one auth output (consolidate authority)
 - **Transfer**: Spend auth to new locking script (transfer authority)
-- **Burn**: Spend auth without creating new auth output (permanently end minting)
+- **Burn**: Spend auth without creating new auth output (destroys that auth output; minting for the token ends once no auth outputs remain)
 
 ## Token Transfers
 
@@ -414,13 +414,13 @@ Outputs:
   - Auth: Locked to admin B
 ```
 
-**6. Burn Auth (End Minting)**
+**6. Burn Auth**
 ```
 Input: Auth UTXO
 Outputs:
   - (No auth outputs created)
 ```
-Minting permanently disabled for this token.
+This auth output is destroyed. Any other auth outputs for the token keep their minting capability; minting is permanently disabled for the token only when the last auth output is spent without a replacement.
 
 ## Summary
 
