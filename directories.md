@@ -12,11 +12,37 @@ Served by [OrdFS](ordfs.md) under `/content/{outpoint}/…`.
 
 ```json
 {
+  ".": "_0",
   "index.html": "_1",
   "style.css": "_2",
   "lib": "aa11bb22…ff_0",
   "readme.md": "ord://cc33dd…_0"
 }
+```
+
+### Default entry (empty path)
+
+`GET /content/{dirOutpoint}` with no filepath (and without `?raw`) picks a **default** map key:
+
+| Priority | Key | Empty-path behavior |
+|----------|-----|---------------------|
+| 1 | `.` | Serve that pointer **in place** (no redirect). Prefer this for a type-neutral root payload (e.g. a shared image). |
+| 2 | `index.html` | **Redirect** to `{path}/index.html`. Prefer this for sites / SPAs. |
+
+`.` wins when both keys exist. Explicit paths such as `/content/{dir}/style.css` are unchanged.
+
+**SPA fallback** (missing last path segment only) still tries `index.html` only — not `.`.
+
+Minimal default-only map:
+
+```json
+{ ".": "aa11bb22…ff_0" }
+```
+
+```text
+GET /content/{dirOutpoint}       →  bytes of the pointed-to inscription
+GET /content/{dirOutpoint}?raw   →  directory JSON (ord-fs/json)
+GET /content/{dirOutpoint}/.     →  same as default when `.` is the map key (optional explicit segment)
 ```
 
 ## Deploying a directory
@@ -54,10 +80,12 @@ Every pointed-to outpoint must exist in **this OrdFS instance’s** transaction 
 1. Load the root pointer. If content type is not `ord-fs/json`, serve the bytes as a normal file (including one-hop [content-ref](content-ref.md) follow when applicable).
 2. If it **is** a directory and **filepath is empty**:
    - With **`?raw`**: return the directory JSON (`Content-Type: ord-fs/json`).
-   - Otherwise: **redirect** to `{path}/index.html`.
+   - Else if map has **`.`**: load that pointer and serve it (in place).
+   - Else if map has **`index.html`**: **redirect** to `{path}/index.html`.
+   - Else: not found.
 3. Split filepath on `/` into segments. For each segment, in order:
    - Look up the name in the **current** directory map.
-   - **SPA fallback:** if the name is missing and this is the **last** segment only, use `index.html` if present.
+   - **SPA fallback:** if the name is missing and this is the **last** segment only, use `index.html` if present (not `.`).
    - Load that entry’s pointer (same pointer rules). Apply content-ref follow on the entry when relevant.
    - If there are **more** segments and the loaded content is again `ord-fs/json`, **recurse** into that subdirectory with the remaining path.
    - If this is the last segment (or the entry is not a directory), **serve that content**.
@@ -69,7 +97,8 @@ Intermediate segments that are not directories (or missing keys mid-path without
 
 ## Practical notes
 
-- Include an `index.html` entry for roots and SPAs that rely on redirect and last-segment fallback.
+- Use **`"."`** as the default entry for a single non-HTML payload (or any root you want at `/content/{outpoint}` without a filename).
+- Include **`index.html`** for web roots and SPAs that rely on redirect and last-segment fallback.
 - Nested apps: put another `ord-fs/json` inscription behind a key (e.g. `"docs"`) and link to `/content/{root}/docs/…`.
 - Relative `_N` pointers only work when the directory’s own outpoint is known (normal content serving).
 
