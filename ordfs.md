@@ -15,6 +15,7 @@ It does not mint or transfer ordinals. It **reads** content and chain state that
 - **Read application state** — merge MAP fields written along that chain (collections, `opns.idKey`, custom keys).
 - **Host small apps** — directories (`ord-fs/json`), path traversal, SPA-style fallback to `index.html`.
 - **Stream large media** — multi-inscription streams with HTTP Range when content is chunked on-chain.
+- **Shared content** — editions with `ref=ordfs` that point at one source inscription (see [Content References](content-ref.md); draft).
 
 Services built on names and paymail use the same model: look up a name’s **origin**, then use OrdFS for tip content and merged MAP (see [Payments](name-service/payments.md)).
 
@@ -182,12 +183,19 @@ The TypeScript SDK’s `inscribe` action can build this layout:
 
 Omit both for a single-transaction inscription. Stream outputs are tagged with `sha256:<content-hash>` and `stream-i:<index>`. See [Libraries](Libraries.md) and [1sat-sdk](https://github.com/b-open-io/1sat-sdk).
 
+### Content references (`ref=ordfs`)
+
+Many inscriptions can share one on-chain payload without re-inscribing the bytes. An **edition** uses the public media type plus parameter **`ref=ordfs`**; its body is a **pointer** to a **source** inscription (same pointer forms as directories). On `/content/`, OrdFS follows that pointer (default one hop) for **body and Content-Type** only. Ordinal headers (`X-Outpoint`, origin, seq, MAP) stay on the requested resource.
+
+Full on-chain layout, stream-source behavior, and co-mint examples: [Content References (OrdFS Ref)](content-ref.md). **Status: draft** until implementation ships.
+
 ## Names and payments
 
 [OpNS](name-service/opns.md) defines how names are mined and where each name’s **origin** is. OrdFS resolves **forward** from that origin (tip content and merged MAP). [Payments](name-service/payments.md) composes the two: origin from OpNS, identity key from OrdFS MAP.
 
 ## See also
 
+- [Content References](content-ref.md) — shared payload via `ref=ordfs` (draft)  
 - [Metadata](adding-metadata/README.md) — MAP and schema types on ordinals  
 - [HTML inscriptions](html-ordinals/README.md) — content that often loads via OrdFS URLs  
 

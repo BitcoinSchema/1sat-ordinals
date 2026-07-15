@@ -7,7 +7,7 @@ description: Inscribe references to content by URI
 You can inscribe references to on-chain content using the text/uri-list content type defined here:\
 [https://www.rfc-editor.org/rfc/rfc2483#section-5](https://www.rfc-editor.org/rfc/rfc2483#section-5)
 
-### &#x20;Examples
+### Examples
 
 ```
 # This is a comment
