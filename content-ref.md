@@ -63,17 +63,7 @@ _0
 
 (when source and edition are co-minted in one transaction and the source is vout 0)
 
-Do not put the media type or extra JSON in the body. The type field already carries the public MIME.
-
-## What is not a content ref
-
-| Pattern | Role |
-|---------|------|
-| `ord-fs/json` | Directory map; path walk, not “this outpoint *is* that content” |
-| Parent (field 3) | Collection / hierarchy metadata — not content source |
-| Bare `image/png` with an outpoint string as body | Invalid as a ref; gateways would treat the body as PNG bytes |
-
-Without `ref=ordfs`, OrdFS must not follow the body as a pointer.
+Do not put the media type or extra JSON in the body. The type field already carries the public MIME. Without `ref=ordfs`, OrdFS does not treat the body as a pointer.
 
 ## OrdFS serving
 
