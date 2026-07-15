@@ -24,3 +24,29 @@ You can not only use AIP signatures to prove a particular identity created an in
 
 ## Validating Collections
 
+A collection and its items should carry an authorship signature identifying the
+collection author, so membership can be validated: an item is a genuine member of
+collection `X` only if its `subTypeData.collectionId` points at `X` **and** its
+authorship signer matches the collection root.
+
+### SIGMA (recommended)
+
+Prefer **SIGMA** for 1-sat ordinal authorship (collection roots and items). The
+SIGMA prefix commits to a specific transaction input, so the signature is
+**replay-resistant** — it cannot be lifted from one item and re-used to forge
+membership on another, which the AIP `[-1]` whole-output form does not prevent.
+Signing follows output type: a signed 1-sat ordinal uses SIGMA; a signed 0-sat
+`B` output uses AIP.
+
+Legacy AIP `[-1]`-signed collections and items remain valid; indexers accept
+either protocol when matching a member's signer against the collection root.
+
+### Owner-follows authority
+
+The collection root is an owned 1-sat ordinal whose metadata may be updated by
+spending and re-inscribing it (resolve the latest state with `{root}:-1`).
+Membership and metadata-update authority follow the current owner: a member is
+authoritative if its signer matched the root's controlling key **as of the
+member's inscription**, so transferring the root delegates authority without
+retroactively invalidating members already minted under the prior owner.
+
