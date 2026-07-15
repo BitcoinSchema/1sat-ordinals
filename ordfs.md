@@ -66,10 +66,35 @@ It does not need a complete global history to be useful. If a request needs an a
 
 Useful response headers when present: `X-Outpoint`, `X-Origin`, `X-Ord-Seq`, `X-Map`, `X-Parent`. Fixed-sequence content can be cached as immutable; tip (`seq=-1`) is not.
 
-### Directories and streams (brief)
+### Directories
 
-- Content type `ord-fs/json` is a directory map of names → outpoints; path segments resolve children; missing files may fall back to `index.html`; `?raw` returns the directory JSON.
-- Streamed inscriptions use `stream=ordfs` / `ordfs/stream` content-type patterns so OrdFS concatenates chunks along the spend chain.
+An inscription with content type `ord-fs/json` is a **directory**. Its body is a JSON object mapping names to outpoint pointers:
+
+```json
+{
+  "index.html": "abc123def…_0",
+  "style.css": "fedcba…_0",
+  "app.js": "012345…_0"
+}
+```
+
+On `GET /content/{dirOutpoint}/…`:
+
+- The **directory root** resolves to `index.html` when present.
+- Each **path segment** is looked up in the map and loaded as content (which may itself be another directory).
+- If a path is missing, OrdFS serves `index.html` when available (SPA-style fallback).
+- Query **`?raw`** returns the directory JSON as-is instead of following entries.
+
+That is how multi-file HTML apps sit on-chain as a tree of inscriptions and are served like a static site under `/content/…`.
+
+### Streams
+
+Large media can be split across **several inscriptions on one ordinal transfer chain**:
+
+1. The **first** chunk uses the real media type with a `stream=ordfs` parameter (for example `video/mp4; stream=ordfs`).
+2. **Later** chunks use content type `ordfs/stream`.
+
+OrdFS detects that pattern, walks the spend chain, and **concatenates** the chunks into one response. `GET /1sat/ordfs/stream/{outpoint}` is the dedicated stream route; content routes honor the same markers when applicable. **HTTP Range** is supported for partial reads (seek / progressive download).
 
 ## Names and payments
 
