@@ -175,12 +175,12 @@ If a middle chunk is missing from the store, the stream stops or errors when tha
 
 #### Reference mint (`@1sat/actions`)
 
-The TypeScript SDK’s `inscribe` action can build this layout for you. Opt in explicitly — it does not stream by size alone:
+The TypeScript SDK’s `inscribe` action can build this layout:
 
 - `stream: true` — multi-tx stream with **1 MiB** chunk bodies  
-- `streamChunkSize: N` — same, with custom body size (implies stream)  
+- `streamChunkSize: N` — multi-tx stream with custom body size  
 
-Without either flag, a single-transaction inscription is used (subject to the action’s max single size). Stream outputs are tagged with `sha256:<content-hash>` and `stream-i:<index>` for wallet bookkeeping. See [Libraries](Libraries.md) and [1sat-sdk](https://github.com/b-open-io/1sat-sdk).
+Omit both for a single-transaction inscription. Stream outputs are tagged with `sha256:<content-hash>` and `stream-i:<index>`. See [Libraries](Libraries.md) and [1sat-sdk](https://github.com/b-open-io/1sat-sdk).
 
 ## Names and payments
 
