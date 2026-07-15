@@ -4,9 +4,9 @@ description: Share one on-chain payload across many inscriptions via OrdFS refs
 
 # Content References (OrdFS Ref)
 
-**Status:** Draft — for review before implementation.
-
 Inscribe the same file many times without repeating the bytes. Each **edition** is a normal 1-sat ordinal (own sat, origin, ownership, MAP). Its inscription body is a **pointer** to a **source** inscription that holds the real payload. OrdFS follows the pointer when serving `/content/`.
+
+Implemented in [1sat-stack](https://github.com/b-open-io/1sat-stack) OrdFS (`ref=ordfs` on the content path).
 
 ## On-chain layout
 
@@ -86,11 +86,9 @@ GET /content/{editionOutpoint}[:seq][/filepath]
 When the resolved inscription’s content type includes the parameter `ref=ordfs`:
 
 1. Parse the body as a pointer (forms above).
-2. Load the **source** (default: **one hop** only).
-3. Serve the **source** content bytes.
-4. Set `Content-Type` from the source (public media type of the payload).
-
-**Ordinal headers are unchanged by the ref.** `X-Outpoint`, `X-Origin`, `X-Ord-Seq`, `X-Map`, and `X-Parent` come from ordinal resolution of the **requested** outpoint (transfer chain / seq). They do not point at the content-ref target. Only body and content type follow the link.
+2. Load the **source** (**one hop** only — nested refs are not followed).
+3. Replace the response **body** and **Content-Type** with the source’s.
+4. Leave ordinal identity alone: `X-Outpoint`, `X-Origin`, `X-Ord-Seq`, `X-Map`, and `X-Parent` stay on the **requested** outpoint (transfer chain / seq). They do not track the content-ref target.
 
 If the pointer is missing, invalid, or the source is not in this OrdFS instance’s store → **404** (same scope rules as other OrdFS loads).
 
@@ -110,26 +108,18 @@ GET /1sat/ordfs/metadata/{editionOutpoint}[:seq]
 
 Metadata describes the **inscription envelope** at the ordinal-resolved outpoint (type as inscribed, including `ref=ordfs`, pointer body length). It does not follow content refs. Use `/content/` when you need resolved bytes and type.
 
-### Cycles and depth
-
-- Default: **single hop** (edition → source that is not itself followed as a ref).
-- If multi-hop is ever allowed, cap depth and detect cycles; refuse with an error rather than looping.
-- A source that is itself `…; ref=ordfs` is not followed under the default single-hop rule (unless a later revision of this doc enables multi-hop).
-
 ### Directory interaction
 
-If a directory entry points at an edition outpoint, path resolution loads that outpoint as today; OrdFS then applies ref following when serving that entry’s content (same as `/content/{edition}`).
+If a directory entry points at an edition outpoint, path resolution loads that entry and applies the same one-hop content-ref follow before serving (or before treating the result as a nested `ord-fs/json` directory).
 
 ### Stream sources
 
-If the source is an OrdFS **stream** origin (`…; stream=ordfs` / `ordfs/stream` chain):
+Content-ref follow loads the **source outpoint’s** inscription only (one hop). It does not walk an OrdFS stream chain.
 
-| Request | Expected behavior |
-|---------|-------------------|
-| `GET /content/{edition}` | Prefer not to assemble the full stream on the content path. Implementations may serve only the first chunk, or redirect / link clients to the stream route. |
-| Full media | `GET /1sat/ordfs/stream/{sourceOutpoint}` using the pointer target outpoint |
-
-Exact `/content/` behavior for stream sources is an implementation detail; mint docs should point large media at the stream endpoint when full bytes are required.
+| Request | Behavior |
+|---------|----------|
+| `GET /content/{edition}` → source is stream origin | First chunk body and that chunk’s content type |
+| Full multi-chunk media | `GET /1sat/ordfs/stream/{sourceOutpoint}` |
 
 ## Deploying editions
 

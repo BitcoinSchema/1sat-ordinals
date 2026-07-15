@@ -15,7 +15,7 @@ It does not mint or transfer ordinals. It **reads** content and chain state that
 - **Read application state** — merge MAP fields written along that chain (collections, `opns.idKey`, custom keys).
 - **Host small apps** — directories (`ord-fs/json`), path traversal, SPA-style fallback to `index.html`.
 - **Stream large media** — multi-inscription streams with HTTP Range when content is chunked on-chain.
-- **Shared content** — editions with `ref=ordfs` that point at one source inscription (see [Content References](content-ref.md); draft).
+- **Shared content** — editions with `ref=ordfs` that point at one source inscription (see [Content References](content-ref.md)).
 
 Services built on names and paymail use the same model: look up a name’s **origin**, then use OrdFS for tip content and merged MAP (see [Payments](name-service/payments.md)).
 
@@ -185,9 +185,9 @@ Omit both for a single-transaction inscription. Stream outputs are tagged with `
 
 ### Content references (`ref=ordfs`)
 
-Many inscriptions can share one on-chain payload without re-inscribing the bytes. An **edition** uses the public media type plus parameter **`ref=ordfs`**; its body is a **pointer** to a **source** inscription (same pointer forms as directories). On `/content/`, OrdFS follows that pointer (default one hop) for **body and Content-Type** only. Ordinal headers (`X-Outpoint`, origin, seq, MAP) stay on the requested resource.
+Many inscriptions can share one on-chain payload without re-inscribing the bytes. An **edition** uses the public media type plus parameter **`ref=ordfs`**; its body is a **pointer** to a **source** inscription (same pointer forms as directories). On `/content/`, OrdFS follows that pointer **one hop** for **body and Content-Type** only (`?raw` skips the follow). Ordinal headers (`X-Outpoint`, origin, seq, MAP) stay on the requested resource. Metadata does not follow refs.
 
-Full on-chain layout, stream-source behavior, and co-mint examples: [Content References (OrdFS Ref)](content-ref.md). **Status: draft** until implementation ships.
+Full on-chain layout, stream-source behavior, and co-mint examples: [Content References (OrdFS Ref)](content-ref.md).
 
 ## Names and payments
 
@@ -195,7 +195,7 @@ Full on-chain layout, stream-source behavior, and co-mint examples: [Content Ref
 
 ## See also
 
-- [Content References](content-ref.md) — shared payload via `ref=ordfs` (draft)  
+- [Content References](content-ref.md) — shared payload via `ref=ordfs`  
 - [Metadata](adding-metadata/README.md) — MAP and schema types on ordinals  
 - [HTML inscriptions](html-ordinals/README.md) — content that often loads via OrdFS URLs  
 
