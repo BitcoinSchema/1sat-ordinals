@@ -1,12 +1,12 @@
 ---
-description: Proof-of-work name service for Bitcoin SV
+description: Low-difficulty proof-of-work name service for Bitcoin SV
 ---
 
 # OpNS
 
 ## Overview
 
-OpNS is a name service for Bitcoin SV. Names are claimed permissionlessly by proof of work — no registrar, no auction, no renewal — and each name can exist exactly once. A claimed name is an ordinary 1Sat ordinal inscription, so holding, transferring, and selling a name works like any other ordinal.
+OpNS is a name service for Bitcoin SV. Names are claimed permissionlessly by low-difficulty proof of work — enough cost to deter spam, not a serious mining race — with no registrar, no auction, and no renewal. Each name can exist exactly once. A claimed name is an ordinary 1Sat ordinal inscription, so holding, transferring, and selling a name works like any other ordinal.
 
 Uniqueness is enforced on-chain by a stateful covenant. Contract UTXOs form a trie — the *mine tree* — where each live UTXO represents a name prefix. Spending a node extends its prefix by one character, and the spend is only valid with a proof-of-work solution. Every spend emits the newly formed name as an inscription.
 
