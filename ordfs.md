@@ -166,12 +166,21 @@ curl -H "Range: bytes=0-1023" "https://{host}/1sat/ordfs/stream/{txid}_{vout}"
 
 #### Deploying a stream
 
-1. Split the file into chunks sized for your inscription limits.
+1. Split the file into chunks sized for your inscription limits (1 MiB bodies are a practical default).
 2. Mint chunk 0 as a 1-sat inscription with the public content type (and optional `stream=ordfs` parameter).
 3. Transfer/reinscribe the same ordinal for each subsequent chunk with type `ordfs/stream` and the next bytes (order is spend order).
 4. Point clients at `/1sat/ordfs/stream/{firstChunkOutpoint}` (or an outpoint mid-chain if you only need a suffix — walk starts from the requested outpoint).
 
 If a middle chunk is missing from the store, the stream stops or errors when that spend cannot be loaded — same instance-scope rules as content.
+
+#### Reference mint (`@1sat/actions`)
+
+The TypeScript SDK’s `inscribe` action can build this layout for you. Opt in explicitly — it does not stream by size alone:
+
+- `stream: true` — multi-tx stream with **1 MiB** chunk bodies  
+- `streamChunkSize: N` — same, with custom body size (implies stream)  
+
+Without either flag, a single-transaction inscription is used (subject to the action’s max single size). Stream outputs are tagged with `sha256:<content-hash>` and `stream-i:<index>` for wallet bookkeeping. See [Libraries](Libraries.md) and [1sat-sdk](https://github.com/b-open-io/1sat-sdk).
 
 ## Names and payments
 
