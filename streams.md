@@ -57,4 +57,3 @@ Omit both for a single-transaction inscription. Stream outputs are tagged with `
 
 - [OrdFS](ordfs.md) — gateway resolution, seq, MAP, HTTP routes  
 - [Directories](directories.md) — multi-file sites via `ord-fs/json`  
-- [Content References](content-ref.md) — shared payload via `ref=ordfs`  

@@ -71,13 +71,11 @@ Every pointed-to outpoint must exist in **this OrdFS instance’s** transaction 
 | `txid` (64 hex) | Treated as that transaction’s first resolvable content output |
 | `ord://…` | Same as the forms above with an optional `ord://` prefix (stripped) |
 
-[Content references](content-ref.md) reuse these forms for `ref=ordfs` pointer bodies.
-
 ## Recursive resolution
 
 `GET /content/{pointer}[:seq]/filepath}` drives directory walk:
 
-1. Load the root pointer. If content type is not `ord-fs/json`, serve the bytes as a normal file (including one-hop [content-ref](content-ref.md) follow when applicable).
+1. Load the root pointer. If content type is not `ord-fs/json`, serve the bytes as a normal file.
 2. If it **is** a directory and **filepath is empty**:
    - With **`?raw`**: return the directory JSON (`Content-Type: ord-fs/json`).
    - Else if map has **`.`**: load that pointer and serve it (in place).
@@ -86,7 +84,7 @@ Every pointed-to outpoint must exist in **this OrdFS instance’s** transaction 
 3. Split filepath on `/` into segments. For each segment, in order:
    - Look up the name in the **current** directory map.
    - **SPA fallback:** if the name is missing and this is the **last** segment only, use `index.html` if present (not `.`).
-   - Load that entry’s pointer (same pointer rules). Apply content-ref follow on the entry when relevant.
+   - Load that entry’s pointer (same pointer rules).
    - If there are **more** segments and the loaded content is again `ord-fs/json`, **recurse** into that subdirectory with the remaining path.
    - If this is the last segment (or the entry is not a directory), **serve that content**.
 4. Nesting is capped at **8** directory levels (`directory nesting too deep` if exceeded).
@@ -106,4 +104,3 @@ Intermediate segments that are not directories (or missing keys mid-path without
 
 - [OrdFS](ordfs.md) — gateway resolution, seq, MAP, HTTP routes  
 - [Streams](streams.md) — large files split across a transfer chain  
-- [Content References](content-ref.md) — shared payload via `ref=ordfs`  

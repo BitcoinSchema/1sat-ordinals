@@ -15,7 +15,7 @@ It does not mint or transfer ordinals. It **reads** content and chain state that
 - **Read application state** — merge MAP fields written along that chain (collections, `opns.idKey`, custom keys).
 - **Host small apps** — [directories](directories.md) (`ord-fs/json`), path traversal, SPA-style fallback to `index.html`.
 - **Stream large media** — [streams](streams.md) with HTTP Range when content is chunked on-chain.
-- **Shared content** — [content references](content-ref.md) (`ref=ordfs`) that point at one source inscription.
+- **Shared payloads** — a directory whose default entry is `"."` pointing at a source inscription (see [Directories](directories.md#default-entry-empty-path)).
 
 Services built on names and paymail use the same model: look up a name’s **origin**, then use OrdFS for tip content and merged MAP (see [Payments](name-service/payments.md)).
 
@@ -71,8 +71,7 @@ On `/content/`, OrdFS may apply layout-specific rules after loading the inscript
 
 | Layout | Spec | Behavior summary |
 |--------|------|------------------|
-| Directory | [Directories](directories.md) | Path walk under `ord-fs/json` |
-| Content ref | [Content References](content-ref.md) | One-hop follow for body and `Content-Type` (`?raw` skips) |
+| Directory | [Directories](directories.md) | Path walk under `ord-fs/json`; empty path uses `"."` then `index.html` |
 | Stream | [Streams](streams.md) | Full assembly on `/1sat/ordfs/stream/…`, not on `/content/` |
 
 ## Names and payments
@@ -83,6 +82,5 @@ On `/content/`, OrdFS may apply layout-specific rules after loading the inscript
 
 - [Directories](directories.md) — `ord-fs/json` file trees  
 - [Streams](streams.md) — multi-inscription media  
-- [Content References](content-ref.md) — shared payload via `ref=ordfs`  
 - [Metadata](adding-metadata/README.md) — MAP and schema types on ordinals  
 - [HTML inscriptions](html-ordinals/README.md) — content that often loads via OrdFS URLs  

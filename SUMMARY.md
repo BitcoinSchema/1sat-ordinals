@@ -23,7 +23,6 @@
 * [OrdFS](ordfs.md)
 * [Directories](directories.md)
 * [Streams](streams.md)
-* [Content References](content-ref.md)
 
 ***
 
