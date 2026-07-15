@@ -139,7 +139,7 @@ Large payloads can be split across **multiple inscriptions on one ordinal transf
 
 #### On-chain layout
 
-1. **Chunk 0 (start of stream):** real media (or other) content type. Conventionally mark it as streamable, e.g. `video/mp4; stream=ordfs` (parameter on the type string). Body is the first slice of bytes.
+1. **Chunk 0 (start of stream):** the payload’s actual content type (e.g. `video/mp4`, `application/octet-stream`). Conventionally mark it as streamable, e.g. `video/mp4; stream=ordfs` (parameter on the type string). Body is the first slice of bytes.
 2. **Further chunks:** each successive **spend** of the ordinal carries the next slice with content type exactly **`ordfs/stream`**.
 3. Chain ends when a spend has no further content, spend is missing, or a later output’s type is **not** `ordfs/stream` (after the first chunk).
 
