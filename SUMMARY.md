@@ -13,6 +13,15 @@
 * [Shrug ¯\\_(ツ)\_/¯](fungible-tokens/shrug.md)
 * [BSV-20 (deprecated)](fungible-tokens/bsv20.md)
 
+## Name Service
+
+* [OpNS](name-service/opns.md)
+* [Payments](name-service/payments.md)
+
+## Content & resolution
+
+* [OrdFS](ordfs.md)
+
 ***
 
 * [Public APIs](public-apis.md)
