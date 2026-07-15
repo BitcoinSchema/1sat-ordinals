@@ -23,7 +23,7 @@ Using [OrdFS](ordfs.md)-compatible content routes, you can reference on-chain fi
 /content/<outpoint | contentHash>.png
 ```
 
-See [OrdFS](ordfs.md) for directory maps, streams, and resolution rules. Gateways such as [ordfs.network](https://ordfs.network) expose a compatible `/content/` path.
+See [OrdFS](ordfs.md), [Directories](directories.md), and [Streams](streams.md) for resolution rules. Gateways such as [ordfs.network](https://ordfs.network) expose a compatible `/content/` path.
 
 ### Multiple Files
 

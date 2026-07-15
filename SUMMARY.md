@@ -21,7 +21,9 @@
 ## Content & resolution
 
 * [OrdFS](ordfs.md)
-* [Content References (OrdFS Ref)](content-ref.md)
+* [Directories](directories.md)
+* [Streams](streams.md)
+* [Content References](content-ref.md)
 
 ***
 

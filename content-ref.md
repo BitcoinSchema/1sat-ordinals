@@ -17,7 +17,7 @@ Implemented in [1sat-stack](https://github.com/b-open-io/1sat-stack) OrdFS (`ref
 | Content type | Public MIME of the payload (e.g. `image/png`, `text/html`) |
 | Body | Full file bytes |
 
-Optional: if the source is an OrdFS stream origin, use the stream layout from [OrdFS — Streams](ordfs.md#streams) (e.g. `video/mp4; stream=ordfs` on chunk 0).
+Optional: if the source is an OrdFS stream origin, use the layout from [Streams](streams.md) (e.g. `video/mp4; stream=ordfs` on chunk 0).
 
 ### Edition (ref)
 
@@ -42,7 +42,7 @@ The parameter is a gateway directive (same idea as `stream=ordfs` on stream orig
 
 ### Pointer body
 
-Body is UTF-8 text: one pointer, no trailing path, no multi-line list. Same pointer forms as [OrdFS directories](ordfs.md#pointer-forms):
+Body is UTF-8 text: one pointer, no trailing path, no multi-line list. Same pointer forms as [Directories](directories.md#pointer-forms):
 
 | Pointer | Meaning |
 |---------|---------|
@@ -113,7 +113,7 @@ Content-ref follow loads the **source outpoint’s** inscription only (one hop).
 
 ## Deploying editions
 
-1. Inscribe the **source** once with the real MIME type and full body (or deploy a stream as in [OrdFS](ordfs.md#streams)).
+1. Inscribe the **source** once with the real MIME type and full body (or deploy a stream as in [Streams](streams.md)).
 2. For each edition, inscribe a 1-sat output with:
    - Content type: `{sourcePublicType}; ref=ordfs`
    - Body: pointer to the source (`txid_vout` after confirmation, or `_N` if co-minted)
@@ -141,10 +141,12 @@ Relative `_N` only works when the edition’s own outpoint is known (normal cont
 
 | Standard | Difference |
 |----------|------------|
-| [Streams](ordfs.md#streams) | One ordinal, many spends, concatenate bytes. Ref: many ordinals, one shared source, no re-inscribe. |
-| [Directories](ordfs.md#directories) | Map of names → pointers for path hosting. Ref: the outpoint itself *is* the logical file. |
+| [Streams](streams.md) | One ordinal, many spends, concatenate bytes. Ref: many ordinals, one shared source, no re-inscribe. |
+| [Directories](directories.md) | Map of names → pointers for path hosting. Ref: the outpoint itself *is* the logical file. |
 
 ## See also
 
-- [OrdFS](ordfs.md) — content serving, directories, streams  
+- [OrdFS](ordfs.md) — gateway resolution and HTTP routes  
+- [Directories](directories.md)  
+- [Streams](streams.md)  
 - [Libraries](Libraries.md)  
