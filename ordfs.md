@@ -68,33 +68,108 @@ Useful response headers when present: `X-Outpoint`, `X-Origin`, `X-Ord-Seq`, `X-
 
 ### Directories
 
-An inscription with content type `ord-fs/json` is a **directory**. Its body is a JSON object mapping names to outpoint pointers:
+An inscription with content type **`ord-fs/json`** is a **directory**. Its body is a JSON object: keys are path segment names, values are **pointers** to other inscriptions (files or nested directories).
 
 ```json
 {
-  "index.html": "abc123def…_0",
-  "style.css": "fedcba…_0",
-  "app.js": "012345…_0"
+  "index.html": "_1",
+  "style.css": "_2",
+  "lib": "aa11bb22…ff_0",
+  "readme.md": "ord://cc33dd…_0"
 }
 ```
 
-On `GET /content/{dirOutpoint}/…`:
+#### Deploying a directory
 
-- The **directory root** resolves to `index.html` when present.
-- Each **path segment** is looked up in the map and loaded as content (which may itself be another directory).
-- If a path is missing, OrdFS serves `index.html` when available (SPA-style fallback).
-- Query **`?raw`** returns the directory JSON as-is instead of following entries.
+1. Inscribe each file (and any nested directory inscriptions) as its own 1-sat output.
+2. Inscribe the directory itself with:
+   - Content type: `ord-fs/json`
+   - Body: JSON map as above
+3. Prefer putting **siblings in the same transaction** and pointing at them with relative vouts (`_1`, `_2`, …) so one mint tx holds the tree root and leaves. Absolute outpoints work when children live in other txs.
+4. Serve via content URL. The directory outpoint is the site root:
 
-That is how multi-file HTML apps sit on-chain as a tree of inscriptions and are served like a static site under `/content/…`.
+```text
+GET /content/{dirTxid}_{dirVout}/
+GET /content/{dirTxid}_{dirVout}/style.css
+GET /content/{dirTxid}_{dirVout}/lib/util.js
+```
+
+Every pointed-to outpoint must exist in **this OrdFS instance’s** transaction store (same scope rules as above). Missing children 404.
+
+#### Pointer forms
+
+| Pointer | Meaning |
+|---------|---------|
+| `_N` | Output index `N` in the **same transaction** as the directory inscription (sibling) |
+| `txid_vout` or `txid.vout` | Absolute outpoint |
+| `txid` (64 hex) | Treated as that transaction’s first resolvable content output |
+| `ord://…` | Same as the forms above with an optional `ord://` prefix (stripped) |
+
+#### Recursive resolution
+
+`GET /content/{pointer}[:seq]/filepath}` drives directory walk:
+
+1. Load the root pointer. If content type is not `ord-fs/json`, serve the bytes as a normal file.
+2. If it **is** a directory and **filepath is empty**:
+   - With **`?raw`**: return the directory JSON (`Content-Type: ord-fs/json`).
+   - Otherwise: **redirect** to `{path}/index.html`.
+3. Split filepath on `/` into segments. For each segment, in order:
+   - Look up the name in the **current** directory map.
+   - **SPA fallback:** if the name is missing and this is the **last** segment only, use `index.html` if present.
+   - Load that entry’s pointer (same pointer rules).
+   - If there are **more** segments and the loaded content is again `ord-fs/json`, **recurse** into that subdirectory with the remaining path.
+   - If this is the last segment (or the entry is not a directory), **serve that content**.
+4. Nesting is capped at **8** directory levels (`directory nesting too deep` if exceeded).
+
+Example: `/content/{root}/lib/util.js` where `root` is `ord-fs/json` with `"lib" → subdirOutpoint`, and that subdir is `ord-fs/json` with `"util.js" → fileOutpoint`, loads the file through two map lookups.
+
+Intermediate segments that are not directories (or missing keys mid-path without SPA fallback) fail with not found / bad request as appropriate.
+
+#### Practical notes
+
+- Include an `index.html` entry for roots and SPAs that rely on redirect and last-segment fallback.
+- Nested apps: put another `ord-fs/json` inscription behind a key (e.g. `"docs"`) and link to `/content/{root}/docs/…`.
+- Relative `_N` pointers only work when the directory’s own outpoint is known (normal content serving).
 
 ### Streams
 
-Large media can be split across **several inscriptions on one ordinal transfer chain**:
+Large payloads can be split across **multiple inscriptions on one ordinal transfer chain**, then reassembled by OrdFS.
 
-1. The **first** chunk uses the real media type with a `stream=ordfs` parameter (for example `video/mp4; stream=ordfs`).
-2. **Later** chunks use content type `ordfs/stream`.
+#### On-chain layout
 
-OrdFS detects that pattern, walks the spend chain, and **concatenates** the chunks into one response. `GET /1sat/ordfs/stream/{outpoint}` is the dedicated stream route; content routes honor the same markers when applicable. **HTTP Range** is supported for partial reads (seek / progressive download).
+1. **Chunk 0 (start of stream):** real media (or other) content type. Conventionally mark it as streamable, e.g. `video/mp4; stream=ordfs` (parameter on the type string). Body is the first slice of bytes.
+2. **Further chunks:** each successive **spend** of the ordinal carries the next slice with content type exactly **`ordfs/stream`**.
+3. Chain ends when a spend has no further content, spend is missing, or a later output’s type is **not** `ordfs/stream` (after the first chunk).
+
+All chunks must be in the instance’s BEEF/spends graph so the stream walk can follow the ordinal.
+
+#### Serving
+
+```text
+GET /1sat/ordfs/stream/{outpoint}
+```
+
+OrdFS:
+
+1. Resolves origin / chain from the starting outpoint.
+2. Walks spends forward, concatenating content bodies in order.
+3. Sets `Content-Type` from the **first** chunk’s type (so clients see `video/mp4`, not `ordfs/stream`).
+4. Supports **HTTP Range** (`Range: bytes=start-end`) for seek and progressive download; only the relevant portions of chunks are written.
+
+Example:
+
+```bash
+curl -H "Range: bytes=0-1023" "https://{host}/1sat/ordfs/stream/{txid}_{vout}"
+```
+
+#### Deploying a stream
+
+1. Split the file into chunks sized for your inscription limits.
+2. Mint chunk 0 as a 1-sat inscription with the public content type (and optional `stream=ordfs` parameter).
+3. Transfer/reinscribe the same ordinal for each subsequent chunk with type `ordfs/stream` and the next bytes (order is spend order).
+4. Point clients at `/1sat/ordfs/stream/{firstChunkOutpoint}` (or an outpoint mid-chain if you only need a suffix — walk starts from the requested outpoint).
+
+If a middle chunk is missing from the store, the stream stops or errors when that spend cannot be loaded — same instance-scope rules as content.
 
 ## Names and payments
 
