@@ -1,13 +1,30 @@
 # Public APIs
 
-GorillaPool maintains a public `1sat-server` Basic usage is documented below. See the auto-generated [swagger documentation](https://ordinals.gorillapool.io/api/docs/) for a complete API reference.
+{% hint style="warning" %}
+**Historical.** This page documents the older **1sat-server** HTTP API (GorillaPool / `ordinals.gorillapool.io`). New integrations should use a **1sat-stack** deployment (example host: `https://api.1sat.app`) and the TypeScript client in [1sat-sdk](Libraries.md) (`@1sat/client`). See [Libraries](Libraries.md) for current software.
+{% endhint %}
+
+## Current platform (summary)
+
+| Surface | Where |
+|---------|--------|
+| Stack (OpNS, OrdFS, owner, market, beef, …) | [1sat-stack](https://github.com/b-open-io/1sat-stack) — typically `/1sat/…` and `/content/…` |
+| Content & ordinal resolution | [OrdFS](ordfs.md) |
+| Names | [OpNS](name-service/opns.md) |
+| App SDK | [1sat-sdk](https://github.com/b-open-io/1sat-sdk) / [Libraries](Libraries.md) |
+
+---
+
+## Legacy: 1sat-server (deprecated for new work)
+
+GorillaPool maintained a public `1sat-server`. Basic usage is below. See the auto-generated [swagger documentation](https://ordinals.gorillapool.io/api/docs/) for a complete API reference.
 
 The API is also [available on Github](https://github.com/shruggr/1sat-server).
 
 ### Other APIs
 
 * There is also basic support from [#whats-on-chain](public-apis.md#whats-on-chain "mention")
-* The [#bmap-api](public-apis.md#bmap-api "mention") can be used to resolve inscriptions with support for several other data protocols.&#x20;
+* The [#bmap-api](public-apis.md#bmap-api "mention") can be used to resolve inscriptions with support for several other data protocols.
 
 ## 1SAT Server Endpoints
 
@@ -17,7 +34,7 @@ The API is also [available on Github](https://github.com/shruggr/1sat-server).
 METHOD: GET
 ```
 
-Get inscription file for a given origin.&#x20;
+Get inscription file for a given origin.
 
 ```
 https://ordinals.gorillapool.io/api/files/inscriptions/:origin
@@ -82,7 +99,7 @@ Sample response
 Method: GET
 ```
 
-Because ordinals exist in Bitcoin Script, . Get unspent utxos with ordinal locks matching a given address.
+Get unspent utxos with ordinal locks matching a given address.
 
 ```
 https://ordinals.gorillapool.io/api/utxos/address/:address
@@ -174,7 +191,7 @@ s.onmessage = (e) => {
 
 ## What's On Chain
 
-WhatsOnChain.com also provides 1Sat Ordinals support by tagging the inscriptions and providing a plugin for rending ordinals by txid and outpout index as follows:
+WhatsOnChain.com also provides 1Sat Ordinals support by tagging the inscriptions and providing a plugin for rendering ordinals by txid and output index as follows:
 
 {% code overflow="wrap" %}
 ```
@@ -207,4 +224,3 @@ or BOB format
 ```
 https://b.map.sv/tx/:txid/bob
 ```
-

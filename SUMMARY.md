@@ -24,8 +24,8 @@
 
 ***
 
-* [Public APIs](public-apis.md)
-* [Libraries](Libraries.md)
+* [Libraries & software](Libraries.md)
+* [Public APIs (historical)](public-apis.md)
 * [Text Inscriptions](text-inscriptions.md)
 * [Reference Inscriptions](reference-inscriptions.md)
 * [HTML Inscriptions](html-ordinals/README.md)

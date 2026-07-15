@@ -16,14 +16,14 @@ https://mydomain.com/something.pdf
 
 In this example we reference a JSON inscription. The file extension is useful for hinting before the content has been loaded, allowing clients to make UI decisions sooner (like choosing the correct component to render the content).
 
-Thanks to [ord-fs](https://ordfs.network) we can reference any b:// c:// or ord:// content by relative path:
+Using [OrdFS](ordfs.md)-compatible content routes, you can reference on-chain files by relative path:
 
 ```
 # This is an image inscription
 /content/<outpoint | contentHash>.png
 ```
 
-For more information on how ord-fs renders content, visit [ordfs.network](https://ordfs.network).&#x20;
+See [OrdFS](ordfs.md) for directory maps, streams, and resolution rules. Gateways such as [ordfs.network](https://ordfs.network) expose a compatible `/content/` path.
 
 ### Multiple Files
 
