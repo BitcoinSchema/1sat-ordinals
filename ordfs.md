@@ -68,7 +68,9 @@ Useful response headers when present: `X-Outpoint`, `X-Origin`, `X-Ord-Seq`, `X-
 
 ### Directories
 
-An inscription with content type **`ord-fs/json`** is a **directory**. Its body is a JSON object: keys are path segment names, values are **pointers** to other inscriptions (files or nested directories).
+An inscription with content type **`ord-fs/json`** is a **directory**. Its body is a JSON object: keys are **single path segment** names, values are **pointers** to other inscriptions (files or nested directories).
+
+**Keys must not contain `/`.** Each directory is one depth only — a flat map of name → pointer. Multi-level URLs (`…/lib/util.js`) come from **recursive** resolution: an entry whose content type is also `ord-fs/json` is another single-level directory, not a key with slashes.
 
 ```json
 {
