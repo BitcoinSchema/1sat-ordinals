@@ -28,11 +28,11 @@ The bind is self-certifying: the lock key is derived from the identity key itsel
 
 | Action | Role |
 |---|---|
-| `opnsRegister` | Publish the binding — re-lock the name with a signed PushDrop carrying the wallet identity key |
-| `opnsDeregister` | Remove the binding — spend back to plain P2PKH |
-| `opnsTransfer` | Transfer the name ordinal (unlocks a bound name; binding does not carry) |
-| `opnsList` | List the name for sale (ordlock) |
-| `getOpnsNames` | List OpNS names in the wallet |
+| `registerOpns` | Publish the binding — re-lock the name with a signed PushDrop carrying the wallet identity key |
+| `deregisterOpns` | Remove the binding — spend back to plain P2PKH |
+| `sendOpns` | Transfer the name ordinal (unlocks a bound name; binding does not carry) |
+| `sellOpns` | List the name for sale (ordlock) |
+| `listOpns` | List OpNS names in the wallet |
 
 ## Resolution
 
