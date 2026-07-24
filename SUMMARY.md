@@ -10,7 +10,7 @@
 ## Fungible Tokens
 
 * [BSV-21](fungible-tokens/bsv-21.md)
-* [Shrug ¯\\_(ツ)\_/¯](fungible-tokens/shrug.md)
+* [BSV-21 Binary](fungible-tokens/bsv-21-binary.md)
 * [BSV-20 (deprecated)](fungible-tokens/bsv20.md)
 
 ## Name Service

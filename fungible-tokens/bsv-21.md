@@ -6,7 +6,9 @@ description: Extensible fungible token specification for Bitcoin SV
 
 ## Overview
 
-BSV-21 is a fungible token standard for Bitcoin SV that uses ordinal inscriptions to create, mint, and transfer tokens. Tokens are identified by their genesis transaction output (`<txid>_<vout>`) and exist as UTXOs on the Bitcoin SV blockchain.
+BSV-21 is a fungible token standard for Bitcoin SV. Tokens are identified by their genesis transaction output (`<txid>_<vout>`) and exist as UTXOs on the Bitcoin SV blockchain.
+
+This document specifies the **JSON encoding**: token fields live in an ordinal inscription (`application/bsv-20`). A draft **[Binary encoding](bsv-21-binary.md)** puts the same token model in a script prefix for script-native use. Both encodings share token identity and the same underlying token model; overlays should treat outputs of either encoding for the same token id as interchangeable.
 
 The protocol supports two token models:
 - **Fixed Supply**: Entire token supply created in a single deployment transaction

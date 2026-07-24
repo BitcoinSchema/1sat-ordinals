@@ -5,14 +5,14 @@ description: Script-native fungible token protocol for Bitcoin SV
 # Shrug ¯\\_(ツ)\_/¯
 
 {% hint style="warning" %}
-¯\\_(ツ)\_/¯ is experimental and the specification may still change. For production tokens, use [BSV-21](bsv-21.md).
+Not part of the published docs. See [BSV-21 Binary](bsv-21-binary.md) (draft).
 {% endhint %}
 
 ## Overview
 
 Shrug is a fungible token protocol for Bitcoin SV where the token data lives directly in the locking script as plain data pushes. Every token output starts with a short, fixed prefix — the shrug tag, a token id, and an amount — followed by an ordinary locking script.
 
-Shrug is an evolution of [BSV-21](bsv-21.md) and follows the same general rules. If you know BSV-21, the mapping is summarized in the comparison below; if you don't, this page stands on its own.
+Shrug follows the same general rules as [BSV-21](bsv-21.md). If you know BSV-21, the mapping is summarized in the comparison below; if you don't, this page stands on its own.
 
 ## Why not BSV-21?
 
