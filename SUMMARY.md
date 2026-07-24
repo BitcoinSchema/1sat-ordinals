@@ -15,6 +15,7 @@
 
 ## Name Service
 
+* [Introduction](name-service/ecosystem.md)
 * [OpNS](name-service/opns.md)
 * [Payments](name-service/payments.md)
 

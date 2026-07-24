@@ -40,7 +40,9 @@ A paymail server answers "where do I pay `alice`?" as follows:
 
 1. **Origin** — look up the name's origin outpoint in the OpNS overlay.
 2. **Current state** — from that origin, resolve the ordinal's latest outpoint and load its locking script.
-3. **Binding** — decode the PushDrop, take the identity key from the first field, re-derive the lock key from it, and verify both the lock and the field signature. Payment requires a valid binding; an unbound name (plain lock, or failed verification) is not payable.
+3. **Binding** — decode the PushDrop, take the identity key from the first field, re-derive the lock key from it, and verify both the lock and the field signature.
+
+**No binding, no payment.** An unbound name (plain lock, or failed verification) is not payable. Resolvers do not fall back to the name ordinal's current locking script or its holder address — only a valid identity binding yields a destination.
 
 ## How the paymail server works
 
@@ -73,3 +75,5 @@ Servers expose the standard bsvalias surface, discovered via `.well-known/bsvali
 - The binding is the current UTXO's locking script: spending the name removes it, so a bound name is always bound by its current holder — stale bindings from prior owners cannot linger.
 - Every destination is a one-shot BRC-29 derivation: no address reuse, and payments are internalized through the wallet inbox rather than sitting at a static address.
 - Bindings verify offline from the script alone; resolvers need the OpNS index only to find the name's latest outpoint.
+- Claiming a name does not make it payable. The holder must publish a binding (`registerOpns`) before paymail destinations work.
+- Overlays and payment hosts are open infrastructure; see [Introduction](ecosystem.md).

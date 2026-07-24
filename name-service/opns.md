@@ -165,4 +165,4 @@ OpNS names are mined, not registered. A covenant trie makes each name mintable e
 - **TypeScript template** — `@1sat/templates` `OpNS` (`lock`, `decode`, `unlock`, `buildInscription`, `claimBit`, `testSolution`)
 - **Go template / overlay** — `1sat-stack` `pkg/template/opns` and `pkg/opns` (mine-tree index and HTTP API above)
 
-Identity binding and paymail are application conventions; see [Payments](payments.md).
+Identity binding and paymail are application conventions; see [Payments](payments.md). The wider network around names: [Introduction](ecosystem.md).
