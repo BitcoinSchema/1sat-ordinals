@@ -95,7 +95,7 @@ The contract's involvement ends when the inscription is created. The name ordina
 
 ## Identity Binding
 
-By application convention, a name can be bound to an identity key and used as a paymail handle. This is not part of the contract protocol — it rides on ordinal transfers as MAP metadata. See [Payments](payments.md).
+By application convention, a name can be bound to an identity key and used as a paymail handle. This is not part of the contract protocol — the holder re-locks the name ordinal with a signed PushDrop script carrying the identity key. See [Payments](payments.md).
 
 ## Validation Rules
 

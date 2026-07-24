@@ -12,12 +12,12 @@ It does not mint or transfer ordinals. It **reads** content and chain state that
 
 - **Serve content** — fetch inscription (or B-protocol) bytes by outpoint with the right `Content-Type` (images, video, HTML, JSON, …).
 - **Follow the ordinal** — resolve origin, a specific sequence, or the current tip of the transfer chain.
-- **Read application state** — merge MAP fields written along that chain (collections, `opns.idKey`, custom keys).
+- **Read application state** — merge MAP fields written along that chain (collections, custom keys).
 - **Host small apps** — [directories](directories.md) (`ord-fs/json`), path traversal, SPA-style fallback to `index.html`.
 - **Stream large media** — [streams](streams.md) with HTTP Range when content is chunked on-chain.
 - **Shared payloads** — a directory whose default entry is `"."` pointing at a source inscription (see [Directories](directories.md#default-entry-empty-path)).
 
-Services built on names and paymail use the same model: look up a name’s **origin**, then use OrdFS for tip content and merged MAP (see [Payments](name-service/payments.md)).
+Services built on names use the same model: look up a name’s **origin**, then use OrdFS to resolve its current tip (see [Payments](name-service/payments.md)).
 
 ## How resolution works
 
@@ -45,7 +45,7 @@ Ownership transfers and content reinscriptions are tracked separately. Requestin
 
 ### MAP
 
-MAP (`1PuQa7K62MiKCtssSLKy1kh56WWU7MtUR5`) on outputs along the chain is merged chronologically. That is how mutable fields such as OpNS identity (`opns.idKey`) stay attached to a name across transfers without changing the inscription body.
+MAP (`1PuQa7K62MiKCtssSLKy1kh56WWU7MtUR5`) on outputs along the chain is merged chronologically. That is how mutable application fields — collection membership, display metadata, custom keys — stay attached to an ordinal across transfers without changing the inscription body.
 
 ## Scope of a deployment
 
@@ -76,7 +76,7 @@ On `/content/`, OrdFS may apply layout-specific rules after loading the inscript
 
 ## Names and payments
 
-[OpNS](name-service/opns.md) defines how names are mined and where each name’s **origin** is. OrdFS resolves **forward** from that origin (tip content and merged MAP). [Payments](name-service/payments.md) composes the two: origin from OpNS, identity key from OrdFS MAP.
+[OpNS](name-service/opns.md) defines how names are mined and where each name’s **origin** is. OrdFS resolves **forward** from that origin to the current tip. [Payments](name-service/payments.md) composes the two: origin from OpNS, identity key from the tip’s locking script (a signed PushDrop bind).
 
 ## See also
 
