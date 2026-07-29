@@ -17,7 +17,7 @@ A name is bound by spending its ordinal into a **signed PushDrop lock** that car
 | Protocol | `[0, 'p 1sat']` |
 | Counterparty | `anyone` |
 | Key ID | `opns:{txid}_{vout}` of the input spent to create the output |
-| Fields | `[identity public key, display name?, avatar origin?]` |
+| Fields | `[identity public key, display name?, avatar outpoint?]` |
 | Field signature | yes, same derivation |
 
 Field 0 is the 33-byte compressed identity public key. Fields 1 and 2 are
@@ -38,11 +38,17 @@ unique. Anything rendering these must keep the name primary.
 | Field | Encoding | Meaning |
 |---|---|---|
 | 1 | UTF-8 | Display name |
-| 2 | 36 bytes — 32-byte txid (little-endian) + 4-byte vout (LE) | Origin outpoint of an image ordinal used as the avatar |
+| 2 | 36 bytes — 32-byte txid (little-endian) + 4-byte vout (LE) | Outpoint of the avatar image on chain |
 
-The avatar is an **origin outpoint, not a URL** — it stays valid as the ordinal
-moves, and resolving it needs no DNS. Field 1 is an empty push when only an
-avatar is set; a trailing unset field is omitted entirely.
+The avatar is an **outpoint, not a URL** — the image is on chain, so resolving it
+depends on no DNS name and no hosting provider. Any outpoint carrying a file
+works: an inscription, a re-inscription on an existing ordinal, or a 0-sat B
+protocol output. Which outpoint to publish is the client's choice — one browsing
+a wallet's ordinals will typically use the inscription's origin, since that is
+the stable reference for content that moves.
+
+Field 1 is an empty push when only an avatar is set; a trailing unset field is
+omitted entirely.
 
 Editing a profile is republishing: there is no separate edit operation. Both
 fields are cleared along with the binding when the name is transferred, listed,
