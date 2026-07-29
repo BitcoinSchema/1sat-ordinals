@@ -38,14 +38,11 @@ unique. Anything rendering these must keep the name primary.
 | Field | Encoding | Meaning |
 |---|---|---|
 | 1 | UTF-8 | Display name |
-| 2 | 36 bytes — 32-byte txid (little-endian) + 4-byte vout (LE) | Outpoint of the avatar image on chain |
+| 2 | 36 bytes — 32-byte txid (little-endian) + 4-byte vout (LE) | Outpoint of the avatar image: an inscription or a B protocol output |
 
 The avatar is an **outpoint, not a URL** — the image is on chain, so resolving it
-depends on no DNS name and no hosting provider. Any outpoint carrying a file
-works: an inscription, a re-inscription on an existing ordinal, or a 0-sat B
-protocol output. Which outpoint to publish is the client's choice — one browsing
-a wallet's ordinals will typically use the inscription's origin, since that is
-the stable reference for content that moves.
+depends on no DNS name and no hosting provider. The outpoint names the output
+holding the image directly.
 
 Field 1 is an empty push when only an avatar is set; a trailing unset field is
 omitted entirely.
