@@ -18,7 +18,7 @@ Since a collection is an ordinal, all top level required fields are still requir
 
 ## Collection Inscription
 
-The collection subType is also an ordinal whos inscription should be of type `image/*`
+The collection subType is also an ordinal whose inscription should be of type `image/*`
 
 While other content types will be considered valid, it it strongly recommended to use an image type to ensure apps can reliably display a collection preview.
 
@@ -70,7 +70,7 @@ Signatures are applied the same way as [top level rules](collections.md#signatur
 
 ## Transaction Structure
 
-This pseudo-script screates a collection called "The Awesome Collection" with only the minimum required fields, and adds a signature via AIP so the issuer can be verified.
+This pseudo-script creates a collection called "The Awesome Collection" with only the minimum required fields, and adds a signature via AIP so the issuer can be verified.
 
 Output 1:
 

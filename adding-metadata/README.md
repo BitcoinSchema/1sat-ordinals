@@ -34,7 +34,7 @@ BSV has several protocols for tagging on-chain data that pre-date Ordinals. 1Sat
 NOTE: Enriching an ordinal with OP_RETURN is completely optional.
 ```
 
-You can still add metadata from other schema types besides "ord" if you prefer. You can find a list of different schema typesa at https://bitcoinschema.org.
+You can still add metadata from other schema types besides "ord" if you prefer. You can find a list of different schema types at [bitcoinschema.org](https://bitcoinschema.org).
 
 {% code overflow="wrap" %}
 ```bash
